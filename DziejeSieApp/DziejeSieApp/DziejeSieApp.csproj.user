@@ -6,6 +6,6 @@
   <PropertyGroup>
     <ActiveDebugProfile>DziejeSieApp</ActiveDebugProfile>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
-    <NameOfLastUsedPublishProfile>matgorzynski.hostingasp</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>matgorzynski.hostingasp.pl - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

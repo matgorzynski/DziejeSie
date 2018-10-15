@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DziejeSieApp.Controllers
 {
-    //[Route("event")]
+    
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
