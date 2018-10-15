@@ -1,0 +1,6 @@
+USE DziejeSieApp
+
+CREATE TABLE dbo.UsersUsers(
+UserId INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+Login VARCHAR(MAX) NOT NULL
+)
