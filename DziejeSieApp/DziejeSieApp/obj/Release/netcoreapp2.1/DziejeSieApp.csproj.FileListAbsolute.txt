@@ -11,3 +11,4 @@ C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeS
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.RazorTargetAssemblyInfo.cache
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.dll
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.pdb
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.csprojAssemblyReference.cache
