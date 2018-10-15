@@ -1,0 +1,13 @@
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Release\netcoreapp2.1\DziejeSieApp.deps.json
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Release\netcoreapp2.1\DziejeSieApp.runtimeconfig.json
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Release\netcoreapp2.1\DziejeSieApp.runtimeconfig.dev.json
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Release\netcoreapp2.1\DziejeSieApp.dll
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Release\netcoreapp2.1\DziejeSieApp.pdb
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.csproj.CoreCompileInputs.cache
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.RazorAssemblyInfo.cache
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.RazorAssemblyInfo.cs
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.AssemblyInfoInputs.cache
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.AssemblyInfo.cs
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.RazorTargetAssemblyInfo.cache
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.dll
+C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Release\netcoreapp2.1\DziejeSieApp.pdb
