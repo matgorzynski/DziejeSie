@@ -23,7 +23,7 @@ namespace DziejeSieApp.Models
         [Required]
         public DateTime EventDate { get; set; }
         [Required]
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
         [ForeignKey("UserId")]
         public Users User { get; set; }
