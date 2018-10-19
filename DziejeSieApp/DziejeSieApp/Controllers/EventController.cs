@@ -16,6 +16,7 @@ namespace DziejeSieApp.Controllers
         {
             _dbcontext = dbcontext;
         }
+
         [Route("event/all")]
         public JsonResult AllEvent()
         {

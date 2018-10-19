@@ -18,9 +18,7 @@ namespace DziejeSieApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddMvcOptions(o => o.OutputFormatters.Add(
-                    new XmlDataContractSerializerOutputFormatter()));
+            services.AddMvc();
 #if DEBUG
             var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp_dev;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
 #else
