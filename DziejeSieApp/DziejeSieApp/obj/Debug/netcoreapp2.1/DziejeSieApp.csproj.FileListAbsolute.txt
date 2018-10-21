@@ -23,3 +23,6 @@ C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Debug\netcoreapp2.1\DziejeSie
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Debug\netcoreapp2.1\DziejeSieApp.pdb
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Debug\netcoreapp2.1\DziejeSieApp.dll
 C:\project\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Debug\netcoreapp2.1\DziejeSieApp.pdb
+C:\Users\Rafał\Source\Repos\DziejeSie\DziejeSieApp\DziejeSieApp\bin\Debug\netcoreapp2.1\DziejeSieApp.pdb
+C:\Users\Rafał\Source\Repos\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Debug\netcoreapp2.1\DziejeSieApp.dll
+C:\Users\Rafał\Source\Repos\DziejeSie\DziejeSieApp\DziejeSieApp\obj\Debug\netcoreapp2.1\DziejeSieApp.pdb
