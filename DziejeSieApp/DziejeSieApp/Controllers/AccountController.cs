@@ -16,9 +16,10 @@ namespace DziejeSieApp.Controllers
 
         }
 
+        [Route("user/login")]
         [HttpPost]
-        public JsonResult LoginVerification(Users user)
-        {
+        public JsonResult LoginVerification([FromBody]Users user)
+        { 
 
             if (CheckLogin(user) == true)
             {
@@ -33,8 +34,9 @@ namespace DziejeSieApp.Controllers
             else return Json("Wprowadzone dane są niepoprawne");
         }
 
+        [Route("user/register")]
         [HttpPost]
-        public ActionResult Register(Users account)
+        public ActionResult Register([FromBody]Users account)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +46,7 @@ namespace DziejeSieApp.Controllers
                     _dbcontext.User.Add(account);
                     _dbcontext.SaveChanges();
                     ModelState.Clear();  
-                    return Ok();
+                    return Json("Dodalismy uzytkownika");
                 }
                 else return Json("Login już jest używany");
 
