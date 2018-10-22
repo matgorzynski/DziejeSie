@@ -20,7 +20,7 @@ namespace DziejeSieApp
         {
             services.AddMvc();
 #if DEBUG
-            var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp_dev;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
+            var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp_dev;Uid=matgorzynski_developer;Password=zaq1@WSX;";
 #else
              var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
 #endif
@@ -37,7 +37,6 @@ namespace DziejeSieApp
             }
 
             app.UseMvc();
-
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
