@@ -1,0 +1,20 @@
+admin@matgorzynski.hostingasp.pl
+kontakt@matgorzynski.hostingasp.pl
+przypomnienie@matgorzynski.hostingasp.pl
+przypomnieniehasla@matgorzynski.hostingasp.pl
+redalert@matgorzynski.hostingasp.pl	
+rejestracja@matgorzynski.hostingasp.pl
+
+
+
+var message = new MailMessage();
+            message.From = new MailAddress("admin@matgorzynski.hostingasp.pl", "admin@matgorzynski.hostingasp.pl");
+            message.To.Add(new MailAddress("admin@matgorzynski.hostingasp.pl"));
+            message.Subject = "Temat maila";
+            message.Body = "Treść maila";
+            var smtp = new SmtpClient("smtp.webio.pl");
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("admin@matgorzynski.hostingasp.pl", "zaq1@WSX");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.Send(message);
