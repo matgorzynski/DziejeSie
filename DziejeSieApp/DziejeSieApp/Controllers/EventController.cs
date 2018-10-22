@@ -25,15 +25,15 @@ namespace DziejeSieApp.Controllers
             return Json(_dbcontext.Event.ToList());
         }
         
-        //GET: dziejeSie.com/event?id={x}
-        [Route("event")]
+        //GET: dziejeSie.com/event/{id}
+        [Route("event/{id}")]
         public JsonResult GetEventById(int id)
         {
             return Json(_dbcontext.Event.Where(x => x.EventId == id));
         }
 
         //POST: dziejeSie.com/event
-        [Route("event")]
+        [Route("event/add")]
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
@@ -50,14 +50,14 @@ namespace DziejeSieApp.Controllers
             }
         }
 
-        //PUT: dziejeSie.com/event?id={x}
-        [Route("event")]
+        //PUT: dziejeSie.com/event/{x}
+        [Route("event/modify/{id}")]
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
             if (ModelState.IsValid)
             {
-                Events toModify = _dbcontext.Event.Single(e => e.EventId == id);
+                Events toModify = _dbcontext.Event.Single(e => e.EventId == events.EventId);
 
                 toModify.Name = events.Name;
                 toModify.Address = events.Address;
@@ -75,8 +75,8 @@ namespace DziejeSieApp.Controllers
             }
         }
 
-        //DELETE: dziejeSie.com/Event?id={x}
-        [Route("event")]
+        //DELETE: dziejeSie.com/Event/{x}
+        [Route("event/delete/{id}")]
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {

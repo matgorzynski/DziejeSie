@@ -5209,7 +5209,7 @@
       ]
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.1": {
-      "sha512": "BOK5fckW9v7xWjpEI6bPGwkjw10OPVASZcAa8HoWJo/0Mmg4Azddj92v8noU+YgvD/6zNZ9o/RiRXXKxk5rYwQ==",
+      "sha512": "f8PKGcxiezL1RVqmnmrazj24Mj4KCTSXqwdotl7Lc+82h8iLV7ItxEIShTJakG7M9iw0ZuCocM0J/IhYesdQrg==",
       "type": "package",
       "path": "microsoft.aspnetcore.razor.design/2.1.1",
       "files": [
@@ -11541,23 +11541,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Rafał\\.nuget\\packages\\": {},
+    "C:\\Users\\mateu\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rafał\\source\\repos\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\DziejeSieApp.csproj",
+      "projectUniqueName": "C:\\project\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\DziejeSieApp.csproj",
       "projectName": "DziejeSieApp",
-      "projectPath": "C:\\Users\\Rafał\\source\\repos\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\DziejeSieApp.csproj",
-      "packagesPath": "C:\\Users\\Rafał\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rafał\\source\\repos\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\obj\\",
+      "projectPath": "C:\\project\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\DziejeSieApp.csproj",
+      "packagesPath": "C:\\Users\\mateu\\.nuget\\packages\\",
+      "outputPath": "C:\\project\\DziejeSie\\DziejeSieApp\\DziejeSieApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Rafał\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mateu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
