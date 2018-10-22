@@ -45,11 +45,18 @@ namespace DziejeSieApp.Controllers
                     account.PasswordHash();
                     _dbcontext.User.Add(account);
                     _dbcontext.SaveChanges();
+                    SendMail sendMail = new SendMail();
+                    string massege = "Witaj," + System.Environment.NewLine +
+                        "Dziękujemy za rejestrację w Dzieje Sie," + System.Environment.NewLine+
+                        "z nami będziesz zawsze na czasie z wydarzeniami w twojej okolicy" + System.Environment.NewLine +
+                        "Pozdrawiamy" + System.Environment.NewLine +
+                        "Dzieje Się";
+                    sendMail.send("rejestracja@matgorzynski.hostingasp.pl",account.email,"Witaj w Dzieje Sie", massege,"zaq1@WSX");
                     ModelState.Clear();  
+
                     return Json("Dodalismy uzytkownika");
                 }
                 else return Json("Login już jest używany");
-
 
             }
             else

@@ -26,6 +26,10 @@ namespace DziejeSieApp.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string email { get; set; }
+
+        [Required]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
 
 
