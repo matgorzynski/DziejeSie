@@ -1,5 +1,6 @@
 ﻿using DziejeSieApp.DataBaseContext;
 using DziejeSieApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace DziejeSieApp.Controllers
                 string savedPasswordHash = _dbcontext.User.Single(u => u.Login == user.Login).Password;
                 if (user.VerifyUser(savedPasswordHash) == true)
                 {
+
                     return Json(_dbcontext.User.Single(u => u.Login == user.Login));
                 }
                 else return Json("Login lub hasło jest niepoprawne");
