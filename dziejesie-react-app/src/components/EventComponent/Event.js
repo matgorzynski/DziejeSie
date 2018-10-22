@@ -11,26 +11,26 @@ class Event extends Component {
 
     componentDidMount() {
         fetch('http://matgorzynski.hostingasp.pl/event/all')
-            .then(response =>  {
-                return response.json();
+        .then(response =>  {
+            return response.json();
+        })
+        .then(myJson => {
+            let data = myJson.map((item) => {
+                return (
+                        <tr key={item.eventId}>
+                            <td>{item.eventId}</td>
+                            <td>{item.name}</td>
+                            <td>{item.address}</td>
+                            <td>{item.postcode}</td>
+                            <td>{item.town}</td>
+                            <td>{item.eventDate}</td>
+                            <td>{item.addDate}</td>
+                        </tr>
+                )
             })
-            .then(myJson => {
-                let data = myJson.map((item) => {
-                    return (
-                            <tr key={item.eventId}>
-                                <td>{item.eventId}</td>
-                                <td>{item.name}</td>
-                                <td>{item.address}</td>
-                                <td>{item.postcode}</td>
-                                <td>{item.town}</td>
-                                <td>{item.eventDate}</td>
-                                <td>{item.addDate}</td>
-                            </tr>
-                    )
-                })
-                this.setState({ data : data });
-                console.log("state", this.state.data);
-            });
+            this.setState({ data : data });
+            console.log("state", this.state.data);
+        });
     }
 
     render() {
