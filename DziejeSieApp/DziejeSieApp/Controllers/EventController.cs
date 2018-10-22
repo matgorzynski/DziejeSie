@@ -1,15 +1,11 @@
 ﻿using DziejeSieApp.DataBaseContext;
 using DziejeSieApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DziejeSieApp.Controllers
 {
-    
+
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
