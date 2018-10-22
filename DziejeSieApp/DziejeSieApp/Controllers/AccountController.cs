@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
@@ -19,6 +20,7 @@ namespace DziejeSieApp.Controllers
 
         [Route("user/login")]
         [HttpPost]
+
         public JsonResult LoginVerification([FromBody]Users user)
         { 
 
