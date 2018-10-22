@@ -20,7 +20,7 @@ namespace DziejeSieApp.Controllers
         {
             return Json(_dbcontext.Event.ToList());
         }
-        
+
         //GET: dziejeSie.com/event/{id}
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
@@ -60,7 +60,7 @@ namespace DziejeSieApp.Controllers
                 toModify.Postcode = events.Postcode;
                 toModify.Town = events.Town;
                 toModify.EventDate = events.EventDate;
-                
+
                 _dbcontext.SaveChanges();
                 ModelState.Clear();
                 return Json("Status: Success");
