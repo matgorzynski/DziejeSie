@@ -18,9 +18,7 @@ namespace DziejeSieApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(option =>
-            option.AddPolicy("AllowSpecificOrigin",
-            builder=>builder.WithOrigins("")));
+          
 
             services.AddMvc()
                 .AddMvcOptions(o => o.OutputFormatters.Add(
@@ -43,7 +41,7 @@ namespace DziejeSieApp
             }
 
             app.UseMvc();
-            app.UseCors("AllowSpecificOrigin");
+           
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");

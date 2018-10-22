@@ -1,11 +1,11 @@
 ﻿using DziejeSieApp.DataBaseContext;
 using DziejeSieApp.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace DziejeSieApp.Controllers
 {
-
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
