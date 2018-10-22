@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Navbar, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
 import Event from "./components/EventComponent/Event";
-//import AddEvent from "./components/AddEvent/AddEvent";
+import AddEvent from "./components/AddEvent/AddEvent";
 import banner from './dzieje-sie-banner.png';
 
 class App extends Component {
@@ -28,9 +28,10 @@ class App extends Component {
               <MenuItem eventKey={2.1}>Warszawa</MenuItem>
               <MenuItem eventKey={2.2}>Poznań</MenuItem>
               <MenuItem eventKey={2.3}>Gdańsk</MenuItem>
-              <MenuItem eventKey={2.4}>Suwałki ;-)</MenuItem>
+              <MenuItem eventKey={2.4}>Suwałki</MenuItem>
               <MenuItem eventKey={2.5}>Kraków</MenuItem>
               <MenuItem eventKey={2.6}>Katowice</MenuItem>
+              <MenuItem eventKey={2.7}>Radom</MenuItem>
             </NavDropdown>
             <NavItem eventKey={3} href="#">
               Dodaj wydarzenie
@@ -39,6 +40,7 @@ class App extends Component {
         </Navbar>
         <img src={banner} alt={"Banner"} />
           <Event />
+          <AddEvent />
       </div>
     );
   }

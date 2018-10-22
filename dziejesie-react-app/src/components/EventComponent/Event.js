@@ -24,7 +24,6 @@ class Event extends Component {
                             <td>{item.postcode}</td>
                             <td>{item.town}</td>
                             <td>{item.eventDate}</td>
-                            <td>{item.addDate}</td>
                         </tr>
                 )
             })
@@ -42,10 +41,9 @@ class Event extends Component {
                             <th>#</th>
                             <th>Nazwa</th>
                             <th>Miejsce</th>
-                            <th>Kod pocztowy? xD</th>
+                            <th>Kod pocztowy</th>
                             <th>Miasto</th>
                             <th>Data wydarzenia</th>
-                            <th>Dodano</th>
                         </tr>
                     </thead>
                     <tbody>
