@@ -22,7 +22,7 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
 
         public JsonResult LoginVerification([FromBody]Users user)
-        { 
+        {
 
             if (CheckLogin(user) == true)
             {
@@ -32,10 +32,18 @@ namespace DziejeSieApp.Controllers
 
                     return Json(_dbcontext.User.Single(u => u.Login == user.Login));
                 }
-                else return Json("Login lub hasło jest niepoprawne");
+                else
+                {
+                    return Json(_dbcontext.Error.Single(u => u.ErrorCode == 1));
+                }
 
             }
-            else return Json("Wprowadzone dane są niepoprawne");
+            else
+
+            {
+                
+                return Json(_dbcontext.Error.Single(u => u.ErrorCode == 1));
+            }
         }
 
         [Route("user/register")]
@@ -51,25 +59,27 @@ namespace DziejeSieApp.Controllers
                     _dbcontext.SaveChanges();
                     SendMail sendMail = new SendMail();
                     string massege = "Witaj," + System.Environment.NewLine +
-                        "Dziękujemy za rejestrację w Dzieje Sie," + System.Environment.NewLine+
+                        "Dziękujemy za rejestrację w Dzieje Sie," + System.Environment.NewLine +
                         "z nami będziesz zawsze na czasie z wydarzeniami w twojej okolicy" + System.Environment.NewLine +
                         "Pozdrawiamy" + System.Environment.NewLine +
                         "Dzieje Się";
-                    sendMail.send("rejestracja@matgorzynski.hostingasp.pl",account.email,"Witaj w Dzieje Sie", massege,"zaq1@WSX");
-                    ModelState.Clear();  
+                    sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.email, "Witaj w Dzieje Sie", massege, "zaq1@WSX");
+                    ModelState.Clear();
 
-                    return Json("Dodalismy uzytkownika");
+                    return Json(account);
                 }
-                else return Json("Login już jest używany");
+                else
+                {
+                    return Json(_dbcontext.Error.Single(u => u.ErrorCode == 3));
+                }
 
             }
             else
             {
 
-                return Json("Wprowadzone dane są niepoprawne");
+                return Json(_dbcontext.Error.Single(u => u.ErrorCode == 2));
             }
         }
-
 
 
         public Boolean CheckRegistration(Users account)
