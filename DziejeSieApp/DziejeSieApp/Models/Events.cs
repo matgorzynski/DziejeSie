@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DziejeSieApp.Models
 {
+    
     public class Events
     {
         [Key]
