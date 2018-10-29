@@ -9,11 +9,10 @@ namespace DziejeSieApp.Models
 {
     public class Error
     {
-        [Key]
         public int ErrorCode { get; set; }
-        [Required]
+        
         public string Type { get; set; }
-        [Required]
+        
         public string Desc { get; set; }
 
         public Error(int errorCode, string type, string desc)

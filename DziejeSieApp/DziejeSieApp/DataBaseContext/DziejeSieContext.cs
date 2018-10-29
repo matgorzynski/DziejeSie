@@ -16,8 +16,6 @@ namespace DziejeSieApp.DataBaseContext
 
             public DbSet<Users> User { get; set; }
             public DbSet<Events> Event { get; set; }
-            public DbSet<Error> Error { get; set; }
-
        
     }
 }

@@ -59,8 +59,8 @@ namespace DziejeSieApp.Controllers
                 toModify.Address = events.Address;
                 toModify.Postcode = events.Postcode;
                 toModify.Town = events.Town;
-                toModify.EventDate = events.EventDate;
-
+                toModify.StartDate = events.StartDate;
+                toModify.StartHour = events.StartHour;
                 _dbcontext.SaveChanges();
                 ModelState.Clear();
                 return Json("Status: Success");

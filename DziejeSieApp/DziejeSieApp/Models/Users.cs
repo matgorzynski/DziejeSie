@@ -37,6 +37,7 @@ namespace DziejeSieApp.Models
         public string RegisterHour { get; set; } = DateTime.Now.ToString("HH:MM");
 
 
+
         public void PasswordHash()
         {
             byte[] salt;
