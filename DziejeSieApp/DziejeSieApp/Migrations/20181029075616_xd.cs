@@ -4,25 +4,42 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DziejeSieApp.Migrations
 {
-    public partial class CreateSimpleDb : Migration
+    public partial class xd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "dbo.Error",
+                columns: table => new
+                {
+                    ErrorCode = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Type = table.Column<string>(nullable: false),
+                    Desc = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_dbo.Error", x => x.ErrorCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "dbo.User",
                 columns: table => new
                 {
                     IdUser = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Login = table.Column<string>(nullable: false)
+                    Login = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    email = table.Column<string>(nullable: false),
+                    RegisterFullDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.IdUser);
+                    table.PrimaryKey("PK_dbo.User", x => x.IdUser);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "dbo.Events",
                 columns: table => new
                 {
                     EventId = table.Column<int>(nullable: false)
@@ -37,28 +54,31 @@ namespace DziejeSieApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.EventId);
+                    table.PrimaryKey("PK_dbo.Events", x => x.EventId);
                     table.ForeignKey(
-                        name: "FK_Event_User_UserId",
+                        name: "FK_dbo.Events_dbo.User_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "dbo.User",
                         principalColumn: "IdUser",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_UserId",
-                table: "Event",
+                name: "IX_dbo.Events_UserId",
+                table: "dbo.Events",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "dbo.Error");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "dbo.Events");
+
+            migrationBuilder.DropTable(
+                name: "dbo.User");
         }
     }
 }

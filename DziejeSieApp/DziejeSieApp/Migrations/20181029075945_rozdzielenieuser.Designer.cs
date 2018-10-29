@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    [Migration("20181015065435_CreateSimpleDb")]
-    partial class CreateSimpleDb
+    [Migration("20181029075945_rozdzielenieuser")]
+    partial class rozdzielenieuser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,23 @@ namespace DziejeSieApp.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DziejeSieApp.Models.Error", b =>
+                {
+                    b.Property<int>("ErrorCode")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Desc")
+                        .IsRequired();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("ErrorCode");
+
+                    b.ToTable("Error");
+                });
 
             modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
                 {
@@ -59,6 +76,20 @@ namespace DziejeSieApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Login")
+                        .IsRequired();
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.Property<string>("RegisterDate")
+                        .IsRequired();
+
+                    b.Property<DateTime>("RegisterFullDate");
+
+                    b.Property<string>("RegisterHour")
+                        .IsRequired();
+
+                    b.Property<string>("email")
                         .IsRequired();
 
                     b.HasKey("IdUser");
