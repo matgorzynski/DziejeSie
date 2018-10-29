@@ -20,8 +20,13 @@ namespace DziejeSieApp.Models
         public string Postcode { get; set; }
         [Required]
         public string Town { get; set; }
+       
         [Required]
-        public DateTime EventDate { get; set; }
+        public string StartDate { get; set; }
+
+        [Required]
+        public string StartHour { get; set; }
+
         [Required]
         public DateTime AddDate { get; set; } = DateTime.Now;
 
