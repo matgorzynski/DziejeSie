@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DziejeSieApp.Models
 {
+
     public class Users
     {
         [Key]
@@ -30,14 +31,11 @@ namespace DziejeSieApp.Models
         public string email { get; set; }
 
         [Required]
-        public DateTime RegisterFullDate { get; set; } = DateTime.Now;
+        public string RegisterDate { get; set; } = DateTime.Now.ToString("dd-MM-yyyy");
 
+        [Required]
+        public string RegisterHour { get; set; } = DateTime.Now.ToString("HH:MM");
 
-        //[Required]
-        //public string RegisterDate = RegisterFullDate.ToString("dd-MM-yyyy");
-
-        //[Required]
-        //public string RegisterHour = RegisterFullDate.ToString("HH:mm");
 
 
         public void PasswordHash()

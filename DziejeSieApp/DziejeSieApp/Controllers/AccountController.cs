@@ -34,15 +34,17 @@ namespace DziejeSieApp.Controllers
                 }
                 else
                 {
-                    return Json(_dbcontext.Error.Single(u => u.ErrorCode == 1));
+                    Error Error = new Error(1, "Logowanie", "Złe dane wpisane");
+                    return Json(Error);
                 }
 
             }
             else
 
             {
-                
-                return Json(_dbcontext.Error.Single(u => u.ErrorCode == 1));
+
+                Error Error = new Error(1, "Logowanie", "Złe dane wpisane");
+                return Json(Error);
             }
         }
 
@@ -66,18 +68,21 @@ namespace DziejeSieApp.Controllers
                     sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.email, "Witaj w Dzieje Sie", massege, "zaq1@WSX");
                     ModelState.Clear();
 
-                    return Json(account);
+                    //var result = new { account.Login, account.email, account.RegisterDate, account.IdUser, account.RegisterHour };
+                    return Json(_dbcontext.User.Single(u => u.Login == account.Login));
                 }
                 else
                 {
-                    return Json(_dbcontext.Error.Single(u => u.ErrorCode == 3));
+                    Error Error = new Error(2, "Rejestracja", "POdany login jest zajęty");
+                    return Json(Error);
                 }
 
             }
             else
             {
 
-                return Json(_dbcontext.Error.Single(u => u.ErrorCode == 2));
+                Error Error = new Error(3, "Rejestracja", "Dane wprowadzone są nieprawidłowe");
+                return Json(Error);
             }
         }
 
