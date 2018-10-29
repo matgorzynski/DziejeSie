@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    [Migration("20181028183807_All")]
-    partial class All
+    [Migration("20181029073952_all")]
+    partial class all
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,7 +81,7 @@ namespace DziejeSieApp.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<DateTime>("RegisterDate");
+                    b.Property<DateTime>("RegisterFullDate");
 
                     b.Property<string>("email")
                         .IsRequired();

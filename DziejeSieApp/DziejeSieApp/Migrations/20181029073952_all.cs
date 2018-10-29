@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DziejeSieApp.Migrations
 {
-    public partial class All : Migration
+    public partial class all : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace DziejeSieApp.Migrations
                     Login = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
                     email = table.Column<string>(nullable: false),
-                    RegisterDate = table.Column<DateTime>(nullable: false)
+                    RegisterFullDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -79,7 +79,7 @@ namespace DziejeSieApp.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<DateTime>("RegisterDate");
+                    b.Property<DateTime>("RegisterFullDate");
 
                     b.Property<string>("email")
                         .IsRequired();

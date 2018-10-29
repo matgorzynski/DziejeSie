@@ -30,7 +30,14 @@ namespace DziejeSieApp.Models
         public string email { get; set; }
 
         [Required]
-        public DateTime RegisterDate { get; set; } = DateTime.Now;
+        public DateTime RegisterFullDate { get; set; } = DateTime.Now;
+
+
+        //[Required]
+        //public string RegisterDate = RegisterFullDate.ToString("dd-MM-yyyy");
+
+        //[Required]
+        //public string RegisterHour = RegisterFullDate.ToString("HH:mm");
 
 
         public void PasswordHash()
