@@ -29,8 +29,17 @@ namespace DziejeSieApp.Controllers
                 string savedPasswordHash = _dbcontext.User.Single(u => u.Login == user.Login).Password;
                 if (user.VerifyUser(savedPasswordHash) == true)
                 {
-
-                    return Json(_dbcontext.User.Single(u => u.Login == user.Login));
+                    user = _dbcontext.User.Single(u => u.Login == user.Login);
+                    var User = new
+                    {
+                       Iduser = user.IdUser,
+                        Login = user.Login,
+                        Email=user.Email,
+                        RegisterDate = user.RegisterDate.ToString("dd-MM-yyy"),
+                        RegisterHour = user.RegisterDate.ToString("HH:mm")
+                        
+                    };
+                    return Json(User);
                 }
                 else
                 {
@@ -65,11 +74,19 @@ namespace DziejeSieApp.Controllers
                         "z nami będziesz zawsze na czasie z wydarzeniami w twojej okolicy" + System.Environment.NewLine +
                         "Pozdrawiamy" + System.Environment.NewLine +
                         "Dzieje Się";
-                    sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.email, "Witaj w Dzieje Sie", massege, "zaq1@WSX");
+                    sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.Email, "Witaj w Dzieje Sie", massege, "zaq1@WSX");
                     ModelState.Clear();
 
-                    //var result = new { account.Login, account.email, account.RegisterDate, account.IdUser, account.RegisterHour };
-                    return Json(_dbcontext.User.Single(u => u.Login == account.Login));
+                    var User = new
+                    {
+                        Iduser = account.IdUser,
+                        Login = account.Login,
+                        Email = account.Email,
+                        RegisterDate = account.RegisterDate.ToString("dd-MM-yyy"),
+                        RegisterHour = account.RegisterDate.ToString("HH:mm")
+
+                    };
+                    return Json(User);
                 }
                 else
                 {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    [Migration("20181029073952_all")]
-    partial class all
+    [Migration("20181031145254_OneDate")]
+    partial class OneDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,23 +20,6 @@ namespace DziejeSieApp.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DziejeSieApp.Models.Error", b =>
-                {
-                    b.Property<int>("ErrorCode")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Desc")
-                        .IsRequired();
-
-                    b.Property<string>("Type")
-                        .IsRequired();
-
-                    b.HasKey("ErrorCode");
-
-                    b.ToTable("Error");
-                });
 
             modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
                 {
@@ -49,12 +32,16 @@ namespace DziejeSieApp.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
-                    b.Property<DateTime>("EventDate");
-
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.Property<string>("Postcode")
+                        .IsRequired();
+
+                    b.Property<string>("StartDate")
+                        .IsRequired();
+
+                    b.Property<string>("StartHour")
                         .IsRequired();
 
                     b.Property<string>("Town")
@@ -75,16 +62,16 @@ namespace DziejeSieApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<string>("Login")
                         .IsRequired();
 
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<DateTime>("RegisterFullDate");
-
-                    b.Property<string>("email")
-                        .IsRequired();
+                    b.Property<DateTime>("RegisterDate");
 
                     b.HasKey("IdUser");
 

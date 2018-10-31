@@ -23,10 +23,8 @@ namespace DziejeSieApp.Models
         public string Town { get; set; }
        
         [Required]
-        public string StartDate { get; set; }
-
-        [Required]
-        public string StartHour { get; set; }
+        public DateTime EventDate { get; set; }
+        
 
         [Required]
         public DateTime AddDate { get; set; } = DateTime.Now;

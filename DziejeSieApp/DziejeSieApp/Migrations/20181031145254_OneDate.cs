@@ -4,24 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DziejeSieApp.Migrations
 {
-    public partial class all : Migration
+    public partial class OneDate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Error",
-                columns: table => new
-                {
-                    ErrorCode = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Type = table.Column<string>(nullable: false),
-                    Desc = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Error", x => x.ErrorCode);
-                });
-
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -30,8 +16,8 @@ namespace DziejeSieApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Login = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
-                    email = table.Column<string>(nullable: false),
-                    RegisterFullDate = table.Column<DateTime>(nullable: false)
+                    Email = table.Column<string>(nullable: false),
+                    RegisterDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +34,8 @@ namespace DziejeSieApp.Migrations
                     Address = table.Column<string>(nullable: false),
                     Postcode = table.Column<string>(nullable: false),
                     Town = table.Column<string>(nullable: false),
-                    EventDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<string>(nullable: false),
+                    StartHour = table.Column<string>(nullable: false),
                     AddDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -71,9 +58,6 @@ namespace DziejeSieApp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Error");
-
             migrationBuilder.DropTable(
                 name: "Event");
 

@@ -60,20 +60,16 @@ namespace DziejeSieApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<string>("Login")
                         .IsRequired();
 
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<string>("RegisterDate")
-                        .IsRequired();
-
-                    b.Property<string>("RegisterHour")
-                        .IsRequired();
-
-                    b.Property<string>("email")
-                        .IsRequired();
+                    b.Property<DateTime>("RegisterDate");
 
                     b.HasKey("IdUser");
 

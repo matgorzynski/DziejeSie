@@ -25,7 +25,23 @@ namespace DziejeSieApp.Controllers
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
         {
-            return Json(_dbcontext.Event.Where(x => x.EventId == id));
+            Events Events= new Events();
+            Events = _dbcontext.Event.Single(x => x.EventId == id);
+            Users User = new Users();
+            User = _dbcontext.User.Single(x => x.IdUser == Events.UserId);
+            var Event = new
+            {
+                EventId = Events.EventId,
+                Name = Events.Name,
+                Address = Events.Address,
+                Postcode = Events.Postcode,
+                Town = Events.Town,
+                User = User.Login,
+                EventDate = Events.EventDate.ToString("dd-MM-yyy"),
+                EventHour = Events.EventDate.ToString("HH:mm")
+
+            };
+            return Json(Event);
         }
 
         //POST: dziejeSie.com/event
@@ -59,8 +75,7 @@ namespace DziejeSieApp.Controllers
                 toModify.Address = events.Address;
                 toModify.Postcode = events.Postcode;
                 toModify.Town = events.Town;
-                toModify.StartDate = events.StartDate;
-                toModify.StartHour = events.StartHour;
+                toModify.EventDate = events.EventDate;
                 _dbcontext.SaveChanges();
                 ModelState.Clear();
                 return Json("Status: Success");

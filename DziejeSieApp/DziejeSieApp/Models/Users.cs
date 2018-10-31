@@ -28,13 +28,10 @@ namespace DziejeSieApp.Models
 
         [Required]
         [EmailAddress]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public string RegisterDate { get; set; } = DateTime.Now.ToString("dd-MM-yyyy");
-
-        [Required]
-        public string RegisterHour { get; set; } = DateTime.Now.ToString("HH:MM");
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
 
 
 
