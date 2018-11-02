@@ -16,6 +16,7 @@ namespace DziejeSieApp.Controllers
         }
 
         [Route("event/all")]
+        [HttpGet]
         public JsonResult AllEvent()
         {
             return Json(_dbcontext.Event.ToList());
