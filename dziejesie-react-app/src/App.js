@@ -3,8 +3,7 @@ import './App.css';
 import { Navbar, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 import Event from "./components/EventComponent/Event";
@@ -20,7 +19,7 @@ class App extends Component {
               <Navbar>
                 <Navbar.Header>
                   <Navbar.Brand>
-                    <a href="#home">Dzieje się</a>
+                    <a href="/">Dzieje się</a>
                   </Navbar.Brand>
                 </Navbar.Header>
               <Nav>
@@ -41,9 +40,13 @@ class App extends Component {
                   <MenuItem eventKey={2.6}>Katowice</MenuItem>
                   <MenuItem eventKey={2.7}>Radom</MenuItem>
                 </NavDropdown>
-                <NavItem eventKey={3} href="#">
+                <NavItem eventKey={3} href="/create/">
                   Dodaj wydarzenie
                 </NavItem>
+              </Nav>
+              <Nav pullRight>
+                <NavItem href="/login/">Zaloguj</NavItem>
+                <NavItem href="/register/">Rejestracja</NavItem>
               </Nav>
             </Navbar>
             <div>
