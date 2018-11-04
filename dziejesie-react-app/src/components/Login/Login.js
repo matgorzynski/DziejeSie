@@ -1,66 +1,48 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
 class Login extends Component {
-    constructor(props, context) {
-        super(props, context);
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
     
-        this.state = {
-          login: '',
-          password: ''
-        };
-      }
+    var dane = {Login:"dupkaaaaaaaaaa", Password:"dupaaaaaaaaaaaa"};
+    
+    fetch('http://matgorzynski.hostingasp.pl/user/login', {
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dane),
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response))
+    );
 
-      handleChange(e) {
-        this.setState({ value: e.target.value });
-      }
+  }
 
-      handleClick() {
-          fetch('http://matgorzynski.hostingasp.pl/user/login', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              firstParam: this.state.login,
-              secondParam: this.state.password,
-            }),
-          }).then((response) => response.json())
-              .then((responseJson) => {
-                return responseJson;
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-      }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label htmlFor="username">Enter username</label>
+        <br />
+        <input id="username" name="username" type="text" />
 
-      render() {
-        return (
-        <div>
-          <form>
-            <FormGroup
-              controlId="formBasicText"
-            >
-              <ControlLabel>Zaloguj się</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.login}
-                placeholder="Login"
-                onChange={this.handleChange}
-              />
-              <FormControl
-                type="text"
-                value={this.state.password}
-                placeholder="Hasło"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-          </form>
-          <Button onClick={this.handleClick}>Zaloguj</Button>
-        </div>
-        );
-      }
+        <br />
+
+        <label htmlFor="password">Enter password</label>
+        <br />
+        <input id="password" name="password" type="password" />
+
+        <br />
+        <button>Send data!</button>
+      </form>
+    );
+  }
 }
 
 export default Login;
