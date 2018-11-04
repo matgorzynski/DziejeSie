@@ -1,78 +1,80 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 class AddEvent extends Component {
-    constructor(props, context) {
-        super(props, context);
+  constructor() {
+    super();
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  
+    this.state = {
+      Name: '',
+      Address: '',
+      Postcode: '',
+      Town: '',
+      EventDate: '',
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = {Name: this.state.Name, Address: this.state.Address, Postcode: this.state.Postcode, Town: this.state.Town, EventDate: this.state.EventDate};
     
-        this.handleChange = this.handleChange.bind(this);
-    
-        this.state = {
-          name: '',
-          address: '',
-          postcode: '',
-          town: '',
-          date: ''
-        };
-      }
-    
-      getValidationState() {
-        const length = this.state.name.length;
-        if (length >= 12) return 'success';
-        else if (length > 0) return 'error';
-        return null;
-      }
-    
-      handleChange(e) {
-        this.setState({ value: e.target.value });
-      }
-    
-      render() {
-        return (
-        <div>
-          <form>
-            <FormGroup
-              controlId="formBasicText"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>Dodaj wydarzenie</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.name}
-                placeholder="Nazwa wydarzenia"
-                onChange={this.handleChange}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Nazwa musi posiadać conajmniej 12 znaków</HelpBlock>
-              <FormControl
-                type="text"
-                value={this.state.address}
-                placeholder="Miejsce wydarzenia"
-                onChange={this.handleChange}
-              />
-              <FormControl
-                type="text"
-                value={this.state.address}
-                placeholder="Kod pocztowy"
-                onChange={this.handleChange}
-               />
-               <FormControl
-                type="text"
-                value={this.state.address}
-                placeholder="Miasto"
-                onChange={this.handleChange}
-               />
-               <FormControl
-                type="date"
-                value={this.state.address}
-                placeholder="Data wydarzenia"
-                onChange={this.handleChange}
-               />
-            </FormGroup>
-          </form>
-        </div>
-        );
-      }
+    //console.log(JSON.stringify(data));
+
+    fetch('http://matgorzynski.hostingasp.pl/event/add', {
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response))
+    );
+  }
+
+  handleChange(e) {
+    let change = {}
+    change[e.target.name] = e.target.value
+    this.setState(change)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label htmlFor="Name">Wpisz nazwę wydarzenia</label>
+        <br />
+        <input id="Name" name="Name" type="text" value={this.state.Name} onChange={this.handleChange.bind(this)} />
+
+        <br />
+
+        <label htmlFor="Address">Wpisz adres wydarzenia</label>
+        <br />
+        <input id="Address" name="Address" type="text" value={this.state.Address} onChange={this.handleChange.bind(this)} />
+
+        <br />
+
+        <label htmlFor="Postcode">Wpisz kod pocztowy wydarzenia</label>
+        <br />
+        <input id="Postcode" name="Postcode" type="postcode" value={this.state.Postcode} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        
+        <label htmlFor="Town">Wpisz nazwę miejscowości</label>
+        <br />
+        <input id="Town" name="Town" type="text" value={this.state.Town} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        
+        <label htmlFor="EventDate">Wpisz datę wydarzenia</label>
+        <br />
+        <input id="EventDate" name="EventDate" type="date" value={this.state.EventDate} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        <button>Send data!</button>
+      </form>
+    );
+  }
 }
 
 export default AddEvent;
