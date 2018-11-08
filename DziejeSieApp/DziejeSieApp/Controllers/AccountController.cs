@@ -39,15 +39,11 @@ namespace DziejeSieApp.Controllers
                         RegisterHour = user.RegisterDate.ToString("HH:mm")
                         
                     };
-                    //tworzenie sesji dla użytkownika
-                    HttpContext.Session.SetString("UserName", user.Login);
-                    HttpContext.Session.SetInt32("UserID", user.IdUser);
-
                     return Json(User);
                 }
                 else
                 {
-                    Error Error = new Error(1, "Logowanie", "Złe dane wpisane");    //kod 1 oznacza błędne hasło
+                    Error Error = new Error(1, "Logowanie", "Złe dane wpisane");
                     return Json(Error);
                 }
 
@@ -56,7 +52,7 @@ namespace DziejeSieApp.Controllers
 
             {
 
-                Error Error = new Error(2, "Logowanie", "Złe dane wpisane");    //kod 2 oznacza brak użytkowwnika o podanym loginie
+                Error Error = new Error(1, "Logowanie", "Złe dane wpisane");
                 return Json(Error);
             }
         }
@@ -94,7 +90,7 @@ namespace DziejeSieApp.Controllers
                 }
                 else
                 {
-                    Error Error = new Error(2, "Rejestracja", "Podany login jest zajęty");
+                    Error Error = new Error(2, "Rejestracja", "POdany login jest zajęty");
                     return Json(Error);
                 }
 
