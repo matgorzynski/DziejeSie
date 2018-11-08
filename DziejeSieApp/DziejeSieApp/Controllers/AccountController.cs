@@ -41,7 +41,6 @@ namespace DziejeSieApp.Controllers
                     };
                     //tworzenie sesji dla użytkownika
                     HttpContext.Session.SetString("UserName", user.Login);
-                    HttpContext.Session.SetInt32("UserID", user.IdUser);
 
                     return Json(User);
                 }

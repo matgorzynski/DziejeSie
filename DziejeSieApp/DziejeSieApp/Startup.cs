@@ -20,10 +20,10 @@ namespace DziejeSieApp
         {
 #if DEBUG
             //dev database
-            //var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp_dev;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
+            var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp_dev;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
 
             //localhost database
-            var connection = @"Server=RAFCIO\DZIEJESIE;Database=dziejesie;Uid=dev;Password=dev;";
+            //var connection = @"Server=RAFCIO\DZIEJESIE;Database=dziejesie;Uid=dev;Password=dev;";
 #else
             var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
 #endif
