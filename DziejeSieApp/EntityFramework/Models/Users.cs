@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace DziejeSieApp.Models
+namespace EntityFramework.Models
 {
 
     public class Users
