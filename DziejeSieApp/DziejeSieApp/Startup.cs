@@ -32,8 +32,8 @@ namespace DziejeSieApp
                 .AddMvcOptions(o => o.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
 
-            services.AddDbContext<DziejeSieContext>
-                (options => options.UseSqlServer(connection));
+            services.AddDbContext < DziejeSieContext >(
+                options => options.UseSqlServer(connection));
 
             services.AddSession(o =>
             {

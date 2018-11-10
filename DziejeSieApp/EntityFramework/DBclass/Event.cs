@@ -14,7 +14,6 @@ namespace EntityFramework.DBclass
         public Event()
         {
             _dbcontext = new DziejeSieContext();
-
         }
 
         public string AllEvent()

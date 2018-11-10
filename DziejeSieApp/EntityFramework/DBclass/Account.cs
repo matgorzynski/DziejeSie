@@ -8,13 +8,13 @@ namespace EntityFramework.DBclass
     public class Account
     {
 
-
         private readonly DziejeSieContext _dbcontext;
         public Account()
         {
             _dbcontext = new DziejeSieContext();
-
         }
+       
+
 
         public string LoginVerification(string Login, string Password)
         {
