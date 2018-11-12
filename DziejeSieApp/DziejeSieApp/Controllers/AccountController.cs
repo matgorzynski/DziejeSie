@@ -1,11 +1,19 @@
 ﻿using EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
+using EntityFramework.DataBaseContext;
 
 namespace DziejeSieApp.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly DziejeSieContext _dbcontext;
+
+        public AccountController(DziejeSieContext dbcontext)
+        {
+            _dbcontext = dbcontext;
+
+        }
 
 
         [Route("user/login")]
@@ -14,7 +22,7 @@ namespace DziejeSieApp.Controllers
         public JsonResult LoginVerification([FromBody]Users user)
         {
 
-            return Json(new Account().LoginVerification(user.Login, user.Password));
+            return Json(new Account(_dbcontext).LoginVerification(user.Login, user.Password));
         }
 
         [Route("user/register")]
@@ -24,7 +32,7 @@ namespace DziejeSieApp.Controllers
             if (ModelState.IsValid)
             {
 
-                return Json(new Account().Register(account));
+                return Json(new Account(_dbcontext).Register(account));
             }
             else
             {

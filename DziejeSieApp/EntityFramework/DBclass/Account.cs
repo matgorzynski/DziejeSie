@@ -3,20 +3,23 @@ using EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+
 namespace EntityFramework.DBclass
+
 {
     public class Account
     {
 
         private readonly DziejeSieContext _dbcontext;
-        public Account()
+
+        public Account(DziejeSieContext dbcontext)
         {
-            _dbcontext = new DziejeSieContext();
+            _dbcontext = dbcontext;
+
         }
-       
 
 
-        public string LoginVerification(string Login, string Password)
+        public dynamic LoginVerification(string Login, string Password)
         {
             Users user = new Users();
             user.Login = Login;
@@ -38,28 +41,28 @@ namespace EntityFramework.DBclass
 
                     };
                     //tworzenie sesji dla użytkownika
-                   // HttpContext.Session.SetString("UserName", user.Login);
+                    // HttpContext.Session.SetString("UserName", user.Login);
 
-                    return User.ToString();
+                    return User;
+
                 }
                 else
                 {
-                    Error Error = new Error(1, "Logowanie", "Złe dane wpisane");    //kod 1 oznacza błędne hasło
-                    return Error.ToString();
-                }
 
+                    Error Error = new Error(1, "Logowanie", "Złe dane wpisane");    //kod 1 oznacza błędne hasło
+                   return Error;
+                }
             }
             else
 
             {
 
                 Error Error = new Error(2, "Logowanie", "Złe dane wpisane");    //kod 2 oznacza brak użytkowwnika o podanym loginie
-                return Error.ToString();
+                return Error;     
             }
         }
 
-
-        public string Register([FromBody]Users account)
+        public dynamic Register([FromBody]Users account)
         {
             if (CheckRegistration(account.Login) == true)
             {
@@ -84,7 +87,8 @@ namespace EntityFramework.DBclass
                     RegisterHour = account.RegisterDate.ToString("HH:mm")
 
                 };
-                return User.ToString();
+                return User;
+              
             }
             else
             {
@@ -95,7 +99,7 @@ namespace EntityFramework.DBclass
                     Opis = "POdany Login jest zajety"
 
                 };
-                return Error.ToString();
+                return Error;
 
             }
         }

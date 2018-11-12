@@ -1,17 +1,26 @@
 ﻿using EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
+using EntityFramework.DataBaseContext;
 
 namespace DziejeSieApp.Controllers
 {
     public class EventController : Controller
     {
-        
+        private readonly DziejeSieContext _dbcontext;
+
+        public EventController(DziejeSieContext dbcontext)
+        {
+
+            _dbcontext = dbcontext;
+
+        }
+
         [Route("event/all")]
         [HttpGet]
         public JsonResult AllEvent()
         {
-            return Json(new Event().AllEvent());
+            return Json(new Event(_dbcontext).AllEvent());
         }
 
         //GET: dziejeSie.com/event/{id}
@@ -19,7 +28,7 @@ namespace DziejeSieApp.Controllers
         public JsonResult GetEventById(int id)
         {
             
-            return Json(new Event().GetEventById(id));
+            return Json(new Event(_dbcontext).GetEventById(id));
         }
 
         //POST: dziejeSie.com/event
@@ -29,7 +38,7 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Json(new Event().AddNewEvent(events));
+                return Json(new Event(_dbcontext).AddNewEvent(events));
             }
             else
             {
@@ -49,7 +58,7 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Json(new Event().UpdateEvent(id, events));
+                return Json(new Event(_dbcontext).UpdateEvent(id, events));
             }
             else
             {
@@ -66,7 +75,7 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            return Json(new Event().DeleteEvent(id));
+            return Json(new Event(_dbcontext).DeleteEvent(id));
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using EntityFramework.DataBaseContext;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +8,11 @@ namespace EntityFramework.DBclass
     public class Event
     {
         private readonly DziejeSieContext _dbcontext;
-        public Event()
+
+        public Event(DziejeSieContext dbcontext)
         {
-            _dbcontext = new DziejeSieContext();
+            _dbcontext = dbcontext;
+
         }
 
         public string AllEvent()
@@ -23,7 +22,7 @@ namespace EntityFramework.DBclass
         }
 
         
-        public string GetEventById(int id)
+        public dynamic GetEventById(int id)
         {
             Events Events = new Events();
             Events = _dbcontext.Event.Single(x => x.EventId == id);
@@ -41,11 +40,11 @@ namespace EntityFramework.DBclass
                 EventHour = Events.EventDate.ToString("HH:mm")
 
             };
-            return Event.ToString();
+            return Event;
         }
 
 
-        public string AddNewEvent([FromBody]Events events)
+        public dynamic AddNewEvent([FromBody]Events events)
         {
 
             _dbcontext.Event.Add(events);
@@ -65,12 +64,12 @@ namespace EntityFramework.DBclass
                 EventHour = events.EventDate.ToString("HH:mm")
 
             };
-            return Event.ToString();
+            return Event;
         }
 
      
       
-        public string UpdateEvent(int id, [FromBody]Events events)
+        public dynamic UpdateEvent(int id, [FromBody]Events events)
         {
                 Events toModify = _dbcontext.Event.Single(e => e.EventId == events.EventId);
 
@@ -95,12 +94,12 @@ namespace EntityFramework.DBclass
                 EventHour = events.EventDate.ToString("HH:mm")
 
             };
-            return Event.ToString();
+            return Event;
 
             
         }
         
-        public string DeleteEvent(int id)
+        public dynamic DeleteEvent(int id)
         {
             Events toDelete = _dbcontext.Event.Single(e => e.EventId == id);
             if (toDelete != null)
@@ -111,7 +110,7 @@ namespace EntityFramework.DBclass
                 {
                     Status = "Success"
                 };
-                return Stauts.ToString();
+                return Stauts;
             }
             else
             {
@@ -119,7 +118,7 @@ namespace EntityFramework.DBclass
                 {
                     Status = "Failed"
                 };
-                return Stauts.ToString();
+                return Stauts;
             }
         }
     }

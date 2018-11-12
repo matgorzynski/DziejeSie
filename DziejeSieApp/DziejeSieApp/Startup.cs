@@ -52,6 +52,8 @@ namespace DziejeSieApp
 
             app.UseSession(); //sesje
             app.UseMvc();
+
+ 
            
             app.Run(async (context) =>
             {

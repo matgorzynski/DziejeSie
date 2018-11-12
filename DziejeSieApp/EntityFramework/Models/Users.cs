@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace EntityFramework.Models
 {
@@ -20,6 +18,7 @@ namespace EntityFramework.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Please confirm your password")]
