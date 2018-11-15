@@ -12,6 +12,6 @@ namespace EntityFramework.DataBaseContext
 
         public DbSet<Users> User { get; set; }
         public DbSet<Events> Event { get; set; }
-       
+
     }
 }

@@ -32,7 +32,7 @@ namespace DziejeSieApp
                 .AddMvcOptions(o => o.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
 
-            services.AddDbContext < DziejeSieContext >(
+            services.AddDbContext<DziejeSieContext>(
                 options => options.UseSqlServer(connection));
 
             services.AddSession(o =>
@@ -46,15 +46,15 @@ namespace DziejeSieApp
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            { 
+            {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseSession(); //sesje
             app.UseMvc();
 
- 
-           
+
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");

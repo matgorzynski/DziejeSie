@@ -42,13 +42,13 @@ namespace EntityFramework.DBclass
                 else
                 {
                     Error Error = new Error(1, "Logowanie", "Złe dane wpisane");    //kod 1 oznacza błędne hasło
-                   return Error;
+                    return Error;
                 }
             }
             else
             {
                 Error Error = new Error(2, "Logowanie", "Złe dane wpisane");    //kod 2 oznacza brak użytkowwnika o podanym loginie
-                return Error;     
+                return Error;
             }
         }
 
@@ -78,7 +78,7 @@ namespace EntityFramework.DBclass
 
                 };
                 return User;
-              
+
             }
             else
             {
@@ -117,4 +117,4 @@ namespace EntityFramework.DBclass
             }
         }
     }
-} 
+}

@@ -21,7 +21,7 @@ namespace EntityFramework.DBclass
             return Event;
         }
 
-        
+
         public dynamic GetEventById(int id)
         {
             Events Events = new Events();
@@ -67,18 +67,18 @@ namespace EntityFramework.DBclass
             return Event;
         }
 
-     
-      
+
+
         public dynamic UpdateEvent(int id, [FromBody]Events events)
         {
-                Events toModify = _dbcontext.Event.Single(e => e.EventId == events.EventId);
+            Events toModify = _dbcontext.Event.Single(e => e.EventId == events.EventId);
 
-                toModify.Name = events.Name;
-                toModify.Address = events.Address;
-                toModify.Postcode = events.Postcode;
-                toModify.Town = events.Town;
-                toModify.EventDate = events.EventDate;
-                _dbcontext.SaveChanges();
+            toModify.Name = events.Name;
+            toModify.Address = events.Address;
+            toModify.Postcode = events.Postcode;
+            toModify.Town = events.Town;
+            toModify.EventDate = events.EventDate;
+            _dbcontext.SaveChanges();
 
             Users User = new Users();
             User = _dbcontext.User.Single(x => x.IdUser == events.UserId);
@@ -96,9 +96,9 @@ namespace EntityFramework.DBclass
             };
             return Event;
 
-            
+
         }
-        
+
         public dynamic DeleteEvent(int id)
         {
             Events toDelete = _dbcontext.Event.Single(e => e.EventId == id);
