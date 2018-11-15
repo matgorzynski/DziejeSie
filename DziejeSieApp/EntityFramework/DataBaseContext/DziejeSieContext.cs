@@ -1,6 +1,5 @@
 ﻿using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 
 namespace EntityFramework.DataBaseContext
 {
