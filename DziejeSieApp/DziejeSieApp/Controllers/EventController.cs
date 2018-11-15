@@ -25,7 +25,20 @@ namespace DziejeSieApp.Controllers
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
         {
-            return Json(new Event(_dbcontext).GetEventById(id));
+            if (id != 0)
+            {
+                return Json(new Event(_dbcontext).GetEventById(id));
+            }
+            else
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "GetSingleEvent",
+                    Desc = "Invalid operation -> check route"
+                };
+                return Json(Error);
+            }
         }
 
         //POST: dziejeSie.com/event
@@ -35,6 +48,7 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                events.AddDate = System.DateTime.Now;
                 return Json(new Event(_dbcontext).AddNewEvent(events));
             }
             else
@@ -65,7 +79,7 @@ namespace DziejeSieApp.Controllers
                 {
                     Code = 1,
                     Type = "EventModify",
-                    Desc = "Eveny could not be modified"
+                    Desc = "Specified event body did not match event model in database"
                 };
                 return Json(Error);
             }
