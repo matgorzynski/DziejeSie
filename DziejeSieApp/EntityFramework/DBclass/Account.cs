@@ -9,13 +9,11 @@ namespace EntityFramework.DBclass
 {
     public class Account
     {
-
         private readonly DziejeSieContext _dbcontext;
 
         public Account(DziejeSieContext dbcontext)
         {
             _dbcontext = dbcontext;
-
         }
 
 
@@ -38,25 +36,17 @@ namespace EntityFramework.DBclass
                         Email = user.Email,
                         RegisterDate = user.RegisterDate.ToString("dd-MM-yyy"),
                         RegisterHour = user.RegisterDate.ToString("HH:mm")
-
                     };
-                    //tworzenie sesji dla użytkownika
-                    // HttpContext.Session.SetString("UserName", user.Login);
-
                     return User;
-
                 }
                 else
                 {
-
                     Error Error = new Error(1, "Logowanie", "Złe dane wpisane");    //kod 1 oznacza błędne hasło
                    return Error;
                 }
             }
             else
-
             {
-
                 Error Error = new Error(2, "Logowanie", "Złe dane wpisane");    //kod 2 oznacza brak użytkowwnika o podanym loginie
                 return Error;     
             }
@@ -71,11 +61,11 @@ namespace EntityFramework.DBclass
                 _dbcontext.SaveChanges();
                 SendMail sendMail = new SendMail();
                 string massege = "Witaj," + System.Environment.NewLine +
-                    "Dziękujemy za rejestrację w Dzieje Sie," + System.Environment.NewLine +
+                    "Dziękujemy za rejestrację w DziejeSie," + System.Environment.NewLine +
                     "z nami będziesz zawsze na czasie z wydarzeniami w twojej okolicy" + System.Environment.NewLine +
                     "Pozdrawiamy" + System.Environment.NewLine +
-                    "Dzieje Się";
-                sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.Email, "Witaj w Dzieje Sie", massege, "zaq1@WSX");
+                    "Zespół DziejeSie";
+                sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.Email, "Witaj w DziejeSie", massege, "zaq1@WSX");
 
 
                 var User = new

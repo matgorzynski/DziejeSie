@@ -11,9 +11,7 @@ namespace DziejeSieApp.Controllers
 
         public EventController(DziejeSieContext dbcontext)
         {
-
             _dbcontext = dbcontext;
-
         }
 
         [Route("event/all")]
@@ -27,7 +25,6 @@ namespace DziejeSieApp.Controllers
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
         {
-            
             return Json(new Event(_dbcontext).GetEventById(id));
         }
 
@@ -42,11 +39,13 @@ namespace DziejeSieApp.Controllers
             }
             else
             {
-                var Stauts = new
+                var Error = new
                 {
-                    Status = "Failes"
+                    Code = 1,
+                    Type = "EventAdd",
+                    Desc = "Event could not be added"
                 };
-                return Json(Stauts);
+                return Json(Error);
             }
         }
         
@@ -62,12 +61,14 @@ namespace DziejeSieApp.Controllers
             }
             else
             {
-            var Stauts = new
-            {
-                Status = "Failes"
-            };
-            return Json(Stauts);
-        }
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "EventModify",
+                    Desc = "Eveny could not be modified"
+                };
+                return Json(Error);
+            }
         }
 
         //DELETE: dziejeSie.com/Event/{x}
