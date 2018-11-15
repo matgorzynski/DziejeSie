@@ -15,10 +15,10 @@ namespace EntityFramework.DBclass
 
         }
 
-        public string AllEvent()
+        public dynamic AllEvent()
         {
-
-            return _dbcontext.Event.ToList().ToString();
+            var Event = _dbcontext.Event;
+            return Event;
         }
 
         
