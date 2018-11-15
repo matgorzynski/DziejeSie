@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
 using EntityFramework.DataBaseContext;
+using Microsoft.AspNetCore.Http;
 
 namespace DziejeSieApp.Controllers
 {
@@ -12,7 +13,6 @@ namespace DziejeSieApp.Controllers
         public AccountController(DziejeSieContext dbcontext)
         {
             _dbcontext = dbcontext;
-
         }
 
 
@@ -21,8 +21,13 @@ namespace DziejeSieApp.Controllers
 
         public JsonResult LoginVerification([FromBody]Users user)
         {
-
-            return Json(new Account(_dbcontext).LoginVerification(user.Login, user.Password));
+            var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
+            if ((Account)result.Login != null)
+            {
+                string tmp = result.Login;
+                HttpContext.Session.SetString("UserName", tmp);
+            }
+            return Json(result);
         }
 
         [Route("user/register")]
@@ -31,18 +36,15 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 return Json(new Account(_dbcontext).Register(account));
             }
             else
             {
-
                 var Error = new
                 {
                     Kod = 1,
                     Typ = "Rejestracja",
                     Opis = "Wrpowadzona dane są błędne."
-
                 };
                 return Json(Error);
             }
