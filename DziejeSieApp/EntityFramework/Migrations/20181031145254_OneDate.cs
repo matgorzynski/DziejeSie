@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DziejeSieApp.Migrations
 {
-    public partial class CreateSimpleDb : Migration
+    public partial class OneDate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,10 @@ namespace DziejeSieApp.Migrations
                 {
                     IdUser = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Login = table.Column<string>(nullable: false)
+                    Login = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    RegisterDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +34,8 @@ namespace DziejeSieApp.Migrations
                     Address = table.Column<string>(nullable: false),
                     Postcode = table.Column<string>(nullable: false),
                     Town = table.Column<string>(nullable: false),
-                    EventDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<string>(nullable: false),
+                    StartHour = table.Column<string>(nullable: false),
                     AddDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },

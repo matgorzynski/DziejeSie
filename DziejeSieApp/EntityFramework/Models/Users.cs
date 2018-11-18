@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
-namespace DziejeSieApp.Models
+namespace EntityFramework.Models
 {
+
     public class Users
     {
         [Key]
@@ -19,6 +18,7 @@ namespace DziejeSieApp.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Please confirm your password")]
@@ -27,10 +27,11 @@ namespace DziejeSieApp.Models
 
         [Required]
         [EmailAddress]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
+
 
 
         public void PasswordHash()

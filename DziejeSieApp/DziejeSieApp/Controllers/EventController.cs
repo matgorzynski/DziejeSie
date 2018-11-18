@@ -1,11 +1,11 @@
-﻿using DziejeSieApp.DataBaseContext;
-using DziejeSieApp.Models;
+﻿using EntityFramework.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using EntityFramework.DBclass;
+using EntityFramework.DataBaseContext;
 
 namespace DziejeSieApp.Controllers
 {
-
+    
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
@@ -19,14 +19,27 @@ namespace DziejeSieApp.Controllers
         [HttpGet]
         public JsonResult AllEvent()
         {
-            return Json(_dbcontext.Event.ToList());
+            return Json(new Event(_dbcontext).AllEvent());
         }
-        
+
         //GET: dziejeSie.com/event/{id}
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
         {
-            return Json(_dbcontext.Event.Where(x => x.EventId == id));
+            if (id != 0)
+            {
+                return Json(new Event(_dbcontext).GetEventById(id));
+            }
+            else
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "GetSingleEvent",
+                    Desc = "Invalid operation -> check route"
+                };
+                return Json(Error);
+            }
         }
 
         //POST: dziejeSie.com/event
@@ -36,16 +49,21 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _dbcontext.Event.Add(events);
-                _dbcontext.SaveChanges();
-                ModelState.Clear();
-                return Json("Status: Success");
+                events.AddDate = System.DateTime.Now;
+                return Json(new Event(_dbcontext).AddNewEvent(events));
             }
             else
             {
-                return Json("Status: Failed");
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "EventAdd",
+                    Desc = "Event could not be added"
+                };
+                return Json(Error);
             }
         }
+        
 
         //PUT: dziejeSie.com/event/{x}
         [Route("event/modify/{id}")]
@@ -54,21 +72,17 @@ namespace DziejeSieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Events toModify = _dbcontext.Event.Single(e => e.EventId == events.EventId);
-
-                toModify.Name = events.Name;
-                toModify.Address = events.Address;
-                toModify.Postcode = events.Postcode;
-                toModify.Town = events.Town;
-                toModify.EventDate = events.EventDate;
-                
-                _dbcontext.SaveChanges();
-                ModelState.Clear();
-                return Json("Status: Success");
+                return Json(new Event(_dbcontext).UpdateEvent(id, events));
             }
             else
             {
-                return Json("Status: Failed");
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "EventModify",
+                    Desc = "Specified event body did not match event model in database"
+                };
+                return Json(Error);
             }
         }
 
@@ -77,17 +91,7 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            Events toDelete = _dbcontext.Event.Single(e => e.EventId == id);
-            if (toDelete != null)
-            {
-                _dbcontext.Event.Remove(toDelete);
-                _dbcontext.SaveChanges();
-                return Json("Status: Success");
-            }
-            else
-            {
-                return Json("Status: Failed");
-            }
+            return Json(new Event(_dbcontext).DeleteEvent(id));
         }
     }
 }
