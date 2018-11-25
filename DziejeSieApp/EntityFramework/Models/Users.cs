@@ -32,8 +32,6 @@ namespace EntityFramework.Models
         [Required]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-
-
         public void PasswordHash()
         {
             byte[] salt;
