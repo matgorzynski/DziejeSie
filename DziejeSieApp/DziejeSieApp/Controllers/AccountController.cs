@@ -23,11 +23,11 @@ namespace DziejeSieApp.Controllers
         {
             var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
             
-            var propertyInfo = result.GetType().GetProperty("Iduser");
+            var propertyInfo = result.GetType().GetProperty("Login");
             try
             {
                 string usr = propertyInfo.GetValue(result, null);
-                HttpContext.Session.SetString("User", usr); //tworzenie sesji -> id będzie odczytywane do wykonania większości akcji przez użytkownika
+                HttpContext.Session.SetString("User", usr); //tworzenie sesji -> login będzie odczytywane do wykonania większości akcji przez użytkownika
             }
             catch (System.Exception)
             {
