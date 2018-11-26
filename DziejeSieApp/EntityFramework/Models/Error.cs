@@ -14,6 +14,12 @@ namespace EntityFramework.Models
         public string Type { get; set; }
         
         public string Desc { get; set; }
+        
+        
+        
+        
+        
+        public int xd {get ; set;}
 
         public Error(int errorCode, string type, string desc)
         {
