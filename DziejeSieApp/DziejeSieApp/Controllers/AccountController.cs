@@ -22,11 +22,7 @@ namespace DziejeSieApp.Controllers
         public JsonResult LoginVerification([FromBody]Users user)
         {
             var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
-            if ((Account)result.Login != null)
-            {
-                string tmp = result.Login;
-                HttpContext.Session.SetString("UserName", tmp);
-            }
+           
             return Json(result);
         }
 
