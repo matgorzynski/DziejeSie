@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            events: [],
         };
     }
 
     componentDidMount() {
-        fetch('http://matgorzynski.hostingasp.pl/event/all')
-        .then(response =>  {
-            return response.json();
-        })
-        .then(myJson => {
-            let data = myJson.map((item) => {
-                return (
-                        <tr key={item.eventId}>
-                            <td>{item.eventId}</td>
-                            <td>{item.name}</td>
-                            <td>{item.address}</td>
-                            <td>{item.postcode}</td>
-                            <td>{item.town}</td>
-                            <td>{item.eventDate}</td>
-                        </tr>
-                )
-            })
-            this.setState({ data : data });
-            console.log("state", this.state.data);
+        axios.get('http://matgorzynski.hostingasp.pl/event/all')
+        .then(response => {
+            const events = response.data;
+            this.setState({ events : events });
+            console.log("state", this.state.events);
         });
     }
 
@@ -47,7 +34,17 @@ class Event extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.data}
+                        { this.state.events.map(item =>
+                        <tr key={item.eventId}>
+                            <td>{item.eventId}</td>
+                            <td>{item.name}</td>
+                            <td>{item.address}</td>
+                            <td>{item.postcode}</td>
+                            <td>{item.town}</td>
+                            <td>{item.eventDate}</td>
+                            <td align="center"><Button bsSize="xsmall" bsStyle="danger">X</Button></td>
+                        </tr>
+                        )}
                     </tbody>
                 </Table>
             </div>

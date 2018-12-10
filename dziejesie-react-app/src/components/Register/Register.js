@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Register extends Component {
   constructor() {
@@ -16,19 +17,14 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = {Login: this.state.Login, Password: this.state.Password, ConfirmPassword: this.state.ConfirmPassword, email: this.state.Email};
-        
-    console.log(JSON.stringify(data));
 
-    fetch('http://matgorzynski.hostingasp.pl/user/register', {
-      method: 'POST',  
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response))
+    axios.post('http://matgorzynski.hostingasp.pl/user/register', { 
+      Login: this.state.Login, 
+      Password: this.state.Password, 
+      ConfirmPassword: this.state.ConfirmPassword, 
+      email: this.state.Email
+    })
+    .then(response => console.log('Response:', JSON.stringify(response))
     );
 
   }

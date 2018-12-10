@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Login extends Component {
   constructor() {
@@ -14,21 +15,14 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = {Login: this.state.Login, Password: this.state.Password};
-        
-    console.log(JSON.stringify(data));
 
-    fetch('http://matgorzynski.hostingasp.pl/user/login', {
-      method: 'POST',  
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response))
-    );
-
+    axios.post('http://matgorzynski.hostingasp.pl/user/login', { 
+      Login: this.state.Login,
+      Password: this.state.Password
+    })
+    .then(response => {
+        console.log("Response: " + JSON.stringify(response));
+    });
   }
 
   handleChange(e) {

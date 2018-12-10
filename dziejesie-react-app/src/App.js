@@ -12,6 +12,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 
 class App extends Component {
+
   render() {
     return (
         <Router>
