@@ -23,6 +23,7 @@ namespace DziejeSieApp.Controllers
         public JsonResult LoginVerification([FromBody]Users user)
         {
             var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
+
             
             var propertyInfo = result.GetType().GetProperty("Login");
             try
@@ -34,7 +35,6 @@ namespace DziejeSieApp.Controllers
             {
                 //użytkownik się nie zalogował -> sesja nie jest tworzona
             }
-
             return Json(result);
         }
 
