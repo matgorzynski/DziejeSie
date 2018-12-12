@@ -3,6 +3,8 @@ using EntityFramework.DataBaseContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,14 @@ namespace DziejeSieApp
             var connection = @"Server=mssql2.webio.pl,2401;Database=matgorzynski_DziejeSieApp;Uid=matgorzynski_DziejeSieApp;Password=zaq1@WSX;";
 #endif
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+
             services.AddMvc()
                 .AddMvcOptions(o => o.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
@@ -32,16 +42,18 @@ namespace DziejeSieApp
             services.AddDbContext<DziejeSieContext>(
                 options => options.UseSqlServer(connection));
 
-            //CORS
-            services.AddCors
-                (options =>
+            services.Configure<MvcOptions>(options =>
             {
-                options.AddPolicy("AllowMyOrigin",
-                builder => builder.WithOrigins());
+                options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy"));
             });
 
-
-
+            //CORS
+            //services.AddCors
+            //    (options =>
+            //{
+            //    options.AddPolicy("AllowMyOrigin",
+            //    builder => builder.WithOrigins());
+            //});
         }
 
 
