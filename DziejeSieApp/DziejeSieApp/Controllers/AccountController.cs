@@ -19,7 +19,7 @@ namespace DziejeSieApp.Controllers
         
         [Route("user/login")]
         [HttpPost]
-        [EnableCors]
+        [EnableCors("SiteCorsPolicy")]
         public JsonResult LoginVerification([FromBody]Users user)
         {
             var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
