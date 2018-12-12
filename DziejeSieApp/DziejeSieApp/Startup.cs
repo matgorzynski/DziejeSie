@@ -20,7 +20,6 @@ namespace DziejeSieApp
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
         }
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -37,8 +36,7 @@ namespace DziejeSieApp
             var corsBuilder = new CorsPolicyBuilder();
             corsBuilder.AllowAnyHeader();
             corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); // For anyone access.
-            //corsBuilder.WithOrigins("http://localhost:3000"); // for a specific url. Don't add a forward slash on the end!
+            corsBuilder.AllowAnyOrigin(); 
             corsBuilder.AllowCredentials();
 
             services.AddCors(options =>
@@ -53,18 +51,7 @@ namespace DziejeSieApp
             services.AddDbContext<DziejeSieContext>(
                 options => options.UseSqlServer(connection));
 
-            //services.Configure<MvcOptions>(options =>
-            //{
-            //    options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy"));
-            //});
 
-            //CORS
-            //services.AddCors
-            //    (options =>
-            //{
-            //    options.AddPolicy("AllowMyOrigin",
-            //    builder => builder.WithOrigins());
-            //});
         }
 
 
@@ -72,14 +59,12 @@ namespace DziejeSieApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader().AllowCredentials());
             app.UseCors("SiteCorsPolicy");
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseCors("AllowMyOrigin");
 
             app.UseMvc();
 
