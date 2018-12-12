@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
 using EntityFramework.DataBaseContext;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
+    [EnableCors("SiteCorsPolicy")]
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
