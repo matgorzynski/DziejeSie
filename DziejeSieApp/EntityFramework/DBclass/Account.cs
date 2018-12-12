@@ -102,9 +102,7 @@ namespace EntityFramework.DBclass
             }
             else return true;
         }
-
-
-
+        
         public Boolean CheckLogin(string Login)
         {
             if (_dbcontext.User.Any(u => u.Login == Login))
