@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
+    [EnableCors("SiteCorsPolicy")]
     public class AccountController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
@@ -19,7 +20,6 @@ namespace DziejeSieApp.Controllers
         
         [Route("user/login")]
         [HttpPost]
-        [EnableCors("SiteCorsPolicy")]
         public JsonResult LoginVerification([FromBody]Users user)
         {
             var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
