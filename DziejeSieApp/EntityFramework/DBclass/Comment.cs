@@ -15,13 +15,26 @@ namespace EntityFramework.DBclass
         public Comment(DziejeSieContext dbcontext) { _dbcontext = dbcontext; }
 
         public dynamic AddComment([FromBody]Comments Comment) {
-            _dbcontext.Add(Comment);
-            _dbcontext.SaveChanges();
-            
+            try
+            {
+                Events Event = _dbcontext.Event.Single(x => x.EventId.Equals(Comment.EventId));
+                _dbcontext.Add(Comment);
+                _dbcontext.SaveChanges();
+            }
+            catch (System.Exception)
+            {
+                return new
+                {
+                    Code = 1,
+                    Type = "CommentAdd",
+                    Desc = "Event does not exist"
+                };
+            }
             return new
             {
-                code = 0,
-                text = "Success"
+                Code = 0,
+                Type = "CommentAdd",
+                Desc = "Success"
             };
         }
 
@@ -45,13 +58,14 @@ namespace EntityFramework.DBclass
                 return new
                 {
                     Code = 1,
-                    Type = "Comment",
+                    Type = "CommentGet",
                     Desc = "There is no comment with such ID"
                 };
             }
         }
 
-        public dynamic ModifyComment(int id, [FromBody]Comments Comment) {
+        public dynamic ModifyComment(int id, [FromBody]Comments Comment)
+        {
             Comments toModify = new Comments();
 
             try
