@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
 using EntityFramework.DataBaseContext;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
+    [EnableCors("AllowMyOrigin")]
     public class AccountController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
@@ -15,7 +17,7 @@ namespace DziejeSieApp.Controllers
             _dbcontext = dbcontext;
         }
 
-
+        
         [Route("user/login")]
         [HttpPost]
 
