@@ -13,17 +13,35 @@ namespace EntityFramework.Models
         [Required]
         public int IdUser { get; set; }
 
-        [Required(ErrorMessage = "Login jest wymagany")]
-        [MinLength(10)]
+        [Required(ErrorMessage = "login jest pusty, lub zawiera spacje")]
+        [RegularExpression("[A-Za-z0-9]{3,}")]
         public string Login { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-
+        [Required(ErrorMessage = "Haslo jest wymagane")]
+        [MinLength(6), MaxLength(20)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Compare("Password", ErrorMessage = "Please confirm your password")]
+        [Compare("Password", ErrorMessage = "Powierdz swoje hasło")]
         [NotMapped]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Podaj swoje imię")]
+        public string Fisrtname { get; set; }
+
+        [Required(ErrorMessage = "Podaj swoje imię")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Ulica jest wymagana")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "Podaj poprawny adres pocztowy")]
+        [RegularExpression("[0-9][0-9]-[0-9][0-9][0-9]")]
+        public string PostCode { get; set; }
+
+        [Required(ErrorMessage = "Miasto jest wymagane")]
+        [MinLength(10)]
+        public string Town { get; set; }
 
         [Required]
         [EmailAddress]
@@ -31,6 +49,11 @@ namespace EntityFramework.Models
 
         [Required]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
+
+
+
+
+
 
         public void PasswordHash()
         {

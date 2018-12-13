@@ -48,13 +48,7 @@ namespace DziejeSieApp.Controllers
             }
             else
             {
-                var Error = new
-                {
-                    Kod = 1,
-                    Typ = "Rejestracja",
-                    Opis = "Wrpowadzona dane są błędne."
-                };
-                return Json(Error);
+                return Json(BadRequest(ModelState));
             }
         }
     }

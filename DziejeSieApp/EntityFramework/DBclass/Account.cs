@@ -54,7 +54,8 @@ namespace EntityFramework.DBclass
 
         public dynamic Register([FromBody]Users account)
         {
-            if (CheckRegistration(account.Login) == true)
+            int wynik = CheckRegistration(account.Email, account.Login);
+            if (wynik == 0)
             {
                 account.PasswordHash();
                 _dbcontext.User.Add(account);
@@ -73,6 +74,11 @@ namespace EntityFramework.DBclass
                     Iduser = account.IdUser,
                     Login = account.Login,
                     Email = account.Email,
+                    FirstName = account.Fisrtname,
+                    LastName = account.LastName,
+                    Address = account.Address,
+                    PostCode = account.PostCode,
+                    Town = account.Town,
                     RegisterDate = account.RegisterDate.ToString("dd-MM-yyy"),
                     RegisterHour = account.RegisterDate.ToString("HH:mm")
 
@@ -80,13 +86,24 @@ namespace EntityFramework.DBclass
                 return User;
 
             }
-            else
+            else if(wynik==1) 
             {
                 var Error = new
                 {
                     Kod = 1,
                     Typ = "Rejestracka",
-                    Opis = "POdany Login jest zajety"
+                    Opis = "Podany email jest zajety"
+
+                };
+                return Error;
+
+            }else
+            {
+                var Error = new
+                {
+                    Kod = 1,
+                    Typ = "Rejestracka",
+                    Opis = "Podany Login jest zajety"
 
                 };
                 return Error;
@@ -94,18 +111,22 @@ namespace EntityFramework.DBclass
             }
         }
 
-        public Boolean CheckRegistration(string Login)
+        public int CheckRegistration(string email, string Login)
         {
-            if (_dbcontext.User.Any(u => u.Login == Login))
+            if (_dbcontext.User.Any(u => u.Email == email))
             {
-                return false;
+                return 1;
             }
-            else return true;
+            else if (_dbcontext.User.Any(u => u.Login == Login))
+                {
+                return 2;
+            }
+            return 0;
         }
         
-        public Boolean CheckLogin(string Login)
+        public Boolean CheckLogin(string email)
         {
-            if (_dbcontext.User.Any(u => u.Login == Login))
+            if (_dbcontext.User.Any(u => u.Email == email))
             {
                 return true;
             }
