@@ -27,12 +27,15 @@ namespace EntityFramework.Models
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Podaj swoje imię")]
+        [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{1,}")]
         public string Fisrtname { get; set; }
 
         [Required(ErrorMessage = "Podaj swoje Nazwisko")]
+        [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{1,}")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Ulica jest wymagana")]
+        [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{1,}")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Podaj poprawny adres pocztowy")]
@@ -40,6 +43,7 @@ namespace EntityFramework.Models
         public string PostCode { get; set; }
 
         [Required(ErrorMessage = "Miasto jest wymagane")]
+        [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{2,}")]
         public string Town { get; set; }
 
         [Required]
