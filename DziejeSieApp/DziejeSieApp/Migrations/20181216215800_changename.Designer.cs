@@ -4,14 +4,16 @@ using EntityFramework.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EntityFramework.Migrations
+namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    partial class DziejeSieContextModelSnapshot : ModelSnapshot
+    [Migration("20181216215800_changename")]
+    partial class changename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace EntityFramework.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Fisrtname")
+                    b.Property<string>("Firstname")
                         .IsRequired();
 
                     b.Property<string>("LastName")
