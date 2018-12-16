@@ -18,8 +18,8 @@ namespace EntityFramework.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Haslo jest wymagane")]
-        [MinLength(6)]
-        [DataType(DataType.Password)]
+        [MinLength(4)]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$^+=!*()@%&]).{4,}$")]
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Powierdz swoje hasło")]
