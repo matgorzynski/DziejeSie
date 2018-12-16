@@ -35,7 +35,7 @@ class Register extends Component {
 
     console.log(JSON.stringify(data));
 
-    fetch('https://localhost:5001/user/register', {
+    fetch('http://matgorzynski.hostingasp.pl/user/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
