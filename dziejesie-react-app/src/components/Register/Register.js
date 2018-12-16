@@ -5,31 +5,46 @@ class Register extends Component {
     super();
 
     this.handleSubmit = this.handleSubmit.bind(this);
-  
+
     this.state = {
       Login: '',
       Password: '',
       ConfirmPassword: '',
       Email: '',
+      FisrtName: '',
+      LastName: '',
+      Address: '',
+      PostCode: '',
+      Town: ''
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = {Login: this.state.Login, Password: this.state.Password, ConfirmPassword: this.state.ConfirmPassword, email: this.state.Email};
-        
+    const data = {
+      Login: this.state.Login,
+      Password: this.state.Password,
+      ConfirmPassword: this.state.ConfirmPassword,
+      email: this.state.Email,
+      FisrtName: this.state.FisrtName,
+      LastName: this.state.LastName,
+      Address: this.state.Address,
+      PostCode: this.state.PostCode,
+      Town: this.state.Town
+    };
+
     console.log(JSON.stringify(data));
 
-    fetch('http://matgorzynski.hostingasp.pl/user/register', {
-      method: 'POST',  
+    fetch('https://localhost:5001/user/register', {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response))
-    );
+      .then(response => console.log('Success:', JSON.stringify(response))
+      );
 
   }
 
@@ -60,11 +75,36 @@ class Register extends Component {
 
         <br />
 
-        <label htmlFor="Email">Adres email</label>
+        <label htmlFor="Email">Adres email:</label>
         <br />
         <input id="Email" name="Email" type="Email" value={this.state.Email} onChange={this.handleChange.bind(this)} />
+		<br />
+        <label htmlFor="FisrtName">Imię:</label>
+        <br />
+        <input id="FisrtName" name="FisrtName" type="FisrtName" value={this.state.FisrtName} onChange={this.handleChange.bind(this)} />
 
         <br />
+        <label htmlFor="LastName">Nazwisko:</label>
+        <br />
+        <input id="LastName" name="LastName" type="LastName" value={this.state.LastName} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        <label htmlFor="Address">Ulica:</label>
+        <br />
+        <input id="Address" name="Address" type="Address" value={this.state.Address} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        <label htmlFor="PostCode">Kod Pocztowy:</label>
+        <br />
+        <input id="PostCode" name="PostCode" type="PostCode" value={this.state.PostCode} onChange={this.handleChange.bind(this)} />
+
+        <br />
+        <label htmlFor="Town">Miasto:</label>
+        <br />
+        <input id="Town" name="Town" type="Town" value={this.state.Town} onChange={this.handleChange.bind(this)} />
+
+        <br />
+
         <button>Send data!</button>
       </form>
     );

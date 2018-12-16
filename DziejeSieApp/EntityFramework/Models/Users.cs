@@ -18,7 +18,7 @@ namespace EntityFramework.Models
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Haslo jest wymagane")]
-        [MinLength(6), MaxLength(20)]
+        [MinLength(6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -29,7 +29,7 @@ namespace EntityFramework.Models
         [Required(ErrorMessage = "Podaj swoje imię")]
         public string Fisrtname { get; set; }
 
-        [Required(ErrorMessage = "Podaj swoje imię")]
+        [Required(ErrorMessage = "Podaj swoje Nazwisko")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Ulica jest wymagana")]
@@ -40,7 +40,6 @@ namespace EntityFramework.Models
         public string PostCode { get; set; }
 
         [Required(ErrorMessage = "Miasto jest wymagane")]
-        [MinLength(10)]
         public string Town { get; set; }
 
         [Required]

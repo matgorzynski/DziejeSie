@@ -48,10 +48,11 @@ namespace DziejeSieApp
                 .AddMvcOptions(o => o.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
 
+            //services.AddDbContext<DziejeSieContext>(
+            //    options => options.UseSqlServer(connection, b => b.MigrationsAssembly("EntityFramework")));
+
             services.AddDbContext<DziejeSieContext>(
                 options => options.UseSqlServer(connection));
-
-
         }
 
 
