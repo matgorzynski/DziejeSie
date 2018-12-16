@@ -49,7 +49,7 @@ namespace DziejeSieApp
                     new XmlDataContractSerializerOutputFormatter()));
 
             services.AddDbContext<DziejeSieContext>(
-                options => options.UseSqlServer(connection, b => b.MigrationsAssembly("EntityFramework")));
+                options => options.UseSqlServer(connection, b => b.MigrationsAssembly("DziejeSieApp")));
 
 
         }

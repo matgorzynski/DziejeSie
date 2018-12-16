@@ -28,7 +28,7 @@ namespace EntityFramework.Models
 
         [Required(ErrorMessage = "Podaj swoje imię")]
         [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{1,}")]
-        public string Fisrtname { get; set; }
+        public string Firstname { get; set; }
 
         [Required(ErrorMessage = "Podaj swoje Nazwisko")]
         [RegularExpression("[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{1,}")]

@@ -74,7 +74,7 @@ namespace EntityFramework.DBclass
                     Iduser = account.IdUser,
                     Login = account.Login,
                     Email = account.Email,
-                    FirstName = account.Fisrtname,
+                    FirstName = account.Firstname,
                     LastName = account.LastName,
                     Address = account.Address,
                     PostCode = account.PostCode,

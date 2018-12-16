@@ -163,7 +163,7 @@ class Register extends Component {
 
       console.log(JSON.stringify(data));
 
-      axios.post('http://matgorzynski.hostingasp.pl/user/register', data)
+        axios.post('http://matgorzynski.hostingasp.pl/user/register', data)
       .then(response => console.log('Success:', JSON.stringify(response))
       );
     } else {
