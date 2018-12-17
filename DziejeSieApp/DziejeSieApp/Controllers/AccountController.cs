@@ -22,10 +22,10 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult LoginVerification([FromBody]Users user)
         {
-            var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
+            var result = new Account(_dbcontext).LoginVerification(user.Email, user.Password);
 
             
-            var propertyInfo = result.GetType().GetProperty("Login");
+            var propertyInfo = result.GetType().GetProperty("Email");
             try
             {
                 string usr = propertyInfo.GetValue(result, null);

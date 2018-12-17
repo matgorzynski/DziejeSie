@@ -167,7 +167,7 @@ class Register extends Component {
       .then(response => console.log('Success:', JSON.stringify(response))
       );
     } else {
-      this.showError();
+      //this.showError();
     }
   }
 

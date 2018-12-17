@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-class Login extends Component {
+class Email extends Component {
   constructor() {
     super();
 
     this.handleSubmit = this.handleSubmit.bind(this);
   
     this.state = {
-      Login: '',
+      Email: '',
       Password: '',
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = {Login: this.state.Login, Password: this.state.Password};
-        
-    console.log(JSON.stringify(data));
 
-    fetch('http://matgorzynski.hostingasp.pl/user/login', {
-      method: 'POST',  
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response))
-    );
-
+    axios.post('http://matgorzynski.hostingasp.pl/user/login', { 
+      Email: this.state.Email,
+      Password: this.state.Password
+    })
+    .then(response => {
+        console.log("Response: " + JSON.stringify(response));
+    });
   }
 
   handleChange(e) {
@@ -40,9 +34,9 @@ class Login extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="Login">Nazwa użytkownika</label>
+        <label htmlFor="Email"> Email:</label>
         <br />
-        <input id="Login" name="Login" type="text" value={this.state.Login} onChange={this.handleChange.bind(this)} />
+        <input id="Email" name="Email" type="text" value={this.state.Email} onChange={this.handleChange.bind(this)} />
 
         <br />
 
@@ -57,4 +51,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Email;
