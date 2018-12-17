@@ -22,7 +22,7 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult LoginVerification([FromBody]Users user)
         {
-            return Json(new Account(_dbcontext).LoginVerification(user.Email, user.Password)); 
+            return Json(new Account(_dbcontext).LoginVerification(user.Login, user.Password)); 
         }
 
         [Route("user/register")]

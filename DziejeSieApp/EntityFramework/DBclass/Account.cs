@@ -17,13 +17,13 @@ namespace EntityFramework.DBclass
         }
 
 
-        public dynamic LoginVerification(string Email, string Password)
+        public dynamic LoginVerification(string Login, string Password)
         {
             Users user = new Users();
-            user.Email = Email;
+            user.Login = Login;
             user.Password = Password;
 
-            if (CheckLogin(user.Email) == true)
+            if (CheckLogin(user.Login) == true)
             {
                 string savedPasswordHash = _dbcontext.User.Single(u => u.Login == user.Login).Password;
                 if (user.VerifyUser(savedPasswordHash) == true)
@@ -124,9 +124,9 @@ namespace EntityFramework.DBclass
             return 0;
         }
         
-        public Boolean CheckLogin(string email)
+        public Boolean CheckLogin(string Login)
         {
-            if (_dbcontext.User.Any(u => u.Email == email))
+            if (_dbcontext.User.Any(u => u.Login == Login))
             {
                 return true;
             }
