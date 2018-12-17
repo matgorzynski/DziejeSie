@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class Email extends Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -16,13 +16,15 @@ class Email extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post('http://matgorzynski.hostingasp.pl/user/login', { 
+    const data = {
       Email: this.state.Email,
       Password: this.state.Password
-    })
-    .then(response => {
-        console.log("Response: " + JSON.stringify(response));
-    });
+    }; 
+    console.log(JSON.stringify(data));
+
+    axios.post('http://matgorzynski.hostingasp.pl/user/login', data)
+  .then(response => console.log('Success:', JSON.stringify(response))
+  );
   }
 
   handleChange(e) {
@@ -34,9 +36,9 @@ class Email extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="Email"> Email:</label>
+        <label htmlFor="Email">Email</label>
         <br />
-        <input id="Email" name="Email" type="text" value={this.state.Email} onChange={this.handleChange.bind(this)} />
+        <input id="Email" name="Email" type="email" value={this.state.Email} onChange={this.handleChange.bind(this)} />
 
         <br />
 
@@ -51,4 +53,4 @@ class Email extends Component {
   }
 }
 
-export default Email;
+export default Login;
