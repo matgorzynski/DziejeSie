@@ -20,22 +20,9 @@ namespace DziejeSieApp.Controllers
         
         [Route("user/login")]
         [HttpPost]
-        public JsonResult LoginVerification([FromBody]Users user)
+        public ActionResult LoginVerification([FromBody]Users user)
         {
-            var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
-
-            
-            var propertyInfo = result.GetType().GetProperty("Login");
-            try
-            {
-                string usr = propertyInfo.GetValue(result, null);
-                HttpContext.Session.SetString("User", usr); //tworzenie sesji -> login będzie odczytywane do wykonania większości akcji przez użytkownika
-            }
-            catch (System.Exception)
-            {
-                //użytkownik się nie zalogował -> sesja nie jest tworzona
-            }
-            return Json(result);
+            return Json(new Account(_dbcontext).LoginVerification(user.Login, user.Password)); 
         }
 
         [Route("user/register")]

@@ -124,9 +124,9 @@ namespace EntityFramework.DBclass
             return 0;
         }
         
-        public Boolean CheckLogin(string email)
+        public Boolean CheckLogin(string Login)
         {
-            if (_dbcontext.User.Any(u => u.Email == email))
+            if (_dbcontext.User.Any(u => u.Login == Login))
             {
                 return true;
             }
