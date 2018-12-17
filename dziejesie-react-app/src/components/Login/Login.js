@@ -8,7 +8,7 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   
     this.state = {
-      Email: '',
+      Login: '',
       Password: '',
     }
   }
@@ -17,7 +17,7 @@ class Login extends Component {
     event.preventDefault();
 
     const data = {
-      Email: this.state.Email,
+      Login: this.state.Login,
       Password: this.state.Password
     }; 
     console.log(JSON.stringify(data));
@@ -36,13 +36,13 @@ class Login extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="Email">Email</label>
+        <label htmlFor="Login">Login</label>
         <br />
-        <input id="Email" name="Email" type="email" value={this.state.Email} onChange={this.handleChange.bind(this)} />
+        <input id="Login" name="Login" type="text" value={this.state.Login} onChange={this.handleChange.bind(this)} />
 
         <br />
 
-        <label htmlFor="Password">Hasło</label>
+        <label htmlFor="Password">Hasloo</label>
         <br />
         <input id="Password" name="Password" type="password" value={this.state.Password} onChange={this.handleChange.bind(this)} />
 
