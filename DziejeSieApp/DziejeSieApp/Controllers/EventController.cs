@@ -49,10 +49,7 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-            string Usr = HttpContext.Session.GetString("User");
-
-            if (new Account(_dbcontext).CheckLogin(Usr))
-            {
+           
                 if (ModelState.IsValid)
                 {
                     events.AddDate = System.DateTime.Now;
@@ -69,42 +66,18 @@ namespace DziejeSieApp.Controllers
                     return Json(Error);
                 }
             }
-            else
-            {
-                var Error = new
-                {
-                    Code = 2,
-                    Type = "EventAdd",
-                    Desc = "User not logged in"
-                };
-                return Json(Error);
-            }
-        }
+           
         
+
 
         //PUT: dziejeSie.com/event/{x}
         [Route("event/modify/{id}")]
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
-            string Usr = HttpContext.Session.GetString("User");
-
-            if (new Account(_dbcontext).CheckLogin(Usr))
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    return Json(new Event(_dbcontext).UpdateEvent(id, events));
-                }
-                else
-                {
-                    var Error = new
-                    {
-                        Code = 1,
-                        Type = "EventModify",
-                        Desc = "Specified event body did not match event model in database"
-                    };
-                    return Json(Error);
-                }
+                return Json(new Event(_dbcontext).UpdateEvent(id, events));
             }
             else
             {
@@ -112,33 +85,22 @@ namespace DziejeSieApp.Controllers
                 {
                     Code = 1,
                     Type = "EventModify",
-                    Desc = "User not logged in"
+                    Desc = "Specified event body did not match event model in database"
                 };
                 return Json(Error);
             }
         }
+
+
 
         //DELETE: dziejeSie.com/Event/{x}
         [Route("event/delete/{id}")]
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            string Usr = HttpContext.Session.GetString("User");
 
-            if (new Account(_dbcontext).CheckLogin(Usr))
-            {
-                return Json(new Event(_dbcontext).DeleteEvent(id));
-            }
-            else
-            {
-                var Error = new
-                {
-                    Code = 1,
-                    Type = "EventDelete",
-                    Desc = "User not logged in"
-                };
-                return Json(Error);
-            }
+            return Json(new Event(_dbcontext).DeleteEvent(id));
         }
+
     }
 }
