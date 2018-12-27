@@ -32,10 +32,10 @@ namespace DziejeSieApp.Controllers
             //}
 
             var type = result.GetType();
-            if (type == "Error")
-            {
-                return Json(result);
-            }
+            //if (type == "Error")
+            //{
+            //    return Json(result);
+            //}
             //else
             string name = (string)type.GetProperty("Login").GetValue(result);
             HttpContext.Session.SetString("UserName", name);
