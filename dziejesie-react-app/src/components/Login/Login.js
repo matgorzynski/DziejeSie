@@ -18,11 +18,11 @@ class Login extends Component {
 
     const data = {
       Login: this.state.Login,
-      Password: this.state.Password
-    }; 
+      Password: this.state.Password,
+	  }; 
     console.log(JSON.stringify(data));
 
-    axios.post('http://matgorzynski.hostingasp.pl/user/login', data)
+    axios.post('https://localhost:5001/user/login', data, {withCredentials: true})
   .then(response => console.log('Success:', JSON.stringify(response))
   );
   }
