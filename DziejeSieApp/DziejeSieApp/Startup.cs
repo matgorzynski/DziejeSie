@@ -51,7 +51,11 @@ namespace DziejeSieApp
             services.AddDbContext<DziejeSieContext>(
                 options => options.UseSqlServer(connection, b => b.MigrationsAssembly("DziejeSieApp")));
 
-
+            //services.AddCaching();
+            services.AddSession(options => {
+                options.IdleTimeout = System.TimeSpan.FromMinutes(30);
+                options.CookieName = ".MyApplication";
+            });
         }
 
 
@@ -60,6 +64,7 @@ namespace DziejeSieApp
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors("SiteCorsPolicy");
+            app.UseSession();
 
             if (env.IsDevelopment())
             {

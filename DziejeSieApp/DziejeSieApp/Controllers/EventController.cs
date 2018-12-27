@@ -49,7 +49,6 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-           
                 if (ModelState.IsValid)
                 {
                     events.AddDate = System.DateTime.Now;
@@ -67,9 +66,6 @@ namespace DziejeSieApp.Controllers
                 }
             }
            
-        
-
-
         //PUT: dziejeSie.com/event/{x}
         [Route("event/modify/{id}")]
         [HttpPut]
@@ -90,17 +86,13 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
         }
-
-
-
+        
         //DELETE: dziejeSie.com/Event/{x}
         [Route("event/delete/{id}")]
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-
             return Json(new Event(_dbcontext).DeleteEvent(id));
         }
-
     }
 }
