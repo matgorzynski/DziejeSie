@@ -49,6 +49,8 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
+            if (new Account(_dbcontext).CheckLogin(HttpContext.Session.GetString("UserName")))
+            {
                 if (ModelState.IsValid)
                 {
                     events.AddDate = System.DateTime.Now;
@@ -65,7 +67,18 @@ namespace DziejeSieApp.Controllers
                     return Json(Error);
                 }
             }
-           
+            else
+            {
+                var Error = new
+                {
+                    Code = 2,
+                    Type = "EventAdd",
+                    Desc = "User not logged in"
+                };
+                return Json(Error);
+        }
+        }
+
         //PUT: dziejeSie.com/event/{x}
         [Route("event/modify/{id}")]
         [HttpPut]

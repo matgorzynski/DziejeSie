@@ -23,21 +23,10 @@ namespace DziejeSieApp.Controllers
         public ActionResult LoginVerification([FromBody]Users user)
         {
             var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
-
-            //public void Create(object obj)
-            //{
-            //    var type = obj.GetType();
-            //    int code = (int)type.GetProperty("Code").GetValue(obj);
-            //    string name = (string)type.GetProperty("ProductName").GetValue(obj);
-            //}
-
+           
             var type = result.GetType();
-            //if (type == "Error")
-            //{
-            //    return Json(result);
-            //}
-            //else
             string name = (string)type.GetProperty("Login").GetValue(result);
+
             HttpContext.Session.SetString("UserName", name);
 
             return Json(result);
