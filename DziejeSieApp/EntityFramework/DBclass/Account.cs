@@ -123,10 +123,22 @@ namespace EntityFramework.DBclass
             }
             return 0;
         }
-        
+
         public Boolean CheckLogin(string Login)
         {
             if (_dbcontext.User.Any(u => u.Login == Login))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Boolean CheckUserId(int Id)
+        {
+            if (_dbcontext.User.Any(u => u.IdUser == Id))
             {
                 return true;
             }

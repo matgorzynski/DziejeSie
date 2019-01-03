@@ -40,6 +40,8 @@ namespace DziejeSieApp.Controllers
                     Type = "GetSingleEvent",
                     Desc = "Invalid operation -> check route"
                 };
+
+                Response.StatusCode = 404; //Not Found
                 return Json(Error);
             }
         }
@@ -49,10 +51,24 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-            if (new Account(_dbcontext).CheckLogin(HttpContext.Session.GetString("UserName")))
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                var Error = new
+                {
+                    Code = 2,
+                    Type = "EventAdd",
+                    Desc = "User not logged in"
+                };
+
+                Response.StatusCode = 403; //Forbidden
+                return Json(Error);
+            }
+
+            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
             {
                 if (ModelState.IsValid)
                 {
+                    events.UserId = (int)HttpContext.Session.GetInt32("UserId");
                     events.AddDate = System.DateTime.Now;
                     return Json(new Event(_dbcontext).AddNewEvent(events));
                 }
@@ -64,6 +80,8 @@ namespace DziejeSieApp.Controllers
                         Type = "EventAdd",
                         Desc = "Event could not be added"
                     };
+
+                    Response.StatusCode = 400; //Bad Request
                     return Json(Error);
                 }
             }
@@ -75,8 +93,10 @@ namespace DziejeSieApp.Controllers
                     Type = "EventAdd",
                     Desc = "User not logged in"
                 };
+
+                Response.StatusCode = 403; //Forbidden
                 return Json(Error);
-        }
+            }
         }
 
         //PUT: dziejeSie.com/event/{x}
@@ -84,18 +104,63 @@ namespace DziejeSieApp.Controllers
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetInt32("UserId") == null)
             {
-                return Json(new Event(_dbcontext).UpdateEvent(id, events));
+                var Error = new
+                {
+                    Code = 2,
+                    Type = "EventAdd",
+                    Desc = "User not logged in"
+                };
+
+                Response.StatusCode = 403; //Forbidden
+                return Json(Error);
+            }
+
+            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            {
+                if (ModelState.IsValid)
+                {
+                    if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                    {
+                        return Json(new Event(_dbcontext).UpdateEvent(id, events));
+                    }
+                    else
+                    {
+                        var Error = new
+                        {
+                            Code = 3,
+                            Type = "EventModify",
+                            Desc = "This event does not belong to you"
+                        };
+
+                        Response.StatusCode = 403; //Forbidden
+                        return Json(Error);
+                    }
+                }
+                else
+                {
+                    var Error = new
+                    {
+                        Code = 1,
+                        Type = "EventModify",
+                        Desc = "Specified event body did not match event model in database"
+                    };
+
+                    Response.StatusCode = 400; //Bad Request
+                    return Json(Error);
+                }
             }
             else
             {
                 var Error = new
                 {
-                    Code = 1,
+                    Code = 2,
                     Type = "EventModify",
-                    Desc = "Specified event body did not match event model in database"
+                    Desc = "User not logged in"
                 };
+
+                Response.StatusCode = 403; //Forbidden
                 return Json(Error);
             }
         }
@@ -105,7 +170,50 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            return Json(new Event(_dbcontext).DeleteEvent(id));
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                var Error = new
+                {
+                    Code = 2,
+                    Type = "EventAdd",
+                    Desc = "User not logged in"
+                };
+
+                Response.StatusCode = 403; //Forbidden
+                return Json(Error);
+            }
+
+            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            {
+                if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                {
+                    return Json(new Event(_dbcontext).DeleteEvent(id));
+                }
+                else
+                {
+                    var Error = new
+                    {
+                        Code = 2,
+                        Type = "EventDelete",
+                        Desc = "This event does not belong to you"
+                    };
+
+                    Response.StatusCode = 400; //Bad Request
+                    return Json(Error);
+                }
+            }
+            else
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "EventDelete",
+                    Desc = "User not logged in"
+                };
+
+                Response.StatusCode = 403; //Forbidden
+                return Json(Error);
+            }
         }
     }
 }

@@ -22,12 +22,25 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult LoginVerification([FromBody]Users user)
         {
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Login",
+                    Desc = "User already logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+
             var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
            
             var type = result.GetType();
-            string name = (string)type.GetProperty("Login").GetValue(result);
+            int id = (int)type.GetProperty("Iduser").GetValue(result);
 
-            HttpContext.Session.SetString("UserName", name);
+            HttpContext.Session.SetInt32("UserId", id);
 
             return Json(result);
         }
@@ -36,6 +49,19 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult Register([FromBody]Users account)
         {
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Register",
+                    Desc = "User already logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+
             if (ModelState.IsValid)
             {
                 return Json(new Account(_dbcontext).Register(account));
@@ -43,6 +69,35 @@ namespace DziejeSieApp.Controllers
             else
             {
                 return Json(BadRequest(ModelState));
+            }
+        }
+
+        [Route("user/logout")]
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Logout",
+                    Desc = "User is not logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+            else
+            {
+                HttpContext.Session.Remove("UserId");
+
+                return Json(new
+                {
+                    Code = 0,
+                    Type = "Logout",
+                    Desc = "Success"
+                });
             }
         }
     }

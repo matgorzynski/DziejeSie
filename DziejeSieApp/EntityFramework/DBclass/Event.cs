@@ -12,7 +12,6 @@ namespace EntityFramework.DBclass
         public Event(DziejeSieContext dbcontext)
         {
             _dbcontext = dbcontext;
-
         }
 
         public dynamic AllEvent()
@@ -188,6 +187,20 @@ namespace EntityFramework.DBclass
                     Desc = "Event deletion failed"
                 };
                 return Response;
+            }
+        }
+
+        public bool UserMatchesEvent (int EventId, int UserId)
+        {
+            try
+            {
+                Events Event = _dbcontext.Event.Single(e => e.EventId == EventId);
+                if (Event.UserId == UserId) return true;
+                else return false;
+            }
+            catch (System.Exception)
+            {
+                return false;
             }
         }
     }
