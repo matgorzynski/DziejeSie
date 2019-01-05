@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DziejeSieApp.Migrations
+namespace EntityFramework.Migrations
 {
-    public partial class OneDate : Migration
+    public partial class extendedregister : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,12 @@ namespace DziejeSieApp.Migrations
                     IdUser = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Login = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(maxLength: 30, nullable: false),
+                    Fisrtname = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    PostCode = table.Column<string>(nullable: false),
+                    Town = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     RegisterDate = table.Column<DateTime>(nullable: false)
                 },
@@ -34,8 +39,7 @@ namespace DziejeSieApp.Migrations
                     Address = table.Column<string>(nullable: false),
                     Postcode = table.Column<string>(nullable: false),
                     Town = table.Column<string>(nullable: false),
-                    StartDate = table.Column<string>(nullable: false),
-                    StartHour = table.Column<string>(nullable: false),
+                    EventDate = table.Column<DateTime>(nullable: false),
                     AddDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },

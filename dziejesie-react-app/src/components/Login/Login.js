@@ -34,13 +34,13 @@ class Login extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="Login">Nazwa użytkownika</label>
+        <label htmlFor="Login">Login</label>
         <br />
         <input id="Login" name="Login" type="text" value={this.state.Login} onChange={this.handleChange.bind(this)} />
 
         <br />
 
-        <label htmlFor="Password">Hasło</label>
+        <label htmlFor="Password">Hasloo</label>
         <br />
         <input id="Password" name="Password" type="password" value={this.state.Password} onChange={this.handleChange.bind(this)} />
 
