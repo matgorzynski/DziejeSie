@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
 using EntityFramework.DataBaseContext;
+using Microsoft.AspNetCore.Http;
 
 namespace DziejeSieApp.Controllers
 {
@@ -47,18 +48,33 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-            if (ModelState.IsValid)
+            string Usr = HttpContext.Session.GetString("User");
+
+            if (new Account(_dbcontext).CheckLogin(Usr))
             {
-                events.AddDate = System.DateTime.Now;
-                return Json(new Event(_dbcontext).AddNewEvent(events));
+                if (ModelState.IsValid)
+                {
+                    events.AddDate = System.DateTime.Now;
+                    return Json(new Event(_dbcontext).AddNewEvent(events));
+                }
+                else
+                {
+                    var Error = new
+                    {
+                        Code = 1,
+                        Type = "EventAdd",
+                        Desc = "Event could not be added"
+                    };
+                    return Json(Error);
+                }
             }
             else
             {
                 var Error = new
                 {
-                    Code = 1,
+                    Code = 2,
                     Type = "EventAdd",
-                    Desc = "Event could not be added"
+                    Desc = "User not logged in"
                 };
                 return Json(Error);
             }
@@ -70,9 +86,24 @@ namespace DziejeSieApp.Controllers
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
-            if (ModelState.IsValid)
+            string Usr = HttpContext.Session.GetString("User");
+
+            if (new Account(_dbcontext).CheckLogin(Usr))
             {
-                return Json(new Event(_dbcontext).UpdateEvent(id, events));
+                if (ModelState.IsValid)
+                {
+                    return Json(new Event(_dbcontext).UpdateEvent(id, events));
+                }
+                else
+                {
+                    var Error = new
+                    {
+                        Code = 1,
+                        Type = "EventModify",
+                        Desc = "Specified event body did not match event model in database"
+                    };
+                    return Json(Error);
+                }
             }
             else
             {
@@ -80,7 +111,7 @@ namespace DziejeSieApp.Controllers
                 {
                     Code = 1,
                     Type = "EventModify",
-                    Desc = "Specified event body did not match event model in database"
+                    Desc = "User not logged in"
                 };
                 return Json(Error);
             }
@@ -91,7 +122,22 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            return Json(new Event(_dbcontext).DeleteEvent(id));
+            string Usr = HttpContext.Session.GetString("User");
+
+            if (new Account(_dbcontext).CheckLogin(Usr))
+            {
+                return Json(new Event(_dbcontext).DeleteEvent(id));
+            }
+            else
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "EventDelete",
+                    Desc = "User not logged in"
+                };
+                return Json(Error);
+            }
         }
     }
 }
