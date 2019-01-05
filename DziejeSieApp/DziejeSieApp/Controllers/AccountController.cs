@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
-    [EnableCors("SiteCorsPolicy")]
+    [DisableCors]
     public class AccountController : Controller
     {
         private readonly DziejeSieContext _dbcontext;

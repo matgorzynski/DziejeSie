@@ -22,7 +22,7 @@ class Login extends Component {
 	  }; 
     console.log(JSON.stringify(data));
 
-    axios.post('https://localhost:5001/user/login', data, {withCredentials: true})
+    axios.post('http://matgorzynski.hostingasp.pl/user/login', data, {withCredentials: true})
   .then(response => console.log('Success:', JSON.stringify(response))
   );
   }

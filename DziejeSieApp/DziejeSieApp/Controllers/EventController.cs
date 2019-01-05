@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
-    [EnableCors("SiteCorsPolicy")]
+    [DisableCors]
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
