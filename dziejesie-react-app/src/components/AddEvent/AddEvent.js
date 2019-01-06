@@ -43,6 +43,12 @@ class AddEvent extends Component {
           return 'success';
         else
           return 'error';
+      case 'Date':
+        var dateNow = new Date();
+        if (value > dateNow)
+          return 'success';
+        else
+          return 'error';
       default:
         return null;
     }
@@ -86,7 +92,7 @@ class AddEvent extends Component {
           <Col componentClass={ControlLabel} sm={2}>
             Nazwa wydarzenia
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl 
               name="Name" 
               type="text" 
@@ -96,6 +102,22 @@ class AddEvent extends Component {
               <FormControl.Feedback />
               <HelpBlock>Nazwa wydarzenia musi mieć conajmniej 10 znaków.</HelpBlock>
           </Col>
+        </FormGroup><FormGroup 
+          controlId="Description"
+//          validationState={this.validateField("Description", this.state.Description)}
+          >
+          <Col componentClass={ControlLabel} sm={2}>
+            Opis wydarzenia
+          </Col>
+          <Col sm={4}>
+            <FormControl 
+              name="Description"
+              componentClass="textarea"
+//              value={this.state.Description} 
+//              onChange={this.handleChange.bind(this)}
+            />
+              <FormControl.Feedback />
+          </Col>
         </FormGroup>
         <FormGroup 
           controlId="Address"
@@ -104,7 +126,7 @@ class AddEvent extends Component {
           <Col componentClass={ControlLabel} sm={2}>
             Adres wydarzenia
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl name="Address" 
               type="text" 
               placeholder="Wpisz tutaj adres wydarzenia" 
@@ -119,7 +141,7 @@ class AddEvent extends Component {
           <Col componentClass={ControlLabel} sm={2}>
             Kod pocztowy
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl 
               name="Postcode" 
               type="text" 
@@ -138,7 +160,7 @@ class AddEvent extends Component {
           <Col componentClass={ControlLabel} sm={2}>
             Nazwa miejscowości
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl 
               name="Town" 
               type="text" 
@@ -156,7 +178,7 @@ class AddEvent extends Component {
           <Col componentClass={ControlLabel} sm={2}>
             Data wydarzenia
           </Col>
-          <Col sm={10}>
+          <Col sm={4}>
             <FormControl 
               name="EventDate" 
               type="date" 
@@ -164,9 +186,13 @@ class AddEvent extends Component {
               onChange={this.handleChange.bind(this)} />
           </Col>
         </FormGroup>
-        <Button  onClick={this.handleSubmit}>
-          Utwórz wydarzenie
-        </Button>
+        <Col sm={3}>
+        </Col>
+        <Col sm={4}>
+          <Button onClick={this.handleSubmit}>
+            Utwórz wydarzenie
+          </Button>
+        </Col>
       </Form>
     );
   }
