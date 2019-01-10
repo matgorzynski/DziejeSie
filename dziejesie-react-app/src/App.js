@@ -10,6 +10,7 @@ import Event from "./components/EventComponent/Event";
 import AddEvent from "./components/AddEvent/AddEvent";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Result from "./components/Result/Result";
 
 class App extends Component {
 
@@ -55,6 +56,7 @@ class App extends Component {
               <Route path="/create/" component={AddEvent} />
               <Route path="/login/" component={Login} />
               <Route path="/register/" component={Register} />
+              <Route path="/result/" component={Result}></Route>
             </div>
           </div>
         </Router>
