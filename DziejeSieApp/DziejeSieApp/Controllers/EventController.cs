@@ -51,7 +51,9 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
             {
                 var Error = new
                 {
@@ -64,7 +66,7 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
                 if (ModelState.IsValid)
                 {
@@ -104,7 +106,9 @@ namespace DziejeSieApp.Controllers
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
             {
                 var Error = new
                 {
@@ -117,11 +121,11 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
                 if (ModelState.IsValid)
                 {
-                    if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                    if (new Event(_dbcontext).UserMatchesEvent(id, header))
                     {
                         return Json(new Event(_dbcontext).UpdateEvent(id, events));
                     }
@@ -170,7 +174,9 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
             {
                 var Error = new
                 {
@@ -183,9 +189,9 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
-                if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                if (new Event(_dbcontext).UserMatchesEvent(id, header))
                 {
                     return Json(new Event(_dbcontext).DeleteEvent(id));
                 }

@@ -190,12 +190,12 @@ namespace EntityFramework.DBclass
             }
         }
 
-        public bool UserMatchesEvent (int EventId, int UserId)
+        public bool UserMatchesEvent (int EventId, string UserLogin)
         {
             try
             {
                 Events Event = _dbcontext.Event.Single(e => e.EventId == EventId);
-                if (Event.UserId == UserId) return true;
+                if (UserLogin == _dbcontext.User.Single(x => x.IdUser == Event.UserId).Login) return true;
                 else return false;
             }
             catch (System.Exception)
@@ -205,4 +205,3 @@ namespace EntityFramework.DBclass
         }
     }
 }
-
