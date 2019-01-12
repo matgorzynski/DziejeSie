@@ -108,7 +108,7 @@ class AddEvent extends Component {
             controlId="Name"
             validationState={this.validateField("Name", this.state.Name)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Nazwa wydarzenia
             </Col>
             <Col sm={4}>
@@ -126,7 +126,7 @@ class AddEvent extends Component {
             controlId="Category"
   //          validationState={this.validateField("Category", this.state.Category)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Kategoria
             </Col>
             <Col sm={4}>
@@ -144,7 +144,7 @@ class AddEvent extends Component {
             controlId="Description"
   //          validationState={this.validateField("Description", this.state.Description)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Opis wydarzenia
             </Col>
             <Col sm={4}>
@@ -161,7 +161,7 @@ class AddEvent extends Component {
             controlId="Address"
             validationState={this.validateField("Address", this.state.Address)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Adres wydarzenia
             </Col>
             <Col sm={4}>
@@ -176,7 +176,7 @@ class AddEvent extends Component {
             controlId="Postcode"
             validationState={this.validateField("Postcode", this.state.Postcode)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Kod pocztowy
             </Col>
             <Col sm={4}>
@@ -195,7 +195,7 @@ class AddEvent extends Component {
             controlId="Town"
             validationState={this.validateField("Town", this.state.Town)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Nazwa miejscowości
             </Col>
             <Col sm={4}>
@@ -213,7 +213,7 @@ class AddEvent extends Component {
             controlId="EventDate"
             validationState={this.validateField("EventDate", this.state.EventDate)}
             >
-            <Col componentClass={ControlLabel} sm={2}>
+            <Col componentClass={ControlLabel} sm={4}>
               Data wydarzenia
             </Col>
             <Col sm={4}>
@@ -224,7 +224,7 @@ class AddEvent extends Component {
                 onChange={this.handleChange.bind(this)} />
             </Col>
           </FormGroup>
-          <Col sm={3}>
+          <Col sm={4}>
           </Col>
           <Col sm={4}>
             <Button onClick={this.handleSubmit}>
