@@ -24,6 +24,21 @@ namespace DziejeSieApp.Controllers
             return Json(new Event(_dbcontext).AllEvent());
         }
 
+        [Route("event/category/{category}")]
+        [HttpGet]
+        public JsonResult Category(string category)
+        {
+            return Json(new Event(_dbcontext).EventCategory(category));
+        }
+
+
+        [Route("event/town/{town}")]
+        [HttpGet]
+        public JsonResult Town(string town)
+        {
+            return Json(new Event(_dbcontext).EventTown(town));
+        }
+
         //GET: dziejeSie.com/event/{id}
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)

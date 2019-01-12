@@ -4,14 +4,16 @@ using EntityFramework.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    partial class DziejeSieContextModelSnapshot : ModelSnapshot
+    [Migration("20190112154845_adddescription")]
+    partial class adddescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace DziejeSieApp.Migrations
                     b.Property<DateTime>("AddDate");
 
                     b.Property<string>("Address")
-                        .IsRequired();
-
-                    b.Property<string>("Category")
                         .IsRequired();
 
                     b.Property<string>("Description")
