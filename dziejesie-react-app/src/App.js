@@ -11,6 +11,7 @@ import AddEvent from "./components/AddEvent/AddEvent";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Result from "./components/Result/Result";
+import SingleEvent from './components/SingleEvent/SingleEvent';
 
 class App extends Component {
 
@@ -57,6 +58,7 @@ class App extends Component {
               <Route path="/login/" component={Login} />
               <Route path="/register/" component={Register} />
               <Route path="/result/" component={Result}></Route>
+              <Route path="/event/:id" component={SingleEvent}></Route>
             </div>
           </div>
         </Router>

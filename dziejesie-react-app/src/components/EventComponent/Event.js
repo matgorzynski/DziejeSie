@@ -37,7 +37,7 @@ class Event extends Component {
                         { this.state.events.map(item =>
                         <tr key={item.eventId}>
                             <td>{item.eventId}</td>
-                            <td>{item.name}</td>
+                            <td><a href={`/event/${item.eventId}`}>{item.name}</a></td>
                             <td>{item.address}</td>
                             <td>{item.postcode}</td>
                             <td>{item.town}</td>
