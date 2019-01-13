@@ -3,7 +3,9 @@ import './App.css';
 import { Navbar, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect,
+  Switch
 } from 'react-router-dom';
 
 import Event from "./components/EventComponent/Event";
@@ -12,10 +14,14 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Result from "./components/Result/Result";
 
-localStorage.setItem('userName', '');
+class App extends Component {  
+  constructor() {
+  super();
 
-class App extends Component {
-
+  this.state = {
+    redirect: false
+  }
+}
   renderLoginNav() {
     if (localStorage.getItem('userName') === '') {
       return (
@@ -26,12 +32,18 @@ class App extends Component {
       )
     } else {
       return (
-        <Nav>
-          <NavItem>{}</NavItem>
+        <Nav pullRight>
+          <NavItem>{localStorage.getItem('userName')}</NavItem>
           <NavItem onClick={() => this.logout()}>Wyloguj</NavItem>
         </Nav>
       )
     }
+  }
+
+  setRedirect() {
+    this.setState({
+      redirect: true
+    })
   }
 
   logout() {
@@ -47,10 +59,17 @@ class App extends Component {
     .then(res => { 
       if (res.status === 200) {
         localStorage.setItem('userName', '');
+        this.setRedirect();
       }
       console.log("Response: ", res.json());
     })
   };
+
+  logoutRedirect() {
+    if (this.state.redirect) {
+      return <Redirect to='/' />
+    }
+  }
 
   render() {
     return (
@@ -87,11 +106,15 @@ class App extends Component {
               {this.renderLoginNav()}
             </Navbar>
             <div>
-              <Route path="/" exact component={Event} />
-              <Route path="/create/" component={AddEvent} />
-              <Route path="/login/" component={Login} callbackFromParent={this.loginCallback} />
-              <Route path="/register/" component={Register} />
-              <Route path="/result/" component={Result}></Route>
+              <Switch>
+                <Route path="/" exact component={Event} />
+                <Route path="/create/" component={AddEvent} />
+                <Route path="/login/" component={Login} callbackFromParent={this.loginCallback} />
+                <Route path="/register/" component={Register} />
+                <Route path="/result/" component={Result} />
+                <Route component={Event} />
+              </Switch>
+              {this.logoutRedirect()}
             </div>
           </div>
         </Router>

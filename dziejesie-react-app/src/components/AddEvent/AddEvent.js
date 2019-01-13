@@ -66,8 +66,6 @@ class AddEvent extends Component {
         var dateNow = new Date();
         if (new Date(value) > dateNow)
           return 'success';
-        else if (new Date(value) === undefined)
-          return null;
         else
           return 'error';
       default:
@@ -104,7 +102,7 @@ class AddEvent extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'VerySecureHeader': 'michaldziemianowicz',
+        'VerySecureHeader': localStorage.getItem('userName')     
       },
       body: JSON.stringify(data),
     }).then(res => res.json())
