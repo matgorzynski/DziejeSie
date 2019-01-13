@@ -16,6 +16,8 @@ class AddEvent extends Component {
       Postcode: '',
       Town: '',
       EventDate: '',
+      Description: '',
+      Category: ''
     }
   }
 
@@ -79,12 +81,14 @@ class AddEvent extends Component {
       Postcode: this.state.Postcode, 
       Town: this.state.Town, 
       EventDate: this.state.EventDate,
+      Description: this.state.Description,
+      Category: this.state.Category,
       UserID: '1'
     }
 
     console.log(data);
 
-    axios.post('http://matgorzynski.hostingasp.pl/event/add', data)
+    axios.post('http://matgorzynski.hostingasp.pl/event/add', data, { headers: {VerySecureHeader: "1" } })
     .then(response => {
       if (response.status === 200) {
         this.setRedirect();
@@ -124,13 +128,17 @@ class AddEvent extends Component {
           </FormGroup>
           <FormGroup 
             controlId="Category"
-  //          validationState={this.validateField("Category", this.state.Category)}
             >
             <Col componentClass={ControlLabel} sm={4}>
               Kategoria
             </Col>
             <Col sm={4}>
-              <FormControl componentClass="select" placeholder="select">
+              <FormControl 
+                name="Category" 
+                componentClass="select" 
+                placeholder="select"
+                value={this.state.Category} 
+                onChange={this.handleChange.bind(this)}>
                 <option value="Muzyka">Muzyka</option>
                 <option value="Sztuka">Sztuka</option>
                 <option value="Komedia">Komedia</option>
@@ -142,7 +150,7 @@ class AddEvent extends Component {
           </FormGroup>
           <FormGroup 
             controlId="Description"
-  //          validationState={this.validateField("Description", this.state.Description)}
+            validationState={this.validateField("Description", this.state.Description)}
             >
             <Col componentClass={ControlLabel} sm={4}>
               Opis wydarzenia
@@ -151,8 +159,8 @@ class AddEvent extends Component {
               <FormControl 
                 name="Description"
                 componentClass="textarea"
-  //              value={this.state.Description} 
-  //              onChange={this.handleChange.bind(this)}
+                value={this.state.Description} 
+                onChange={this.handleChange.bind(this)}
               />
                 <FormControl.Feedback />
             </Col>
