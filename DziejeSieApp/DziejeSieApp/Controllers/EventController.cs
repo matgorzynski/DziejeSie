@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
-    [DisableCors]
+    [EnableCors("SiteCorsPolicy")]
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
@@ -219,7 +219,7 @@ namespace DziejeSieApp.Controllers
                         Desc = "This event does not belong to you"
                     };
 
-                    Response.StatusCode = 400; //Bad Request
+                    Response.StatusCode = 403; //Forbidden
                     return Json(Error);
                 }
             }
