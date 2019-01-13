@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 class Login extends Component {
   constructor() {
@@ -15,13 +15,26 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    axios.post('http://matgorzynski.hostingasp.pl/user/login', { 
+    const data = {
       Login: this.state.Login,
       Password: this.state.Password
+    }
+        
+    fetch('http://matgorzynski.hostingasp.pl/user/login', {
+      credentials: 'include',
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'VerySecureHeader': '',
+      },
+      body: JSON.stringify(data),
     })
-    .then(response => {
-        console.log("Response: " + JSON.stringify(response));
+    .then(res => {
+      if (res.status === 200) {
+        localStorage.setItem('userName', this.state.Login);
+      }
+      console.log('Response:', res.json());
     });
   }
 

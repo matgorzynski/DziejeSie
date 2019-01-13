@@ -12,7 +12,45 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Result from "./components/Result/Result";
 
+localStorage.setItem('userName', '');
+
 class App extends Component {
+
+  renderLoginNav() {
+    if (localStorage.getItem('userName') === '') {
+      return (
+        <Nav pullRight>
+          <NavItem href="/login/">Zaloguj</NavItem>
+          <NavItem href="/register/">Rejestracja</NavItem>
+        </Nav>
+      )
+    } else {
+      return (
+        <Nav>
+          <NavItem>{}</NavItem>
+          <NavItem onClick={() => this.logout()}>Wyloguj</NavItem>
+        </Nav>
+      )
+    }
+  }
+
+  logout() {
+    fetch('http://matgorzynski.hostingasp.pl/user/logout', {
+      credentials: 'include',
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'VerySecureHeader': localStorage.getItem('userName')
+      }
+    })
+    .then(res => { 
+      if (res.status === 200) {
+        localStorage.setItem('userName', '');
+      }
+      console.log("Response: ", res.json());
+    })
+  };
 
   render() {
     return (
@@ -46,15 +84,12 @@ class App extends Component {
                   Dodaj wydarzenie
                 </NavItem>
               </Nav>
-              <Nav pullRight>
-                <NavItem href="/login/">Zaloguj</NavItem>
-                <NavItem href="/register/">Rejestracja</NavItem>
-              </Nav>
+              {this.renderLoginNav()}
             </Navbar>
             <div>
               <Route path="/" exact component={Event} />
               <Route path="/create/" component={AddEvent} />
-              <Route path="/login/" component={Login} />
+              <Route path="/login/" component={Login} callbackFromParent={this.loginCallback} />
               <Route path="/register/" component={Register} />
               <Route path="/result/" component={Result}></Route>
             </div>

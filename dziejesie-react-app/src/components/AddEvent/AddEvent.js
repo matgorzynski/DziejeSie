@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 class AddEvent extends Component {
   constructor() {
@@ -62,10 +62,12 @@ class AddEvent extends Component {
           return 'success';
         else
           return 'error';
-      case 'Date':
+      case 'EventDate':
         var dateNow = new Date();
-        if (value > dateNow)
+        if (new Date(value) > dateNow)
           return 'success';
+        else if (new Date(value) === undefined)
+          return null;
         else
           return 'error';
       default:
@@ -88,12 +90,25 @@ class AddEvent extends Component {
 
     console.log(data);
 
-    axios.post('http://matgorzynski.hostingasp.pl/event/add', data, { headers: {VerySecureHeader: "1" } })
-    .then(response => {
-      if (response.status === 200) {
-        this.setRedirect();
-      }
-    }
+    // axios.post('http://matgorzynski.hostingasp.pl/event/add', data, { headers: {VerySecureHeader: "1" } })
+    // .then(response => {
+    //   if (response.status === 200) {
+    //     this.setRedirect();
+    //   }
+    // }
+    // );
+    
+    fetch('http://matgorzynski.hostingasp.pl/event/add', {
+      credentials: 'include',
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'VerySecureHeader': 'michaldziemianowicz',
+      },
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response))
     );
   }
 
@@ -227,7 +242,7 @@ class AddEvent extends Component {
             <Col sm={4}>
               <FormControl 
                 name="EventDate" 
-                type="date" 
+                type="datetime-local" 
                 value={this.state.EventDate} 
                 onChange={this.handleChange.bind(this)} />
             </Col>
