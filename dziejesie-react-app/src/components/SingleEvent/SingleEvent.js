@@ -52,7 +52,7 @@ class SingleEvent extends Component {
                         </PageHeader>
                     </Row>
                     <Row className="smallMargin">
-                        <Col sm={4} md={3}><h3>Kategoria{this.state.eventData.category}</h3></Col>
+                        <Col sm={4} md={3}><h3>{this.state.eventData.category}</h3></Col>
                         <Col sm={4} md={3}><h3><Label>{this.state.eventData.user}</Label></h3></Col>
                     </Row>
                     <Row className="smallMargin">

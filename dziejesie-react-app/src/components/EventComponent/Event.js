@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Col, Table, Button, Label, PageHeader } from 'react-bootstrap';
 import axios from 'axios';
 
 class Event extends Component {
@@ -19,34 +19,27 @@ class Event extends Component {
         });
     }
 
+    
     render() {
         return(
             <div>
-                <Table responsive striped bordered condensed>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nazwa</th>
-                            <th>Miejsce</th>
-                            <th>Kod pocztowy</th>
-                            <th>Miasto</th>
-                            <th>Data wydarzenia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <Col sm={1} md={2} />
+                <Col sm={10} md={8}>
+                <h1>Nadchodzące wydarzenia:</h1>
+                <tbody>
                         { this.state.events.map(item =>
-                        <tr key={item.eventId}>
-                            <td>{item.eventId}</td>
-                            <td><a href={`/event/${item.eventId}`}>{item.name}</a></td>
-                            <td>{item.address}</td>
-                            <td>{item.postcode}</td>
-                            <td>{item.town}</td>
-                            <td>{item.eventDate}</td>
-                            <td align="center"><Button bsSize="xsmall" bsStyle="danger">X</Button></td>
-                        </tr>
+                        <div key={item.eventId}>
+                           <PageHeader>
+                                    <a href={`/event/${item.eventId}`}>{item.name}</a>
+                                    <small>  🡒  {item.town}</small>
+                           </PageHeader>
+                            <h4><b>Gdzie:</b> {item.address} {item.postcode}</h4>
+                            <h4><b>Kiedy:</b> {item.eventDate}</h4>
+                        </div>
                         )}
-                    </tbody>
-                </Table>
+                </tbody>
+            </Col>
+            <Col sm={1} md={2} />
             </div>
         )
     }
