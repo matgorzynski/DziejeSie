@@ -24,7 +24,9 @@ class App extends Component {
                   <Navbar.Brand>
                     <a href="/">Dzieje się</a>
                   </Navbar.Brand>
+                  <Navbar.Toggle />
                 </Navbar.Header>
+              <Navbar.Collapse>
               <Nav>
                 <NavDropdown eventKey={1} title="Kategorie" id="basic-nav-dropdown">
                   <MenuItem eventKey={1.1}>Muzyka</MenuItem>
@@ -51,6 +53,7 @@ class App extends Component {
                 <NavItem href="/login/">Zaloguj</NavItem>
                 <NavItem href="/register/">Rejestracja</NavItem>
               </Nav>
+              </Navbar.Collapse>
             </Navbar>
             <div>
               <Route path="/" exact component={Event} />

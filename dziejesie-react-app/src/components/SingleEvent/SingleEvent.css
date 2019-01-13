@@ -1,0 +1,16 @@
+div.smallMargin {
+    padding: 2px;
+}
+
+div.panMargin {
+    padding: 5%;
+}
+
+div.comMargin {
+    margin-top: 20px;
+    padding: 5%;
+}
+
+div.buttonMargin {
+    padding: 5px;
+}
