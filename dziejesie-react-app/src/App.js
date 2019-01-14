@@ -13,6 +13,7 @@ import AddEvent from "./components/AddEvent/AddEvent";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Result from "./components/Result/Result";
+import SingleEvent from './components/SingleEvent/SingleEvent';
 
 class App extends Component {  
   constructor() {
@@ -80,7 +81,9 @@ class App extends Component {
                   <Navbar.Brand>
                     <a href="/">Dzieje się</a>
                   </Navbar.Brand>
+                  <Navbar.Toggle />
                 </Navbar.Header>
+              <Navbar.Collapse>
               <Nav>
                 <NavDropdown eventKey={1} title="Kategorie" id="basic-nav-dropdown">
                   <MenuItem eventKey={1.1}>Muzyka</MenuItem>
@@ -104,14 +107,16 @@ class App extends Component {
                 </NavItem>
               </Nav>
               {this.renderLoginNav()}
-            </Navbar>
+              </Navbar.Collapse>
+              </Navbar>
             <div>
               <Switch>
                 <Route path="/" exact component={Event} />
                 <Route path="/create/" component={AddEvent} />
-                <Route path="/login/" component={Login} callbackFromParent={this.loginCallback} />
+                <Route path="/login/" component={Login} />
                 <Route path="/register/" component={Register} />
-                <Route path="/result/" component={Result} />
+                <Route path="/result/" component={Result}></Route>
+                <Route path="/event/:id" component={SingleEvent}></Route>
                 <Route component={Event} />
               </Switch>
               {this.logoutRedirect()}
