@@ -172,9 +172,9 @@ class Register extends Component {
   }
 
   handleChange(e) {
-    let change = {}
-    change[e.target.name] = e.target.value
-    this.setState(change)
+    let change = {};
+    change[e.target.name] = e.target.value;
+    this.setState(change);
   }
 
   render() {
