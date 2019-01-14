@@ -22,7 +22,9 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult LoginVerification([FromBody]Users user)
         {
-            if (HttpContext.Session.GetInt32("UserId") != null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header != "")
             {
                 var Error = new
                 {
@@ -38,9 +40,23 @@ namespace DziejeSieApp.Controllers
             var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
            
             var type = result.GetType();
-            int id = (int)type.GetProperty("Iduser").GetValue(result);
+            string login = (string)type.GetProperty("Login").GetValue(result);
 
-            HttpContext.Session.SetInt32("UserId", id);
+            if (LoggedIn.List.Exists(x => x.Contains(login)))
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Login",
+                    Desc = "User already logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+
+            HttpContext.Response.Headers["VerySecureHeader"] = login;
+            LoggedIn.List.Add(login);
 
             return Json(result);
         }
@@ -49,7 +65,9 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult Register([FromBody]Users account)
         {
-            if (HttpContext.Session.GetInt32("UserId") != null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header != "")
             {
                 var Error = new
                 {
@@ -76,7 +94,9 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public ActionResult Logout()
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
             {
                 var Error = new
                 {
@@ -90,7 +110,7 @@ namespace DziejeSieApp.Controllers
             }
             else
             {
-                HttpContext.Session.Remove("UserId");
+                LoggedIn.List.Remove(header);
 
                 return Json(new
                 {

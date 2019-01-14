@@ -24,6 +24,21 @@ namespace DziejeSieApp.Controllers
             return Json(new Event(_dbcontext).AllEvent());
         }
 
+        [Route("event/category/{category}")]
+        [HttpGet]
+        public JsonResult Category(string category)
+        {
+            return Json(new Event(_dbcontext).EventCategory(category));
+        }
+
+
+        [Route("event/town/{town}")]
+        [HttpGet]
+        public JsonResult Town(string town)
+        {
+            return Json(new Event(_dbcontext).EventTown(town));
+        }
+
         //GET: dziejeSie.com/event/{id}
         [Route("event/{id}")]
         public JsonResult GetEventById(int id)
@@ -51,7 +66,10 @@ namespace DziejeSieApp.Controllers
         [HttpPost]
         public JsonResult AddNewEvent([FromBody]Events events)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
+                if(LoggedIn.Contains(header))
             {
                 var Error = new
                 {
@@ -64,11 +82,12 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
                 if (ModelState.IsValid)
                 {
-                    events.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                    //events.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                    events.UserId = new Account(_dbcontext).GetId(header);
                     events.AddDate = System.DateTime.Now;
                     return Json(new Event(_dbcontext).AddNewEvent(events));
                 }
@@ -104,8 +123,11 @@ namespace DziejeSieApp.Controllers
         [HttpPut]
         public JsonResult UpdateEvent(int id, [FromBody]Events events)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
+                if (LoggedIn.Contains(header))
+                {
                 var Error = new
                 {
                     Code = 2,
@@ -117,11 +139,11 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
                 if (ModelState.IsValid)
                 {
-                    if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                    if (new Event(_dbcontext).UserMatchesEvent(id, header))
                     {
                         return Json(new Event(_dbcontext).UpdateEvent(id, events));
                     }
@@ -170,8 +192,11 @@ namespace DziejeSieApp.Controllers
         [HttpDelete]
         public JsonResult DeleteEvent(int id)
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
+                if (LoggedIn.Contains(header))
+                {
                 var Error = new
                 {
                     Code = 2,
@@ -183,9 +208,9 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            if (new Account(_dbcontext).CheckUserId((int)HttpContext.Session.GetInt32("UserId")))
+            if (new Account(_dbcontext).CheckLogin(header))
             {
-                if (new Event(_dbcontext).UserMatchesEvent(id, (int)HttpContext.Session.GetInt32("UserId")))
+                if (new Event(_dbcontext).UserMatchesEvent(id, header))
                 {
                     return Json(new Event(_dbcontext).DeleteEvent(id));
                 }
@@ -198,7 +223,7 @@ namespace DziejeSieApp.Controllers
                         Desc = "This event does not belong to you"
                     };
 
-                    Response.StatusCode = 400; //Bad Request
+                    Response.StatusCode = 403; //Forbidden
                     return Json(Error);
                 }
             }
