@@ -225,7 +225,7 @@ class AddEvent extends Component {
                 validationState={this.validateField("Name", this.state.Name, 0)}
                 >
                 <Col componentClass={ControlLabel} sm={4}>
-                  Nazwa wydarzenia*
+                  Nazwa wydarzenia
                 </Col>
                 <Col sm={4}>
                   <FormControl 
@@ -244,7 +244,7 @@ class AddEvent extends Component {
                 validationState={this.validateField("Category", this.state.Category, 6)}
                 >
                 <Col componentClass={ControlLabel} sm={4}>
-                  Kategoria*
+                  Kategoria
                 </Col>
                 <Col sm={4}>
                   <FormControl 
@@ -302,7 +302,7 @@ class AddEvent extends Component {
                 validationState={this.validateField("Postcode", this.state.Postcode, 3)}
                 >
                 <Col componentClass={ControlLabel} sm={4}>
-                  Kod pocztowy*
+                  Kod pocztowy
                 </Col>
                 <Col sm={4}>
                   <FormControl 
@@ -322,7 +322,7 @@ class AddEvent extends Component {
                 validationState={this.validateField("Town", this.state.Town, 4)}
                 >
                 <Col componentClass={ControlLabel} sm={4}>
-                  Nazwa miejscowości*
+                  Nazwa miejscowości
                 </Col>
                 <Col sm={4}>
                   <FormControl 
@@ -341,7 +341,7 @@ class AddEvent extends Component {
                 validationState={this.validateField("EventDate", this.state.EventDate, 5)}
                 >
                 <Col componentClass={ControlLabel} sm={4}>
-                  Data wydarzenia*
+                  Data wydarzenia
                 </Col>
                 <Col sm={4}>
                   <FormControl 
@@ -355,7 +355,7 @@ class AddEvent extends Component {
                 <Col sm={4}>
                 </Col>
                 <Col sm={4}>
-                <p align="right">Pola z * muszą zostać wypełnione</p>
+                  <p align="right">Wszystkie pola muszą zostać wypełnione</p>
                 </Col>
                 <Col sm={4}>
                 </Col>
