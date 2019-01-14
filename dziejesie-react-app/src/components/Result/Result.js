@@ -14,13 +14,9 @@ class Result extends Component {
     }    
     
     componentDidMount() {
-        setTimeout(this.setRedirect(), 10000);
-    }
-
-    setRedirect() {
-        this.setState({
-            redirect: true
-        })
+        setTimeout(function(){ 
+            this.setState({redirect: true})
+        }.bind(this), 7000);
     }
 
     redirectToHome() {
