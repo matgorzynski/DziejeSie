@@ -16,6 +16,13 @@ namespace EntityFramework.DBclass
             _dbcontext = dbcontext;
         }
 
+        public int GetId(string login)
+        {
+            Users usr = new Users();
+            usr = _dbcontext.User.Single(u => u.Login == login);
+            return usr.IdUser;
+        }
+
 
         public dynamic LoginVerification(string Login, string Password)
         {

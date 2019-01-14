@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DziejeSieApp.Controllers
 {
-    [DisableCors]
+    [EnableCors("SiteCorsPolicy")]
     public class EventController : Controller
     {
         private readonly DziejeSieContext _dbcontext;
@@ -69,6 +69,7 @@ namespace DziejeSieApp.Controllers
             string header = HttpContext.Request.Headers["VerySecureHeader"];
 
             if (header == "")
+                if(LoggedIn.Contains(header))
             {
                 var Error = new
                 {
@@ -85,7 +86,8 @@ namespace DziejeSieApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    events.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                    //events.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                    events.UserId = new Account(_dbcontext).GetId(header);
                     events.AddDate = System.DateTime.Now;
                     return Json(new Event(_dbcontext).AddNewEvent(events));
                 }
@@ -124,7 +126,8 @@ namespace DziejeSieApp.Controllers
             string header = HttpContext.Request.Headers["VerySecureHeader"];
 
             if (header == "")
-            {
+                if (LoggedIn.Contains(header))
+                {
                 var Error = new
                 {
                     Code = 2,
@@ -192,7 +195,8 @@ namespace DziejeSieApp.Controllers
             string header = HttpContext.Request.Headers["VerySecureHeader"];
 
             if (header == "")
-            {
+                if (LoggedIn.Contains(header))
+                {
                 var Error = new
                 {
                     Code = 2,
@@ -219,7 +223,7 @@ namespace DziejeSieApp.Controllers
                         Desc = "This event does not belong to you"
                     };
 
-                    Response.StatusCode = 400; //Bad Request
+                    Response.StatusCode = 403; //Forbidden
                     return Json(Error);
                 }
             }
