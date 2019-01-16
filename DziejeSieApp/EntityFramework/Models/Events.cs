@@ -18,9 +18,15 @@ namespace EntityFramework.Models
         public string Postcode { get; set; }
         [Required]
         public string Town { get; set; }
-       
+
+        [Required]
+        public string Category { get; set; } 
+        
         [Required]
         public DateTime EventDate { get; set; }
+
+        [Required]
+        public string Description { get; set; }
         
 
         [Required]
