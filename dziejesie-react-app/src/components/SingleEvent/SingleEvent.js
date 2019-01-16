@@ -47,6 +47,9 @@ class SingleEvent extends Component {
             })
             ).then(res => {
                 console.log(res.status, res.data);
+                this.setState({
+                    eventPoints: res.data
+                })
             })
         )
     }
@@ -61,8 +64,8 @@ class SingleEvent extends Component {
                 'VerySecureHeader': localStorage.getItem('userName')     
                 },
                 body: JSON.stringify({
-                    UserId: localStorage.getItem('userId'),
-                    EventId: this.state.eventId
+                    userId: localStorage.getItem('userId'),
+                    eventId: this.state.eventId
                 }),
             }).then(response => 
                 response.json().then(data => ({
@@ -85,8 +88,8 @@ class SingleEvent extends Component {
                 'VerySecureHeader': localStorage.getItem('userName')     
                 },
                 body: JSON.stringify({
-                    UserId: localStorage.getItem('userId'),
-                    EventId: this.state.eventId
+                    userId: localStorage.getItem('userId'),
+                    eventId: this.state.eventId
                 }),
             }).then(response => 
                 response.json().then(data => ({
