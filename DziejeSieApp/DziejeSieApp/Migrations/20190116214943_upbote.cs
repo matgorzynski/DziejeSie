@@ -4,10 +4,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DziejeSieApp.Migrations
 {
-    public partial class OneDate : Migration
+    public partial class upbote : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Upvote",
+                columns: table => new
+                {
+                    UpvoteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Value = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    EventId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Upvote", x => x.UpvoteId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -16,6 +31,11 @@ namespace DziejeSieApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Login = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
+                    Firstname = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    PostCode = table.Column<string>(nullable: false),
+                    Town = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     RegisterDate = table.Column<DateTime>(nullable: false)
                 },
@@ -34,8 +54,9 @@ namespace DziejeSieApp.Migrations
                     Address = table.Column<string>(nullable: false),
                     Postcode = table.Column<string>(nullable: false),
                     Town = table.Column<string>(nullable: false),
-                    StartDate = table.Column<string>(nullable: false),
-                    StartHour = table.Column<string>(nullable: false),
+                    Category = table.Column<string>(nullable: false),
+                    EventDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
                     AddDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -60,6 +81,9 @@ namespace DziejeSieApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Event");
+
+            migrationBuilder.DropTable(
+                name: "Upvote");
 
             migrationBuilder.DropTable(
                 name: "User");

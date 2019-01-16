@@ -4,6 +4,7 @@ using EntityFramework.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DziejeSieApp.Migrations
 {
@@ -18,7 +19,7 @@ namespace DziejeSieApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
+            modelBuilder.Entity("EntityFramework.Models.Events", b =>
                 {
                     b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
@@ -27,6 +28,12 @@ namespace DziejeSieApp.Migrations
                     b.Property<DateTime>("AddDate");
 
                     b.Property<string>("Address")
+                        .IsRequired();
+
+                    b.Property<string>("Category")
+                        .IsRequired();
+
+                    b.Property<string>("Description")
                         .IsRequired();
 
                     b.Property<DateTime>("EventDate");
@@ -49,13 +56,39 @@ namespace DziejeSieApp.Migrations
                     b.ToTable("Event");
                 });
 
-            modelBuilder.Entity("DziejeSieApp.Models.Users", b =>
+            modelBuilder.Entity("EntityFramework.Models.Upvotes", b =>
+                {
+                    b.Property<int>("UpvoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EventId");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("UpvoteId");
+
+                    b.ToTable("Upvote");
+                });
+
+            modelBuilder.Entity("EntityFramework.Models.Users", b =>
                 {
                     b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired();
+
                     b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Firstname")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<string>("Login")
@@ -64,16 +97,22 @@ namespace DziejeSieApp.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
+                    b.Property<string>("PostCode")
+                        .IsRequired();
+
                     b.Property<DateTime>("RegisterDate");
+
+                    b.Property<string>("Town")
+                        .IsRequired();
 
                     b.HasKey("IdUser");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
+            modelBuilder.Entity("EntityFramework.Models.Events", b =>
                 {
-                    b.HasOne("DziejeSieApp.Models.Users", "User")
+                    b.HasOne("EntityFramework.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

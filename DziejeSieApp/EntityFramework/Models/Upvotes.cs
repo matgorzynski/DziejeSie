@@ -12,14 +12,15 @@ namespace EntityFramework.Models
         [Required]
         public int Value { get; set; } // 1 or -1
 
-        [ForeignKey("UserId")]
+
+        //[ForeignKey("UserId")]
         [Required]
-        public Users User { get; set; }
+        //public Users User { get; set; }
         public int UserId { get; set; }
 
-        [ForeignKey("EventId")]
+        //[ForeignKey("EventId")]
         [Required]
-        public Events Event { get; set; }
+        //public Events Event { get; set; }
         public int EventId{ get; set; }
     }
 }
