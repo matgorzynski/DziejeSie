@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Col, Row, Image, Label, Jumbotron, PageHeader, Panel, Button, ButtonGroup } from 'react-bootstrap';
+import { Col, Row, Image, Label, PageHeader, Panel, Button, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 import './SingleEvent.css';
-// import placeholder from '/Repos/DziejeSie/dziejesie-react-app/src/photo_placeholder.png';
+import placeholder from '../../photo_placeholder.png';
 
 class SingleEvent extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class SingleEvent extends Component {
                 <Col sm={1} md={2} />
                 <Col sm={2} md={2}>
                     <Row>
-                       {/* <Image src={placeholder} responsive /> */}
+                        <Image src={placeholder} responsive />
                     </Row>
                     <Row className="buttonMargin">
                         <ButtonGroup>

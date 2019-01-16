@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Table, Button, Label, PageHeader } from 'react-bootstrap';
+import { Col, PageHeader } from 'react-bootstrap';
 import axios from 'axios';
 
 class Event extends Component {

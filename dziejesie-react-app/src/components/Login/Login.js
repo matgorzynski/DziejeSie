@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 // import axios from 'axios';
 
 class Login extends Component {
@@ -8,8 +10,11 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   
     this.state = {
+      redirect: false,
       Login: '',
       Password: '',
+      alertMessage: '',
+      show: false
     }
   }
 
@@ -29,13 +34,26 @@ class Login extends Component {
         'VerySecureHeader': '',
       },
       body: JSON.stringify(data),
-    })
-    .then(res => {
-      if (res.status === 200) {
-        localStorage.setItem('userName', this.state.Login);
-      }
-      console.log('Response:', res.json());
-    });
+    }).then(response => 
+        response.json().then(data => ({
+            data: data,
+            status: response.status
+      })
+      ).then(res => {
+          console.log(res.status, res.data);
+          if (res.data.errorCode >= 0) {
+            this.setState({
+              alertMessage: res.data.desc,
+              show: true
+            })
+          } else {
+            this.setState({
+              redirect: true
+            })
+            localStorage.setItem('userName', this.state.Login);
+          }
+      })
+    );
   }
 
   handleChange(e) {
@@ -44,24 +62,49 @@ class Login extends Component {
     this.setState(change)
   }
 
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to={{
+        pathname: '/result/',
+        state: { message: "Udało się zalogować!" }
+      }} />
+    }
+  }
+
+  showAlert() {
+  if(this.state.show) {
+    return (
+      <Alert bsStyle="danger">
+        <p align="center"><strong>Coś poszło nie tak!</strong> {this.state.alertMessage}</p>
+      </Alert>
+      )
+    }
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="Login">Login</label>
-        <br />
-        <input id="Login" name="Login" type="text" value={this.state.Login} onChange={this.handleChange.bind(this)} />
+      <div>
+        {this.showAlert()}
+        {this.renderRedirect()}
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="Login">Login</label>
+          <br />
+          <input id="Login" name="Login" type="text" value={this.state.Login} onChange={this.handleChange.bind(this)} />
 
-        <br />
+          <br />
 
-        <label htmlFor="Password">Hasloo</label>
-        <br />
-        <input id="Password" name="Password" type="password" value={this.state.Password} onChange={this.handleChange.bind(this)} />
+          <label htmlFor="Password">Hasloo</label>
+          <br />
+          <input id="Password" name="Password" type="password" value={this.state.Password} onChange={this.handleChange.bind(this)} />
 
-        <br />
-        <button>Send data!</button>
-      </form>
+          <br />
+          <button>Send data!</button>
+        </form>
+      </div>
     );
   }
+  
 }
 
 export default Login;
