@@ -1,6 +1,7 @@
 ﻿using EntityFramework.DataBaseContext;
 using Microsoft.AspNetCore.Mvc;
 using EntityFramework.DBclass;
+using EntityFramework.Models;
 
 namespace DziejeSieApp.Controllers
 {
@@ -12,7 +13,7 @@ namespace DziejeSieApp.Controllers
 
         [Route("upvote/plus")]
         [HttpPost]
-        public JsonResult Plus(int UserId, int EventId)
+        public JsonResult Plus([FromBody]Upvotes Upvotes)
         {
             string header = HttpContext.Request.Headers["VerySecureHeader"];
             if (header == "" || !LoggedIn.Contains(header))
@@ -28,12 +29,12 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            return Json(new Upvote(_dbcontext).Positive(UserId, EventId));
+            return Json(new Upvote(_dbcontext).Positive(Upvotes.UserId, Upvotes.EventId));
         }
 
         [Route("upvote/minus")]
         [HttpPost]
-        public JsonResult Minus(int UserId, int EventId)
+        public JsonResult Minus([FromBody]Upvotes Upvotes)
         {
             string header = HttpContext.Request.Headers["VerySecureHeader"];
             if (header == "" || !LoggedIn.Contains(header))
@@ -49,14 +50,14 @@ namespace DziejeSieApp.Controllers
                 return Json(Error);
             }
 
-            return Json(new Upvote(_dbcontext).Negative(UserId, EventId));
+            return Json(new Upvote(_dbcontext).Negative(Upvotes.UserId, Upvotes.EventId));
         }
 
         [Route("upvote/points")]
         [HttpPost]
-        public JsonResult Points(int EventId)
+        public JsonResult Points([FromBody]Upvotes Upvotes)
         {
-            return Json(new Upvote(_dbcontext).Points(EventId));
+            return Json(new Upvote(_dbcontext).Points(Upvotes.EventId));
         }
     }
 }
