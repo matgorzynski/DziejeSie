@@ -113,7 +113,7 @@ namespace EntityFramework.DBclass
                 //brak wpisu dla kombinacji UxE --> dodanie informacji do bazy
                 Upvote.EventId = EventId;
                 Upvote.UserId = UserId;
-                Upvote.Value = 1;
+                Upvote.Value = -1;
 
                 _dbcontext.Upvote.Add(Upvote);
                 _dbcontext.SaveChanges();
@@ -123,7 +123,6 @@ namespace EntityFramework.DBclass
                 if (UpvoteValue == -1)   //usuwanie wpisu
                 {
                     Upvote = _dbcontext.Upvote.Single(x => x.UserId == UserId && x.EventId == EventId);
-
                     _dbcontext.Remove(Upvote);
                     _dbcontext.SaveChanges();
                 }
