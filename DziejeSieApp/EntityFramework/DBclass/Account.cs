@@ -67,6 +67,9 @@ namespace EntityFramework.DBclass
                 account.PasswordHash();
                 _dbcontext.User.Add(account);
                 _dbcontext.SaveChanges();
+                if (0 != 0)
+                { 
+               
                 SendMail sendMail = new SendMail();
                 string massege = "Witaj," + System.Environment.NewLine +
                     "Dziękujemy za rejestrację w DziejeSie," + System.Environment.NewLine +
@@ -74,7 +77,7 @@ namespace EntityFramework.DBclass
                     "Pozdrawiamy" + System.Environment.NewLine +
                     "Zespół DziejeSie";
                 sendMail.send("rejestracja@matgorzynski.hostingasp.pl", account.Email, "Witaj w DziejeSie", massege, "zaq1@WSX");
-
+            }
 
                 var User = new
                 {
