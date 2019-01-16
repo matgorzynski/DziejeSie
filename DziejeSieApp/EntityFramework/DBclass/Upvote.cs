@@ -2,6 +2,7 @@
 using EntityFramework.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EntityFramework.DBclass
@@ -17,12 +18,7 @@ namespace EntityFramework.DBclass
 
         public dynamic Positive(int UserId, int EventId)
         {
-            try
-            {
-                Users User = new Users();
-                User = _dbcontext.User.Single(x => x.UserId == UserId);
-            }
-            catch
+            if(!UserExists(UserId))
             {
                 var Error = new
                 {
@@ -33,12 +29,7 @@ namespace EntityFramework.DBclass
                 return Error;
             } // sprawdzanie czy istnieje użyszkodnik
 
-            try
-            {
-                Events Event = new Events();
-                Event = _dbcontext.Event.Single(x => x.EventId == EventId);
-            }
-            catch (System.Exception)
+            if (!EventExists(EventId))
             {
                 var Error = new
                 {
@@ -49,14 +40,36 @@ namespace EntityFramework.DBclass
                 return Error;
             } //sprawdzanie czy istnieje event o danym id
 
-            //dodanie informacji do bazy
+            int UpvoteValue = UpvoteExists(EventId, UserId);
             Upvotes Upvote = new Upvotes();
-            Upvote.EventId = EventId;
-            Upvote.UserId = UserId;
-            Upvote.Value = 1;
 
-            _dbcontext.Upvote.Add(Upvote);
-            _dbcontext.SaveCHanges();
+            if (UpvoteValue == 0)
+            {
+                //brak wpisu dla kombinacji UxE --> dodanie informacji do bazy
+                Upvote.EventId = EventId;
+                Upvote.UserId = UserId;
+                Upvote.Value = 1;
+
+                _dbcontext.Upvote.Add(Upvote);
+                _dbcontext.SaveChanges();
+            }
+            else
+            {
+                if (UpvoteValue == 1)   //usuwanie wpisu
+                {
+                    Upvote = _dbcontext.Upvote.Single(x => x.UserId == UserId && x.EventId == EventId);
+
+                    _dbcontext.Remove(Upvote);
+                    _dbcontext.SaveChanges();
+                }
+                else if (UpvoteValue == -1) // modyfikowanie wpisu
+                {
+                    Upvote = _dbcontext.Upvote.Single(x => x.UserId == UserId && x.EventId == EventId);
+                    Upvote.Value = 1;
+                    
+                    _dbcontext.SaveChanges();
+                }
+            }
 
             var Message = new
             {
@@ -64,16 +77,13 @@ namespace EntityFramework.DBclass
                 Type = "Upvote",
                 Desc = "Success"
             };
+
             return Message;
         }
+
         public dynamic Negative(int UserId, int EventId)
         {
-            try
-            {
-                Users User = new Users();
-                User = _dbcontext.User.Single(x => x.UserId == UserId);
-            }
-            catch
+            if (!UserExists(UserId))
             {
                 var Error = new
                 {
@@ -84,12 +94,7 @@ namespace EntityFramework.DBclass
                 return Error;
             } // sprawdzanie czy istnieje użyszkodnik
 
-            try
-            {
-                Events Event = new Events();
-                Event = _dbcontext.Event.Single(x => x.EventId == EventId);
-            }
-            catch (System.Exception)
+            if (!EventExists(EventId))
             {
                 var Error = new
                 {
@@ -100,14 +105,36 @@ namespace EntityFramework.DBclass
                 return Error;
             } //sprawdzanie czy istnieje event o danym id
 
-            //dodanie informacji do bazy
+            int UpvoteValue = UpvoteExists(EventId, UserId);
             Upvotes Upvote = new Upvotes();
-            Upvote.EventId = EventId;
-            Upvote.UserId = UserId;
-            Upvote.Value = -1;
 
-            _dbcontext.Upvote.Add(Upvote);
-            _dbcontext.SaveCHanges();
+            if (UpvoteValue == 0)
+            {
+                //brak wpisu dla kombinacji UxE --> dodanie informacji do bazy
+                Upvote.EventId = EventId;
+                Upvote.UserId = UserId;
+                Upvote.Value = 1;
+
+                _dbcontext.Upvote.Add(Upvote);
+                _dbcontext.SaveChanges();
+            }
+            else
+            {
+                if (UpvoteValue == -1)   //usuwanie wpisu
+                {
+                    Upvote = _dbcontext.Upvote.Single(x => x.UserId == UserId && x.EventId == EventId);
+
+                    _dbcontext.Remove(Upvote);
+                    _dbcontext.SaveChanges();
+                }
+                else if (UpvoteValue == 1) // modyfikowanie wpisu
+                {
+                    Upvote = _dbcontext.Upvote.Single(x => x.UserId == UserId && x.EventId == EventId);
+                    Upvote.Value = -1;
+
+                    _dbcontext.SaveChanges();
+                }
+            }
 
             var Message = new
             {
@@ -120,12 +147,7 @@ namespace EntityFramework.DBclass
 
         public dynamic Points(int EventId)
         {
-            try
-            {
-                Events Event = new Events();
-                Event = _dbcontext.Event.Single(x => x.EventId == EventId);
-            }
-            catch (System.Exception)
+            if(!EventExists(EventId))
             {
                 var Error = new
                 {
@@ -136,8 +158,55 @@ namespace EntityFramework.DBclass
                 return Error;
             } //sprawdzanie czy istnieje event o danym id
 
-            int Points = _dbcontext.Upvote.Sum(x => x.EventId == EventId);
+            int Points = _dbcontext.Upvote
+                .Where(e => e.EventId == EventId)
+                .Select(e => e.Value)
+                .Sum();
+
             return Points;
+        }
+
+        private bool UserExists (int UserId)
+        {
+            try
+            {
+                Users User = new Users();
+                User = _dbcontext.User.Single(x => x.IdUser == UserId);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool EventExists(int EventId)
+        {
+            try
+            {
+                Events Event = new Events();
+                Event = _dbcontext.Event.Single(x => x.EventId == EventId);
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private int UpvoteExists(int EventId, int UserId)
+        {
+            try
+            {
+                Upvotes Upvote = new Upvotes();
+                Upvote = _dbcontext.Upvote.Single(x => x.EventId == EventId && x.UserId == UserId);
+
+                return Upvote.Value; // 1 || -1 
+            }
+            catch (System.Exception)
+            {
+                return 0;   // brak wpisu
+            }
         }
     }
 }

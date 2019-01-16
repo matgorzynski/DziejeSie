@@ -13,7 +13,7 @@ namespace EntityFramework.Models
         public int UpvoteId { get; set; }
 
         [Required]
-        public int value { get; set; } // 1 or -1
+        public int Value { get; set; } // 1 or -1
 
         [ForeignKey("UserId")]
         [Required]
