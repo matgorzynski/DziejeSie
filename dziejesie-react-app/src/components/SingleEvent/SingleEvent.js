@@ -9,16 +9,94 @@ class SingleEvent extends Component {
         super(props);
         this.state = {
             eventData: [],
+            eventPoints: 0,
+            eventId: this.props.match.params.id
         };
     }
 
     componentDidMount() {
-        axios.get('http://matgorzynski.hostingasp.pl/event/' + this.props.match.params.id)
+        this.fetchEvent();
+        this.fetchUpvotes();
+    }
+
+    fetchEvent() {
+        return axios.get('http://matgorzynski.hostingasp.pl/event/' + this.props.match.params.id)
         .then(response => {
             const eventData = response.data;
             this.setState({ eventData : eventData });
             console.log("state", this.state.eventData);
-        });
+        })
+    }
+
+    fetchUpvotes() {
+        fetch('http://matgorzynski.hostingasp.pl/upvote/points', {
+                credentials: 'include',
+                method: 'POST',  
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'VerySecureHeader': localStorage.getItem('userName')     
+                },
+                body: JSON.stringify({
+                    eventId: this.props.match.params.id
+                }),
+            }).then(response => 
+                response.json().then(data => ({
+                    data: data,
+                    status: response.status
+            })
+            ).then(res => {
+                console.log(res.status, res.data);
+            })
+        )
+    }
+
+    upvote() {
+        fetch('http://matgorzynski.hostingasp.pl/upvote/plus', {
+                credentials: 'include',
+                method: 'POST',  
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'VerySecureHeader': localStorage.getItem('userName')     
+                },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    EventId: this.state.eventId
+                }),
+            }).then(response => 
+                response.json().then(data => ({
+                    data: data,
+                    status: response.status
+            })
+            ).then(res => {
+                console.log(res.status, res.data);
+            })
+        )
+    }
+
+    downvote() {
+        fetch('http://matgorzynski.hostingasp.pl/upvote/minus', {
+                credentials: 'include',
+                method: 'POST',  
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'VerySecureHeader': localStorage.getItem('userName')     
+                },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    EventId: this.state.eventId
+                }),
+            }).then(response => 
+                response.json().then(data => ({
+                    data: data,
+                    status: response.status
+            })
+            ).then(res => {
+                console.log(res.status, res.data);
+            })
+        )
     }
 
     render() {
@@ -31,13 +109,14 @@ class SingleEvent extends Component {
                     </Row>
                     <Row className="buttonMargin">
                         <ButtonGroup>
-                            <Button bsStyle="success"> ▲ </Button>
-                            <Button bsStyle="danger"> ▼ </Button>
+                            <Button bsStyle="success" onClick={this.upvote.bind(this)}> ▲ </Button>
+                            <h2><Label>{this.state.eventPoints}</Label></h2>
+                            <Button bsStyle="danger" onClick={this.downvote.bind(this)}> ▼ </Button>
                         </ButtonGroup>
                     </Row>
-                    <Row className="buttonMargin">
+                    {/* <Row className="buttonMargin">
                         <Button bsStyle="warning">★ Dodaj do ulubionych</Button>
-                    </Row>
+                    </Row> */}
                     <Row className="buttonMargin">
                         <ButtonGroup>
                             <Button> Edytuj </Button>

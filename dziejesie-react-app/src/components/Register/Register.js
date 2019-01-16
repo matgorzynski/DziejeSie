@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
-import axios from 'axios';
 
 var vals;
 
@@ -163,9 +162,25 @@ class Register extends Component {
 
       console.log(JSON.stringify(data));
 
-        axios.post('http://matgorzynski.hostingasp.pl/user/register', data)
-      .then(response => console.log('Success:', JSON.stringify(response))
-      );
+        
+      fetch('http://matgorzynski.hostingasp.pl/user/register', {
+        credentials: 'include',
+        method: 'POST',  
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'VerySecureHeader': '',
+        },
+        body: JSON.stringify(data),
+      }).then(response => 
+        response.json().then(data => ({
+            data: data,
+            status: response.status
+      })
+      ).then(res => {
+          console.log(res.status, res.data);
+        })
+      )
     } else {
       //this.showError();
     }

@@ -51,6 +51,7 @@ class Login extends Component {
               redirect: true
             })
             localStorage.setItem('userName', this.state.Login);
+            localStorage.setItem('userId', res.data.iduser);
           }
       })
     );

@@ -16,7 +16,7 @@ class Result extends Component {
     componentDidMount() {
         setTimeout(function(){ 
             this.setState({redirect: true})
-        }.bind(this), 7000);
+        }.bind(this), 4000);
     }
 
     redirectToHome() {

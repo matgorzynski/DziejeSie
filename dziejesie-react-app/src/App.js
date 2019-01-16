@@ -60,6 +60,7 @@ class App extends Component {
     .then(res => { 
       if (res.status === 200) {
         localStorage.setItem('userName', '');
+        localStorage.setItem('userId', -1);
         this.setRedirect();
       }
       console.log("Response: ", res.json());
