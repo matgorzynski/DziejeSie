@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EntityFramework.DBclass
 {
-    class Upvote
+    public class Upvote
     {
         private readonly DziejeSieContext _dbcontext;
 
