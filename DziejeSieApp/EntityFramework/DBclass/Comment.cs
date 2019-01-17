@@ -14,7 +14,7 @@ namespace EntityFramework.DBclass
 
         public Comment(DziejeSieContext dbcontext) { _dbcontext = dbcontext; }
 
-        public dynamic AddComment([FromBody]Comments Comment) {
+        public dynamic AddComment(Comments Comment) {
             try
             {
                 Events Event = _dbcontext.Event.Single(x => x.EventId.Equals(Comment.EventId));
@@ -64,7 +64,7 @@ namespace EntityFramework.DBclass
             }
         }
 
-        public dynamic ModifyComment(int id, [FromBody]Comments Comment)
+        public dynamic ModifyComment(int id, Comments Comment)
         {
             Comments toModify = new Comments();
 
