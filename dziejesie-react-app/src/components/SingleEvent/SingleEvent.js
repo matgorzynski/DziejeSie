@@ -108,23 +108,24 @@ class SingleEvent extends Component {
                         <Image src={placeholder} responsive />
                     </Row>
                     <Row className="buttonMargin">
-                        <ButtonGroup>
+                        <ButtonGroup className="buttonMargin">
                             <Button bsStyle="success" onClick={this.upvote.bind(this)}> ▲ </Button>
-                            <h2><Label>{this.state.eventPoints}</Label></h2>
                             <Button bsStyle="danger" onClick={this.downvote.bind(this)}> ▼ </Button>
                         </ButtonGroup>
+                        <Label>{this.state.eventPoints}</Label>
                     </Row>
                     {/* <Row className="buttonMargin">
                         <Button bsStyle="warning">★ Dodaj do ulubionych</Button>
                     </Row> */}
                     <Row className="buttonMargin">
-                        <ButtonGroup>
-                            <Button> Edytuj </Button>
-                            <Button> Usuń </Button>
+                        <ButtonGroup className="buttonMargin">
+                            <Button bsSize="small"> Edytuj </Button>
+                            <Button bsSize="small"> Usuń </Button>
                         </ButtonGroup>
                     </Row>
                 </Col>
-                <Col sm={8} md={6}>
+                <Col sm={1} md={1} />
+                <Col sm={7} md={5}>
                     <Row>
                         <PageHeader>
                             {this.state.eventData.name}

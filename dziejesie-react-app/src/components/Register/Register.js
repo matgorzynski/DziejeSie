@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import './Register.css'
 
 var vals;
 
@@ -199,10 +200,10 @@ class Register extends Component {
           controlId="Login"
           validationState={this.validateField("Login", this.state.Login, 0)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Login
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="Login" 
               type="text" 
@@ -216,10 +217,10 @@ class Register extends Component {
           controlId="Password"
           validationState={this.validateField("Password", this.state.Password, 1)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Hasło
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="Password" 
               type="password" 
@@ -233,10 +234,10 @@ class Register extends Component {
           controlId="ConfirmPassword"
           validationState={this.validateField("ConfirmPassword", this.state.ConfirmPassword, 2)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Powtórz hasło
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="ConfirmPassword" 
               type="password" 
@@ -249,10 +250,10 @@ class Register extends Component {
           controlId="Email"
           validationState={this.validateField("Email", this.state.Email, 3)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Adres email
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="Email" 
               type="email" 
@@ -265,10 +266,10 @@ class Register extends Component {
           controlId="FirstName"
           validationState={this.validateField("FirstName", this.state.FirstName, 4)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Imię
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="FirstName" 
               type="text" 
@@ -281,10 +282,10 @@ class Register extends Component {
           controlId="LastName"
           validationState={this.validateField("LastName", this.state.LastName, 5)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Nazwisko
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="LastName" 
               type="text" 
@@ -297,10 +298,10 @@ class Register extends Component {
           controlId="Town"
           validationState={this.validateField("Town", this.state.Town, 6)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Nazwa miejscowości
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="Town" 
               type="text"
@@ -314,10 +315,10 @@ class Register extends Component {
           controlId="Address"
           validationState={this.validateField("Address", this.state.Address, 7)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Adres
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl name="Address" 
               type="text" 
               value={this.state.Address} 
@@ -328,10 +329,10 @@ class Register extends Component {
           controlId="Postcode"
           validationState={this.validateField("Postcode", this.state.Postcode, 8)}
           >
-          <Col componentClass={ControlLabel} sm={2}>
+          <Col componentClass={ControlLabel} sm={4} md={4}>
             Kod pocztowy
           </Col>
-          <Col sm={4}>
+          <Col sm={4} md={4}>
             <FormControl 
               name="Postcode" 
               type="text" 
@@ -342,9 +343,8 @@ class Register extends Component {
             <HelpBlock>Wpisz kod pocztowy w formacie XX-XXX</HelpBlock>
           </Col>
         </FormGroup>
-        <Col sm={3}>
-        </Col>
-        <Col sm={4}>
+        <Col sm={4} md={4} />
+        <Col sm={4} md={4}>
           <Button bsSize="large" onClick={this.handleSubmit}>
             Zarejestruj
           </Button>
