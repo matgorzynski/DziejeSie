@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Col, Row, Image, Label, PageHeader, Panel, Button, ButtonGroup } from 'react-bootstrap';
+import { Col, Row, Image, Label, PageHeader, Panel, Button, ButtonGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import './SingleEvent.css';
 import placeholder from '../../photo_placeholder.png';
+import Comment from '../Comment/Comment';
 
 class SingleEvent extends Component {
     constructor(props) {
@@ -10,6 +11,8 @@ class SingleEvent extends Component {
         this.state = {
             eventData: [],
             eventPoints: 0,
+            comments: [],
+            comment: '',
             eventId: this.props.match.params.id
         };
     }
@@ -17,6 +20,7 @@ class SingleEvent extends Component {
     componentDidMount() {
         this.fetchEvent();
         this.fetchUpvotes();
+        this.fetchComments();
     }
 
     fetchEvent() {
@@ -24,8 +28,17 @@ class SingleEvent extends Component {
         .then(response => {
             const eventData = response.data;
             this.setState({ eventData : eventData });
-            console.log("state", this.state.eventData);
+            console.log("eventData", this.state.eventData);
         })
+    }
+
+    fetchComments() {
+        axios.get('http://matgorzynski.hostingasp.pl/comments/get/event/' + this.props.match.params.id)
+        .then(response => {
+            const comments = response.data;
+            this.setState({ comments : comments });
+            console.log("comments", this.state.comments);
+        });
     }
 
     fetchUpvotes() {
@@ -102,6 +115,70 @@ class SingleEvent extends Component {
         )
     }
 
+    handleChange(e) {
+        let change = {};
+        change[e.target.name] = e.target.value;
+        this.setState(change);
+    }
+
+    addComment() {
+        fetch('http://matgorzynski.hostingasp.pl/comments/add', {
+            credentials: 'include',
+            method: 'POST',  
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'VerySecureHeader': localStorage.getItem('userName')     
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem('userId'),
+                eventId: this.state.eventId
+            }),
+        }).then(response => 
+            response.json().then(data => ({
+                data: data,
+                status: response.status
+        })
+        ).then(res => {
+            console.log(res.status, res.data);
+        })
+    )
+    }
+
+    renderAddComment () {
+        if (localStorage.getItem('userName') !== '') {
+            return (
+                <div>
+                    Dodaj komentarz
+                    <FormControl 
+                        name="comment"
+                        componentClass="textarea"
+                        maxLength="1500"
+                        value={this.state.comment} 
+                        onChange={this.handleChange.bind(this)}
+                    />
+                    <Button>
+                        Dodaj
+                    </Button>
+                </div>
+            )
+        }
+    }
+
+    renderComments () {
+        if (this.state.comments !== undefined) {
+            return(
+                <div>
+                    { this.state.comments.map(item =>
+                        <div key={item.commentId}>
+                            <Comment user={item.userId} body={item.body} />
+                        </div>
+                    )}
+                </div>
+            )
+        }
+    }
+
     render() {
         return(
             <div>
@@ -160,10 +237,11 @@ class SingleEvent extends Component {
                             Komentarze
                         </Button>
                         <br />
-                        <Panel id="collapsible-panel-example-1" expanded={this.state.open}>
+                        <Panel id="collapsible-panel-example-1" defaultExpanded={false} expanded={this.state.open}>
                             <Panel.Collapse>
                                 <Panel.Body>
-                                    Tutaj pojawią się komentarze :)
+                                    {/* {this.renderComments()} */}
+                                    {this.renderAddComment()}
                                 </Panel.Body>
                             </Panel.Collapse>
                          </Panel>
