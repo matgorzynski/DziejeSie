@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { Panel } from 'react-bootstrap';
 
-class Comment extends Component { 
-    constructor(props) {
-        super(props);
-    }
+class Comment extends Component {
 
     render () {
         return (
             <Panel>
-                <Panel.Heading>{this.props.user}</Panel.Heading>
+                <Panel.Heading>{this.props.user} {this.props.date}</Panel.Heading>
                 <Panel.Body>{this.props.body}</Panel.Body>
             </Panel>
         )
