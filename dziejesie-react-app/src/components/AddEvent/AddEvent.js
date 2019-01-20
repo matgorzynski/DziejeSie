@@ -57,7 +57,7 @@ class AddEvent extends Component {
     switch(fieldName)
     {
       case 'Name':
-        if (value.length > 10)
+        if (value.length > 10 && value.match(/^\s+$/i))
           returnValue = 'success';
         else if (value.length > 0) 
           returnValue = 'error';

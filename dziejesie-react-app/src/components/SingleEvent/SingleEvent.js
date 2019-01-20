@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Image, Label, PageHeader, Panel, Button, ButtonGroup, FormControl } from 'react-bootstrap';
+import { Col, Row, Image, Label, PageHeader, Panel, Button, ButtonGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import axios from 'axios';
 import './SingleEvent.css';
 import placeholder from '../../photo_placeholder.png';
@@ -8,6 +8,9 @@ import Comment from '../Comment/Comment';
 class SingleEvent extends Component {
     constructor(props) {
         super(props);
+        
+        this.addComment = this.addComment.bind(this);
+
         this.state = {
             eventData: [],
             eventPoints: 0,
@@ -132,27 +135,32 @@ class SingleEvent extends Component {
     }
 
     addComment() {
-        fetch('http://matgorzynski.hostingasp.pl/comments/add', {
-            credentials: 'include',
-            method: 'POST',  
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'VerySecureHeader': localStorage.getItem('userName')     
-            },
-            body: JSON.stringify({
-                userId: localStorage.getItem('userId'),
-                eventId: this.state.eventId
-            }),
-        }).then(response => 
-            response.json().then(data => ({
-                data: data,
-                status: response.status
-        })
-        ).then(res => {
-            console.log(res.status, res.data);
-        })
-    )
+        if (!this.state.comment.match(/^\s+$/i) && this.state.comment.length > 2) {
+            fetch('http://matgorzynski.hostingasp.pl/comments/add', {
+                credentials: 'include',
+                method: 'POST',  
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json', 
+                'VerySecureHeader': localStorage.getItem('userName')
+                },
+                body: JSON.stringify({
+                    body: this.state.comment,
+                    userId: localStorage.getItem('userId'),
+                    eventID: this.props.match.params.id
+                }),
+            }).then(response => 
+                response.json().then(data => ({
+                    data: data,
+                    status: response.status
+            })
+            ).then(res => {
+                console.log(res.status, res.data);
+                this.refreshSuccess();
+            }))
+        } else {
+            console.log("Bad comment");
+        }
     }
 
     renderAddComment () {
@@ -167,7 +175,8 @@ class SingleEvent extends Component {
                         value={this.state.comment} 
                         onChange={this.handleChange.bind(this)}
                     />
-                    <Button>
+                    <HelpBlock>Minimum 3 znaki</HelpBlock>
+                    <Button onClick={this.addComment}>
                         Dodaj
                     </Button>
                 </div>
@@ -185,7 +194,7 @@ class SingleEvent extends Component {
                 <div>
                     { this.state.comments.map(item =>
                         <div key={item.commentId}>
-                            <Comment user={item.userId} body={item.body} />
+                            <Comment user={item.userId} body={item.body} date={item.addDate}/>
                         </div>
                     )}
                 </div>
@@ -254,7 +263,7 @@ class SingleEvent extends Component {
                         <Panel id="collapsible-panel-example-1" defaultExpanded={false} expanded={this.state.open}>
                             <Panel.Collapse>
                                 <Panel.Body>
-                                    {/* {this.renderComments()} */}
+                                    {this.renderComments()}
                                     {this.renderAddComment()}
                                 </Panel.Body>
                             </Panel.Collapse>

@@ -97,6 +97,7 @@ class Register extends Component {
           returnValue = 'error';
         break;
       case 'Email':
+        // eslint-disable-next-line no-useless-escape
         if (value.match(/^[A-Za-z0-9\.]+@[a-zA-z0.9_]+(\.[a-zA-Z0-9)]+)$/))
           returnValue = 'success';
         else if (value.length === 0)
