@@ -148,7 +148,7 @@ class AddEvent extends Component {
         EventDate: this.state.EventDate,
         Description: this.state.Description,
         Category: this.state.Category,
-        UserID: '1'
+        UserID: localStorage.getItem('userId')
       }
 
       console.log(data);
@@ -219,6 +219,9 @@ class AddEvent extends Component {
       } else
       return (
           <div>
+            <Row>
+              {this.showAlert()}
+            </Row>
             {this.renderRedirect()}
             <Form horizontal>
               <FormGroup 

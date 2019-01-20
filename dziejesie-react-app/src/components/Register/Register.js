@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import React, { Component, Redirect } from 'react';
+import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock, Alert, Row } from 'react-bootstrap';
 import './Register.css'
 
 var vals;
@@ -20,6 +20,9 @@ class Register extends Component {
       Address: '',
       Postcode: '',
       Town: '',
+      redirect: false,
+      show: false,
+      alertMessage: '',
       valStates: []
     }
   }
@@ -176,14 +179,21 @@ class Register extends Component {
       }).then(response => 
         response.json().then(data => ({
             data: data,
-            status: response.status
+            status: data.statusCode
       })
       ).then(res => {
           console.log(res.status, res.data);
+          if (res.status === undefined) {
+            this.setRedirect();
+          } else {
+            this.setState({
+              show: true,
+              alertMessage: 'Sprawdź czy pola zostały poprawnie wypełnione'
+            })
+            this.showAlert();
+          }
         })
       )
-    } else {
-      //this.showError();
     }
   }
 
@@ -193,9 +203,37 @@ class Register extends Component {
     this.setState(change);
   }
 
+  showAlert() {
+    if(this.state.show) {
+      return (
+        <Alert bsStyle="danger">
+          <p align="center"><strong>Coś poszło nie tak!</strong> {this.state.alertMessage}</p>
+        </Alert>
+      )
+    }
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to={{
+        pathname: '/result/',
+        state: { message: "Udało się zarejestrować!" }
+      }} />
+    }
+  }
   render() {
     return (
       <Form horizontal>
+        {this.renderRedirect()}
+        <Row>
+          {this.showAlert()}
+        </Row>
         <FormGroup 
           controlId="Login"
           validationState={this.validateField("Login", this.state.Login, 0)}
