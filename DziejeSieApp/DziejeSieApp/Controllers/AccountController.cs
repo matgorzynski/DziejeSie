@@ -38,7 +38,7 @@ namespace DziejeSieApp.Controllers
             }
 
             var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
-           
+
             var type = result.GetType();
 
             try
@@ -90,7 +90,20 @@ namespace DziejeSieApp.Controllers
 
             if (ModelState.IsValid)
             {
-                return Json(new Account(_dbcontext).Register(account));
+
+                var result = (new Account(_dbcontext).Register(account));
+
+                var type = result.GetType();
+
+                try
+                {
+                    string login = (string)type.GetProperty("Login").GetValue(result);
+                }
+                catch (System.Exception)
+                {
+                    HttpContext.Response.StatusCode = 400;
+                }
+                return Json(result);
             }
             else
             {
