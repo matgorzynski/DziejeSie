@@ -183,13 +183,20 @@ class Register extends Component {
       })
       ).then(res => {
           console.log(res.status, res.data);
-          if (res.status === undefined) {
+          if (res.data.iduser !== undefined) {
             this.setRedirect();
           } else {
-            this.setState({
-              show: true,
-              alertMessage: 'Sprawdź czy pola zostały poprawnie wypełnione'
-            })
+            if (res.data.opis !== undefined){
+              this.setState({
+                show: true,
+                alertMessage: res.data.opis
+              })
+            } else {
+              this.setState({
+                show: true,
+                alertMessage: 'Sprawdź czy pola zostały poprawnie wypełnione'
+              })
+            }
             this.showAlert();
           }
         })
