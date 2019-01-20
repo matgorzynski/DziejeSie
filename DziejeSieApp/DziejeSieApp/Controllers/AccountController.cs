@@ -94,6 +94,7 @@ namespace DziejeSieApp.Controllers
             }
             else
             {
+                Response.StatusCode = 403;
                 return Json(BadRequest(ModelState));
             }
         }
