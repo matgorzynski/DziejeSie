@@ -87,6 +87,9 @@ class SingleEvent extends Component {
             })
             ).then(res => {
                 console.log(res.status, res.data);
+                if (res.status === 200) {
+                    this.refreshSuccess();
+                }
             })
         )
     }
@@ -111,6 +114,9 @@ class SingleEvent extends Component {
             })
             ).then(res => {
                 console.log(res.status, res.data);
+                if (res.status === 200) {
+                    this.refreshSuccess();
+                }
             })
         )
     }
@@ -119,6 +125,10 @@ class SingleEvent extends Component {
         let change = {};
         change[e.target.name] = e.target.value;
         this.setState(change);
+    }
+
+    refreshSuccess() {
+        window.location.reload();
     }
 
     addComment() {
@@ -161,6 +171,10 @@ class SingleEvent extends Component {
                         Dodaj
                     </Button>
                 </div>
+            )
+        } else {
+            return (
+                <div>Zaloguj się aby dodać komentarz!</div>
             )
         }
     }
