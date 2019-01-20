@@ -4,9 +4,8 @@ using EntityFramework.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EntityFramework.Migrations
+namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
     partial class DziejeSieContextModelSnapshot : ModelSnapshot
@@ -19,7 +18,7 @@ namespace EntityFramework.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EntityFramework.Models.Events", b =>
+            modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
                 {
                     b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
@@ -50,22 +49,13 @@ namespace EntityFramework.Migrations
                     b.ToTable("Event");
                 });
 
-            modelBuilder.Entity("EntityFramework.Models.Users", b =>
+            modelBuilder.Entity("DziejeSieApp.Models.Users", b =>
                 {
                     b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired();
-
                     b.Property<string>("Email")
-                        .IsRequired();
-
-                    b.Property<string>("Fisrtname")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<string>("Login")
@@ -74,22 +64,16 @@ namespace EntityFramework.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<string>("PostCode")
-                        .IsRequired();
-
                     b.Property<DateTime>("RegisterDate");
-
-                    b.Property<string>("Town")
-                        .IsRequired();
 
                     b.HasKey("IdUser");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("EntityFramework.Models.Events", b =>
+            modelBuilder.Entity("DziejeSieApp.Models.Events", b =>
                 {
-                    b.HasOne("EntityFramework.Models.Users", "User")
+                    b.HasOne("DziejeSieApp.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
