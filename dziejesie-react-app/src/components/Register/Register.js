@@ -1,4 +1,5 @@
-import React, { Component, Redirect } from 'react';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock, Alert, Row } from 'react-bootstrap';
 import './Register.css'
 
