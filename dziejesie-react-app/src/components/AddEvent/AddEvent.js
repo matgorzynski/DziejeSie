@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock, Alert, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { isUndefined, isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from 'util';
+import './AddEvent.css'
 // import axios from 'axios';
 
 var vals;
@@ -243,10 +244,10 @@ class AddEvent extends Component {
                 controlId="Name"
                 validationState={this.validateField("Name", this.state.Name, 0)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Nazwa wydarzenia
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="Name" 
                     type="text"
@@ -262,10 +263,10 @@ class AddEvent extends Component {
                 controlId="Category"
                 validationState={this.validateField("Category", this.state.Category, 6)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Kategoria
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="Category" 
                     componentClass="select" 
@@ -286,10 +287,10 @@ class AddEvent extends Component {
                 controlId="Description"
                 validationState={this.validateField("Description", this.state.Description, 1)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Opis wydarzenia
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="Description"
                     componentClass="textarea"
@@ -304,10 +305,10 @@ class AddEvent extends Component {
                 controlId="Address"
                 validationState={this.validateField("Address", this.state.Address, 2)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Adres wydarzenia
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl name="Address" 
                     type="text"
                     maxLength="50"
@@ -320,10 +321,10 @@ class AddEvent extends Component {
                 controlId="Postcode"
                 validationState={this.validateField("Postcode", this.state.Postcode, 3)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Kod pocztowy
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="Postcode" 
                     type="text" 
@@ -340,10 +341,10 @@ class AddEvent extends Component {
                 controlId="Town"
                 validationState={this.validateField("Town", this.state.Town, 4)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Nazwa miejscowości
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="Town" 
                     type="text"
@@ -359,10 +360,10 @@ class AddEvent extends Component {
                 controlId="EventDate"
                 validationState={this.validateField("EventDate", this.state.EventDate, 5)}
                 >
-                <Col componentClass={ControlLabel} sm={4}>
+                <Col componentClass={ControlLabel} sm={4} md={4}>
                   Data wydarzenia
                 </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4}>
                   <FormControl 
                     name="EventDate" 
                     type="datetime-local" 
@@ -371,24 +372,23 @@ class AddEvent extends Component {
                 </Col>
               </FormGroup>
               <Row>
-                <Col sm={4}>
-                </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4} />
+                <Col sm={4} md={4}>
                   <p align="right">Wszystkie pola muszą zostać wypełnione</p>
                 </Col>
-                <Col sm={4}>
-                </Col>
+                <Col sm={4} md={4} />
               </Row>
               <Row>
-                <Col sm={4}>
-                </Col>
-                <Col sm={4}>
+                <Col sm={4} md={4} />
+                <Col sm={4} md={4}>
                   <Button onClick={this.handleSubmit} bsSize="large">
                     Utwórz wydarzenie
                   </Button>
                 </Col>
-                <Col sm={4}>
-                </Col>
+              </Row>
+              <Row />
+              <Row>
+                {this.showAlert()}
               </Row>
             </Form>
           </div>

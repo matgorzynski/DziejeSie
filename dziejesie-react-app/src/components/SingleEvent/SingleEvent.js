@@ -258,6 +258,23 @@ class SingleEvent extends Component {
         }
     }
 
+    renderUpvotes () {
+        if (localStorage.getItem('userName') !== '') {
+            return ( 
+                <div>
+                    <ButtonGroup className="buttonMargin">
+                            <Button bsStyle="success" onClick={this.upvote.bind(this)}> ▲ </Button>
+                            <Button bsStyle="danger" onClick={this.downvote.bind(this)}> ▼ </Button>
+                    </ButtonGroup>
+                <Label>{this.state.eventPoints}</Label>
+                </div>
+            )
+        } else {
+            return (
+                <div>Zaloguj się aby oceniać wydarzenia!</div>
+            )
+        }
+}
     render() {
         return(
             <div>
@@ -268,18 +285,15 @@ class SingleEvent extends Component {
                         <Image src={placeholder} responsive />
                     </Row>
                     <Row className="buttonMargin">
-                        <ButtonGroup>
-                            <Button bsStyle="success" onClick={this.upvote.bind(this)}> ▲ </Button>
-                            <h2><Label>{this.state.eventPoints}</Label></h2>
-                            <Button bsStyle="danger" onClick={this.downvote.bind(this)}> ▼ </Button>
-                        </ButtonGroup>
+                        {this.renderUpvotes()}
                     </Row>
                     {/* <Row className="buttonMargin">
                         <Button bsStyle="warning">★ Dodaj do ulubionych</Button>
                     </Row> */}
                     {this.checkUser()}
                 </Col>
-                <Col sm={8} md={6}>
+                <Col sm={1} md={1} />
+                <Col sm={7} md={5}>
                     <Row>
                         <PageHeader>
                             {this.state.eventData.name}
