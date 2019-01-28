@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock, Alert, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import { isUndefined, isNullOrUndefined } from 'util';
 // import axios from 'axios';
 
 var vals;
@@ -57,7 +58,7 @@ class AddEvent extends Component {
     switch(fieldName)
     {
       case 'Name':
-        if (value.length > 10 && value.match(/^\s+$/i))
+        if (value.length > 10 && !value.match(/^\s+$/i))
           returnValue = 'success';
         else if (value.length > 0) 
           returnValue = 'error';
@@ -65,7 +66,12 @@ class AddEvent extends Component {
           returnValue = null;
         break;
       case 'Address':
-        returnValue = null;
+        if (value.match(/^\S[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ1234567890\- ]+$/))
+          returnValue = 'success';
+        else if (value.length === 0)
+          returnValue = null;
+        else
+          returnValue = 'error'
         break;
       case 'Postcode':
         if (value.length === 0)
@@ -78,7 +84,7 @@ class AddEvent extends Component {
       case 'Town':
         if (value.length === 0)
           returnValue = null;
-        else if (value.match(/^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/i))
+        else if (value.match(/^\S[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ ]+$/i))
           returnValue = 'success';
         else
           returnValue = 'error';
@@ -87,12 +93,22 @@ class AddEvent extends Component {
         var dateNow = new Date();
         if (new Date(value) > dateNow)
           returnValue = 'success';
+        else if (new Date(value) < dateNow)
+          returnValue = 'error';
+        else if (isNaN(value) || isNullOrUndefined(value) || value === '')
+          returnValue = null;
+        break;
+      case 'Description':
+        if (value.match(/^\S.+$/) && value.length > 10)
+          returnValue = 'success';
+        else if (value.length === 0)
+          returnValue = null;
         else
           returnValue = 'error';
         break;
       case 'Category':
         if (value === '' || value === null)
-          returnValue = 'error';
+          returnValue = null;
         else
           returnValue = 'success';
         break;
@@ -112,7 +128,7 @@ class AddEvent extends Component {
     vals = this.state.valStates; 
     if (index != null && value != null)
     {
-      if (value === 'error')
+      if (value === 'error' || value === null)
       {
         vals[index] = false;
       }

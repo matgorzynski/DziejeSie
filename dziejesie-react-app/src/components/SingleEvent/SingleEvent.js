@@ -4,14 +4,17 @@ import axios from 'axios';
 import './SingleEvent.css';
 import placeholder from '../../photo_placeholder.png';
 import Comment from '../Comment/Comment';
+import { Redirect } from 'react-router-dom';
 
 class SingleEvent extends Component {
     constructor(props) {
         super(props);
         
         this.addComment = this.addComment.bind(this);
+        this.deleteEvent = this.deleteEvent.bind(this);
 
         this.state = {
+            redirect: false,
             eventData: [],
             eventPoints: 0,
             comments: [],
@@ -20,6 +23,22 @@ class SingleEvent extends Component {
         };
     }
 
+
+    setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+    
+    renderRedirect = () => {
+    if (this.state.redirect) {
+            return <Redirect to={{
+            pathname: '/result/',
+            state: { message: "Udało się dodać event!" }
+            }} />
+        }
+    }
+      
     componentDidMount() {
         this.fetchEvent();
         this.fetchUpvotes();
@@ -194,7 +213,7 @@ class SingleEvent extends Component {
                 <div>
                     { this.state.comments.map(item =>
                         <div key={item.commentId}>
-                            <Comment user={item.userId} body={item.body} date={item.addDate}/>
+                            <Comment user={item.userId} body={item.body} date={item.addDate} id={item.commentId}/>
                         </div>
                     )}
                 </div>
@@ -202,9 +221,47 @@ class SingleEvent extends Component {
         }
     }
 
+    deleteEvent() {
+        fetch('http://matgorzynski.hostingasp.pl/event/delete/' + this.props.match.params.id, {
+                credentials: 'include',
+                method: 'DELETE',  
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json', 
+                'VerySecureHeader': localStorage.getItem('userName')
+                },
+                body: JSON.stringify({
+                    id: this.state.eventData.id
+                }),
+            }).then(response => 
+                response.json().then(data => ({
+                    data: data,
+                    status: response.status
+            })
+            ).then(res => {
+                console.log(res.status, res.data);
+                this.refreshSuccess();
+            }))
+    }
+
+    checkUser() {
+        // eslint-disable-next-line eqeqeq
+        if (localStorage.getItem("userName") == this.state.eventData.user) {
+            return (
+                <Row className="buttonMargin">
+                    <ButtonGroup>
+                        <Button onClick={this.editEvent}> Edytuj </Button>
+                        <Button onClick={this.deleteEvent}> Usuń </Button>
+                    </ButtonGroup>
+                </Row>
+            )
+        }
+    }
+
     render() {
         return(
             <div>
+                {this.renderRedirect()}
                 <Col sm={1} md={2} />
                 <Col sm={2} md={2}>
                     <Row>
@@ -220,12 +277,7 @@ class SingleEvent extends Component {
                     {/* <Row className="buttonMargin">
                         <Button bsStyle="warning">★ Dodaj do ulubionych</Button>
                     </Row> */}
-                    <Row className="buttonMargin">
-                        <ButtonGroup>
-                            <Button> Edytuj </Button>
-                            <Button> Usuń </Button>
-                        </ButtonGroup>
-                    </Row>
+                    {this.checkUser()}
                 </Col>
                 <Col sm={8} md={6}>
                     <Row>

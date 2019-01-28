@@ -5,6 +5,10 @@ import axios from 'axios';
 class Event extends Component {
     constructor(props) {
         super(props);
+
+        this.convertDate = this.convertDate.bind(this);
+        this.convertHours = this.convertHours.bind(this);
+
         this.state = {
             events: [],
         };
@@ -19,6 +23,13 @@ class Event extends Component {
         });
     }
 
+    convertDate (date) {
+        return new Date(date).toLocaleDateString();
+    }
+
+    convertHours(date) {
+        return new Date(date).toLocaleTimeString();
+    }
     
     render() {
         return(
@@ -34,7 +45,7 @@ class Event extends Component {
                                     <small>  🡒  {item.town}</small>
                            </PageHeader>
                             <h4><b>Gdzie:</b> {item.address} {item.postcode}</h4>
-                            <h4><b>Kiedy:</b> {item.eventDate}</h4>
+                            <h4><b>Kiedy:</b> {this.convertDate(item.eventDate)} o {this.convertHours(item.eventDate)}</h4>
                         </div>
                         )}
                 </tbody>
