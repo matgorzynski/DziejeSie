@@ -14,6 +14,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Result from "./components/Result/Result";
 import SingleEvent from './components/SingleEvent/SingleEvent';
+import ModifyEvent from './components/ModifyEvent/ModifyEvent';
 
 class App extends Component {  
   constructor() {
@@ -86,23 +87,6 @@ class App extends Component {
                 </Navbar.Header>
               <Navbar.Collapse>
               <Nav>
-                <NavDropdown eventKey={1} title="Kategorie" id="basic-nav-dropdown">
-                  <MenuItem eventKey={1.1}>Muzyka</MenuItem>
-                  <MenuItem eventKey={1.2}>Sztuka</MenuItem>
-                  <MenuItem eventKey={1.3}>Komedia</MenuItem>
-                  <MenuItem eventKey={1.4}>Gry</MenuItem>
-                  <MenuItem eventKey={1.5}>Film</MenuItem>
-                  <MenuItem eventKey={1.6}>Sport</MenuItem>
-                </NavDropdown>
-                <NavDropdown eventKey={2} title="Miasta" id="basic-nav-dropdown">
-                  <MenuItem eventKey={2.1}>Warszawa</MenuItem>
-                  <MenuItem eventKey={2.2}>Poznań</MenuItem>
-                  <MenuItem eventKey={2.3}>Gdańsk</MenuItem>
-                  <MenuItem eventKey={2.4}>Suwałki</MenuItem>
-                  <MenuItem eventKey={2.5}>Kraków</MenuItem>
-                  <MenuItem eventKey={2.6}>Katowice</MenuItem>
-                  <MenuItem eventKey={2.7}>Radom</MenuItem>
-                </NavDropdown>
                 <NavItem eventKey={3} href="/create/">
                   Dodaj wydarzenie
                 </NavItem>
@@ -118,6 +102,7 @@ class App extends Component {
                 <Route path="/register/" component={Register} />
                 <Route path="/result/" component={Result}></Route>
                 <Route path="/event/:id" component={SingleEvent}></Route>
+                <Route path="/edit/" component={ModifyEvent}></Route>
                 <Route component={Event} />
               </Switch>
               {this.logoutRedirect()}

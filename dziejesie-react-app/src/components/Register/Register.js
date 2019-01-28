@@ -76,7 +76,7 @@ class Register extends Component {
       case 'Address':
         if (value.length === 0)
           returnValue = null;
-        else if (value.match(/^[A-ZĄŚĆÓŁŃĘŹŻ][a-zążśźćęńół]{2,}$/))
+        else if (value.match(/^\S[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ1234567890\- ]+$/))
           returnValue = 'success';
         else
           returnValue = 'error';

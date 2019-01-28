@@ -15,6 +15,7 @@ class SingleEvent extends Component {
 
         this.state = {
             redirect: false,
+            modifyRedirect: false,
             eventData: [],
             eventPoints: 0,
             comments: [],
@@ -31,10 +32,16 @@ class SingleEvent extends Component {
       }
     
     renderRedirect = () => {
-    if (this.state.redirect) {
+        if (this.state.redirect) {
+                return <Redirect to={{
+                pathname: '/result/',
+                state: { message: "Udało się dodać event!" }
+            }} />
+        }
+        else if (this.state.modifyRedirect) {
             return <Redirect to={{
-            pathname: '/result/',
-            state: { message: "Udało się dodać event!" }
+                pathname: '/edit/',
+                state: { eventId: this.state.eventId }
             }} />
         }
     }
@@ -240,8 +247,16 @@ class SingleEvent extends Component {
             })
             ).then(res => {
                 console.log(res.status, res.data);
-                this.refreshSuccess();
+                this.setRedirect({
+                    redirect: true
+                })
             }))
+    }
+
+    editEvent = () => {
+        this.setState({
+            modifyRedirect: true
+        })
     }
 
     checkUser() {
