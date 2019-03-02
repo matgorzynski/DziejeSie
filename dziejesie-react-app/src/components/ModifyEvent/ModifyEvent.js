@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { FormGroup, Form, Col, FormControl, ControlLabel, Button, HelpBlock, Alert, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { isNullOrUndefined } from 'util';
-import './AddEvent.css'
-// import axios from 'axios';
+import axios from 'axios';
 
 var vals;
 
-class AddEvent extends Component {
-  constructor() {
-    super();
+class ModifyEvent extends Component {
+  constructor(props) {
+    super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-  
+    this.loadEventContent = this.loadEventContent.bind(this);
+
     this.state = {
       redirect: false,
+      eventId: this.props.location.state.eventId,
+      eventData: [],
       Name: '',
       Address: '',
       Postcode: '',
@@ -33,9 +35,10 @@ class AddEvent extends Component {
     if (localStorage.getItem('userName') === '') 
       this.setState({
         show: true,
-        alertMessage: 'Zaloguj się aby dodać wydarzenie!',
+        alertMessage: 'Zaloguj się aby zmodyfikować wydarzenie!',
         userLogged: false
-      })
+    })
+    this.loadEventContent();
   }
 
   setRedirect = () => {
@@ -48,7 +51,7 @@ class AddEvent extends Component {
     if (this.state.redirect) {
       return <Redirect to={{
         pathname: '/result/',
-        state: { message: "Udało się dodać event!" }
+        state: { message: "Udało się zmodyfikować event!" }
       }} />
     }
   }
@@ -153,6 +156,24 @@ class AddEvent extends Component {
     return true;
   }
 
+  loadEventContent() {
+    return axios.get('http://matgorzynski.hostingasp.pl/event/' + this.state.eventId)
+    .then(response => {
+        const eventData = response.data;
+        this.setState({ 
+            eventData : eventData,
+            Name: eventData.name,
+            Address: eventData.address,
+            Postcode: eventData.postcode,
+            Town: eventData.town,
+            EventDate: '',
+            Description: eventData.description,
+            Category: eventData.category,
+        });
+        console.log("eventData", this.state.eventData);
+    })
+  }
+
   handleSubmit(event) {
     if (this.checkValidationStates()) {
       event.preventDefault();
@@ -169,15 +190,18 @@ class AddEvent extends Component {
 
       console.log(data);
       
-      fetch('http://matgorzynski.hostingasp.pl/event/add', {
+      fetch('http://matgorzynski.hostingasp.pl/event/modify/' + this.state.eventData.eventId, {
         credentials: 'include',
-        method: 'POST',  
+        method: 'PUT',  
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'VerySecureHeader': localStorage.getItem('userName')     
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+            id: this.state.eventData.eventId, 
+            events: data
+        }),
       })
       .then(res => {
         if (res.status === 200) {  
@@ -187,7 +211,7 @@ class AddEvent extends Component {
         } else {
           this.setState({
             show: true,
-            alertMessage: 'Zaloguj się aby dodać wydarzenie!'
+            alertMessage: 'Zaloguj się aby zmodyfikować wydarzenie!'
           })
         }
         console.log('Response:', res.json());
@@ -229,7 +253,7 @@ class AddEvent extends Component {
         return (
           <Redirect to={{
             pathname: '/result/',
-            state: { message: 'Pomyślnie dodano event!' }
+            state: { message: 'Pomyślnie edytowano event!' }
           }}/>
         )
       } else
@@ -382,7 +406,7 @@ class AddEvent extends Component {
                 <Col sm={4} md={4} />
                 <Col sm={4} md={4}>
                   <Button onClick={this.handleSubmit} bsSize="large">
-                    Utwórz wydarzenie
+                    Modyfikuj wydarzenie
                   </Button>
                 </Col>
               </Row>
@@ -397,4 +421,4 @@ class AddEvent extends Component {
   }
 }
 
-export default AddEvent;
+export default ModifyEvent;
