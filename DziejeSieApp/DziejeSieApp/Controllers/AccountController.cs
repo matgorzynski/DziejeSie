@@ -38,27 +38,35 @@ namespace DziejeSieApp.Controllers
             }
 
             var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
-           
+
             var type = result.GetType();
-            string login = (string)type.GetProperty("Login").GetValue(result);
 
-            if (LoggedIn.List.Exists(x => x.Contains(login)))
+            try
             {
-                var Error = new
+                string login = (string)type.GetProperty("Login").GetValue(result);
+
+                if (LoggedIn.List.Exists(x => x.Contains(login)))
                 {
-                    Code = 1,
-                    Type = "Login",
-                    Desc = "User already logged in"
-                };
+                    var Error = new
+                    {
+                        Code = 1,
+                        Type = "Login",
+                        Desc = "User already logged in"
+                    };
 
-                Response.StatusCode = 403;
-                return Json(Error);
+                    Response.StatusCode = 403;
+                    return Json(Error);
+                }
+
+                HttpContext.Response.Headers["VerySecureHeader"] = login;
+                LoggedIn.List.Add(login);
+
+                return Json(result);
             }
-
-            HttpContext.Response.Headers["VerySecureHeader"] = login;
-            LoggedIn.List.Add(login);
-
-            return Json(result);
+            catch (System.Exception)
+            {
+                return Json(result);
+            }
         }
 
         [Route("user/register")]
@@ -82,10 +90,24 @@ namespace DziejeSieApp.Controllers
 
             if (ModelState.IsValid)
             {
-                return Json(new Account(_dbcontext).Register(account));
+
+                var result = (new Account(_dbcontext).Register(account));
+
+                var type = result.GetType();
+
+                try
+                {
+                    string login = (string)type.GetProperty("Login").GetValue(result);
+                }
+                catch (System.Exception)
+                {
+                    HttpContext.Response.StatusCode = 400;
+                }
+                return Json(result);
             }
             else
             {
+                Response.StatusCode = 403;
                 return Json(BadRequest(ModelState));
             }
         }

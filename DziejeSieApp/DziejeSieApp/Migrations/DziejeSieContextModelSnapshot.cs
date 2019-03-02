@@ -19,6 +19,26 @@ namespace DziejeSieApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("EntityFramework.Models.Comments", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddDate");
+
+                    b.Property<string>("Body")
+                        .IsRequired();
+
+                    b.Property<int>("EventId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("CommentId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("EntityFramework.Models.Events", b =>
                 {
                     b.Property<int>("EventId")
@@ -54,6 +74,23 @@ namespace DziejeSieApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("EntityFramework.Models.Upvotes", b =>
+                {
+                    b.Property<int>("UpvoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EventId");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("UpvoteId");
+
+                    b.ToTable("Upvote");
                 });
 
             modelBuilder.Entity("EntityFramework.Models.Users", b =>

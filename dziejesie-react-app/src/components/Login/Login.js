@@ -3,6 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 // import axios from 'axios';
 
+
 class Login extends Component {
   constructor() {
     super();
@@ -27,6 +28,7 @@ class Login extends Component {
         
     fetch('http://matgorzynski.hostingasp.pl/user/login', {
       credentials: 'include',
+
       method: 'POST',  
       headers: {
         'Accept': 'application/json',
@@ -55,6 +57,7 @@ class Login extends Component {
           }
       })
     );
+
   }
 
   handleChange(e) {
@@ -98,6 +101,7 @@ class Login extends Component {
           <label htmlFor="Password">Hasloo</label>
           <br />
           <input id="Password" name="Password" type="password" value={this.state.Password} onChange={this.handleChange.bind(this)} />
+
 
           <br />
           <button>Send data!</button>

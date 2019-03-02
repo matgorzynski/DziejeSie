@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DziejeSieApp.Migrations
 {
     [DbContext(typeof(DziejeSieContext))]
-    [Migration("20190112155854_AddCategory")]
-    partial class AddCategory
+    [Migration("20190120183330_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,26 @@ namespace DziejeSieApp.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("EntityFramework.Models.Comments", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddDate");
+
+                    b.Property<string>("Body")
+                        .IsRequired();
+
+                    b.Property<int>("EventId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("CommentId");
+
+                    b.ToTable("Comment");
+                });
 
             modelBuilder.Entity("EntityFramework.Models.Events", b =>
                 {
@@ -56,6 +76,23 @@ namespace DziejeSieApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("EntityFramework.Models.Upvotes", b =>
+                {
+                    b.Property<int>("UpvoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EventId");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("UpvoteId");
+
+                    b.ToTable("Upvote");
                 });
 
             modelBuilder.Entity("EntityFramework.Models.Users", b =>

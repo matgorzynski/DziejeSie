@@ -5,12 +5,13 @@ import './Register.css'
 
 var vals;
 
+
 class Register extends Component {
   constructor() {
     super();
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
+  
     this.state = {
       Login: '',
       Password: '',
@@ -146,27 +147,26 @@ class Register extends Component {
       return true;
     } else {
       return false;
+
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    
-    if (this.checkValidationStates())
-    {
-      const data = {
-        Login: this.state.Login,
-        Password: this.state.Password,
-        ConfirmPassword: this.state.ConfirmPassword,
-        email: this.state.Email,
-        FirstName: this.state.FirstName,
-        LastName: this.state.LastName,
-        Address: this.state.Address,
-        PostCode: this.state.Postcode,
-        Town: this.state.Town
-      };
+    const data = {Login: this.state.Login, Password: this.state.Password, ConfirmPassword: this.state.ConfirmPassword, email: this.state.Email};
+        
+    console.log(JSON.stringify(data));
 
-      console.log(JSON.stringify(data));
+    fetch('http://matgorzynski.hostingasp.pl/user/register', {
+      method: 'POST',  
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response))
+    );
 
         
       fetch('http://matgorzynski.hostingasp.pl/user/register', {
@@ -397,6 +397,7 @@ class Register extends Component {
           </Button>
         </Col>
       </Form>
+
     );
   }
 }
