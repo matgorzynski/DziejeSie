@@ -12,12 +12,27 @@ namespace EntityFramework.DBclass
         public Event(DziejeSieContext dbcontext)
         {
             _dbcontext = dbcontext;
-
         }
 
         public dynamic AllEvent()
         {
             var Event = _dbcontext.Event;
+            return Event;
+        }
+
+
+        public dynamic EventCategory( string category)
+        {
+
+            var Event = _dbcontext.Event.Where(x => x.Category == category);
+            return Event;
+        }
+
+
+        public dynamic EventTown(string town)
+        {
+
+            var Event = _dbcontext.Event.Where(x => x.Town == town);
             return Event;
         }
 
@@ -36,6 +51,8 @@ namespace EntityFramework.DBclass
                     {
                         EventId = Events.EventId,
                         Name = Events.Name,
+                        Description = Events.Description,
+                        Category = Events.Category,
                         Address = Events.Address,
                         Postcode = Events.Postcode,
                         Town = Events.Town,
@@ -52,6 +69,8 @@ namespace EntityFramework.DBclass
                     {
                         EventId = Events.EventId,
                         Name = Events.Name,
+                        Description = Events.Description,
+                        Category = Events.Category,
                         Address = Events.Address,
                         Postcode = Events.Postcode,
                         Town = Events.Town,
@@ -87,6 +106,8 @@ namespace EntityFramework.DBclass
             {
                 EventId = events.EventId,
                 Name = events.Name,
+                Description = events.Description,
+                Category = events.Category,
                 Address = events.Address,
                 Postcode = events.Postcode,
                 Town = events.Town,
@@ -121,6 +142,8 @@ namespace EntityFramework.DBclass
             }
 
             if (events.Name != null || events.Name != "") toModify.Name = events.Name;
+            if (events.Description != null || events.Description != "") toModify.Description = events.Description;
+            if (events.Category != null || events.Category != "") toModify.Category = events.Category;
             if (events.Address != null || events.Address != "") toModify.Address = events.Address;
             if (events.Postcode != null || events.Postcode != "") toModify.Postcode = events.Postcode;
             if (events.Town != null || events.Town != "") toModify.Town = events.Town;
@@ -135,6 +158,8 @@ namespace EntityFramework.DBclass
                 {
                     EventId = events.EventId,
                     Name = events.Name,
+                    Description = events.Description,
+                    Category = events.Category,
                     Address = events.Address,
                     Postcode = events.Postcode,
                     Town = events.Town,
@@ -151,6 +176,8 @@ namespace EntityFramework.DBclass
                 {
                     EventId = events.EventId,
                     Name = events.Name,
+                    Description = events.Description,
+                    Category = events.Category,
                     Address = events.Address,
                     Postcode = events.Postcode,
                     Town = events.Town,
@@ -190,6 +217,19 @@ namespace EntityFramework.DBclass
                 return Response;
             }
         }
+
+        public bool UserMatchesEvent (int EventId, string UserLogin)
+        {
+            try
+            {
+                Events Event = _dbcontext.Event.Single(e => e.EventId == EventId);
+                if (UserLogin == _dbcontext.User.Single(x => x.IdUser == Event.UserId).Login) return true;
+                else return false;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
     }
 }
-

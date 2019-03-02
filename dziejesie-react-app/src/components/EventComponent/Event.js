@@ -1,55 +1,56 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Col, PageHeader } from 'react-bootstrap';
+import axios from 'axios';
 
 class Event extends Component {
     constructor(props) {
         super(props);
+
+        this.convertDate = this.convertDate.bind(this);
+        this.convertHours = this.convertHours.bind(this);
+
         this.state = {
-            data: [],
+            events: [],
         };
     }
 
     componentDidMount() {
-        fetch('http://matgorzynski.hostingasp.pl/event/all')
-        .then(response =>  {
-            return response.json();
-        })
-        .then(myJson => {
-            let data = myJson.map((item) => {
-                return (
-                        <tr key={item.eventId}>
-                            <td>{item.eventId}</td>
-                            <td>{item.name}</td>
-                            <td>{item.address}</td>
-                            <td>{item.postcode}</td>
-                            <td>{item.town}</td>
-                            <td>{item.eventDate}</td>
-                        </tr>
-                )
-            })
-            this.setState({ data : data });
-            console.log("state", this.state.data);
+        axios.get('http://matgorzynski.hostingasp.pl/event/all')
+        .then(response => {
+            const events = response.data;
+            this.setState({ events : events });
+            console.log("state", this.state.events);
         });
     }
 
+    convertDate (date) {
+        return new Date(date).toLocaleDateString();
+    }
+
+    convertHours(date) {
+        return new Date(date).toLocaleTimeString();
+    }
+    
     render() {
         return(
             <div>
-                <Table responsive striped bordered condensed>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nazwa</th>
-                            <th>Miejsce</th>
-                            <th>Kod pocztowy</th>
-                            <th>Miasto</th>
-                            <th>Data wydarzenia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.data}
-                    </tbody>
-                </Table>
+                <Col sm={1} md={2} />
+                <Col sm={10} md={8}>
+                <h1>Nadchodzące wydarzenia:</h1>
+                <tbody>
+                        { this.state.events.map(item =>
+                        <div key={item.eventId}>
+                           <PageHeader>
+                                    <a href={`/event/${item.eventId}`}>{item.name}</a>
+                                    <small>  🡒  {item.town}</small>
+                           </PageHeader>
+                            <h4><b>Gdzie:</b> {item.address} {item.postcode}</h4>
+                            <h4><b>Kiedy:</b> {this.convertDate(item.eventDate)} o {this.convertHours(item.eventDate)}</h4>
+                        </div>
+                        )}
+                </tbody>
+            </Col>
+            <Col sm={1} md={2} />
             </div>
         )
     }

@@ -20,41 +20,126 @@ namespace DziejeSieApp.Controllers
         
         [Route("user/login")]
         [HttpPost]
-        public JsonResult LoginVerification([FromBody]Users user)
+        public ActionResult LoginVerification([FromBody]Users user)
         {
-            var result = new Account(_dbcontext).LoginVerification(user.Login, user.Password);
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
 
-            
-            var propertyInfo = result.GetType().GetProperty("Login");
+            if (header != "")
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Login",
+                    Desc = "User already logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+
+            var result = (new Account(_dbcontext).LoginVerification(user.Login, user.Password));
+
+            var type = result.GetType();
+
             try
             {
-                string usr = propertyInfo.GetValue(result, null);
-                HttpContext.Session.SetString("User", usr); //tworzenie sesji -> login będzie odczytywane do wykonania większości akcji przez użytkownika
+                string login = (string)type.GetProperty("Login").GetValue(result);
+
+                if (LoggedIn.List.Exists(x => x.Contains(login)))
+                {
+                    var Error = new
+                    {
+                        Code = 1,
+                        Type = "Login",
+                        Desc = "User already logged in"
+                    };
+
+                    Response.StatusCode = 403;
+                    return Json(Error);
+                }
+
+                HttpContext.Response.Headers["VerySecureHeader"] = login;
+                LoggedIn.List.Add(login);
+
+                return Json(result);
             }
             catch (System.Exception)
             {
-                //użytkownik się nie zalogował -> sesja nie jest tworzona
+                return Json(result);
             }
-            return Json(result);
         }
 
         [Route("user/register")]
         [HttpPost]
         public ActionResult Register([FromBody]Users account)
         {
-            if (ModelState.IsValid)
-            {
-                return Json(new Account(_dbcontext).Register(account));
-            }
-            else
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header != "")
             {
                 var Error = new
                 {
-                    Kod = 1,
-                    Typ = "Rejestracja",
-                    Opis = "Wrpowadzona dane są błędne."
+                    Code = 1,
+                    Type = "Register",
+                    Desc = "User already logged in"
                 };
+
+                Response.StatusCode = 403;
                 return Json(Error);
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                var result = (new Account(_dbcontext).Register(account));
+
+                var type = result.GetType();
+
+                try
+                {
+                    string login = (string)type.GetProperty("Login").GetValue(result);
+                }
+                catch (System.Exception)
+                {
+                    HttpContext.Response.StatusCode = 400;
+                }
+                return Json(result);
+            }
+            else
+            {
+                Response.StatusCode = 403;
+                return Json(BadRequest(ModelState));
+            }
+        }
+
+        [Route("user/logout")]
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            string header = HttpContext.Request.Headers["VerySecureHeader"];
+
+            if (header == "")
+            {
+                var Error = new
+                {
+                    Code = 1,
+                    Type = "Logout",
+                    Desc = "User is not logged in"
+                };
+
+                Response.StatusCode = 403;
+                return Json(Error);
+            }
+            else
+            {
+                LoggedIn.List.Remove(header);
+
+                return Json(new
+                {
+                    Code = 0,
+                    Type = "Logout",
+                    Desc = "Success"
+                });
             }
         }
     }
